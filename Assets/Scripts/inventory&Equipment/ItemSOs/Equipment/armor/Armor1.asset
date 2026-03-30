@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 446401f36ab035146a8b48fe8c67191c, type: 3}
+  m_Name: Armor1
+  m_EditorClassIdentifier: 
+  itemName: Armor1
+  itemDescription: "\uBA38\uB9AC\uC5B4\uAE68\uBB34\uB98E\uBC1C\uBB34\uB98E\uBC1C"
+  icon: {fileID: -963687306, guid: 1047364cf319c654f8853bd4cc3acd94, type: 3}
+  itemCategory: 1
+  itemType: 1
+  isGold: 0
+  stackSize: 1
+  currentHealth: 0
+  maxHealth: 0
+  speed: 0
+  damage: 0
+  duration: 0
+  armorSprites:
+    body: {fileID: -3992137426342128158, guid: 7d46d0efc54b6ac4d8c591908f3b5fcb, type: 3}
+    leftArm: {fileID: -1120026500337400717, guid: 7d46d0efc54b6ac4d8c591908f3b5fcb, type: 3}
+    rightArm: {fileID: -1554369935797715747, guid: 7d46d0efc54b6ac4d8c591908f3b5fcb, type: 3}
+  bottomSprites:
+    leftLeg: {fileID: 0}
+    rightLeg: {fileID: 0}
