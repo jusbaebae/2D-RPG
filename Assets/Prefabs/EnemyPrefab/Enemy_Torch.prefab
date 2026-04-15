@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0d75fc350ce1b4c92a95521ddfcddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enmey_name: Enemy_Torch
   ExpReward: 3
   damageTextPrefab: {fileID: 6892059751814402074, guid: 044f8879c0402f04781339b55e8d4cb0, type: 3}
   deathEffect: {fileID: 161544526464053854, guid: 17c038d1379ff404f86e2e69f20cac04, type: 3}

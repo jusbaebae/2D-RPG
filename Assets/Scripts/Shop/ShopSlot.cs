@@ -19,7 +19,7 @@ public class ShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Initialized(ItemSO newItemSO, int price)
     {
-        //½½·Ô Á¤º¸ ÀÔ·Â
+        //ìŠ¬ë¡¯ ì •ë³´ ìž…ë ¥
         itemSO = newItemSO;
         itemImage.sprite = itemSO.icon;
         itemNameText.text = itemSO.itemName;

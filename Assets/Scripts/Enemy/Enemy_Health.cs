@@ -8,10 +8,10 @@ using Random = UnityEngine.Random;
 
 public class Enemy_Health : MonoBehaviour
 {
-    public int ExpReward = 3;
+    public string Enmey_name;
+    public int ExpReward;
 
-    public delegate void MonsterDefeated(int exp);
-    public static event MonsterDefeated OnMonsterDefeated;
+    public static event Action<int>  OnMonsterDefeated;
 
     public GameObject damageTextPrefab;
     public GameObject deathEffect;
@@ -24,7 +24,7 @@ public class Enemy_Health : MonoBehaviour
     float targetHP;
 
     public List<LootItem> lootTable;
-    public GameObject lootPrefab; //¾ÆÀÌÅÛ Á¤º¸
+    public GameObject lootPrefab; //ì•„ì´í…œ ì •ë³´
 
     public event Action Ondeath;
 
@@ -35,16 +35,20 @@ public class Enemy_Health : MonoBehaviour
         hpSlider.value = maxHealth;
         targetHP = maxHealth;
 
-        hpBar.SetActive(false); //Ã³À½¿¡´Â ¼û±è
+        hpBar.SetActive(false); //ì²˜ìŒì—ëŠ” ìˆ¨ê¹€
     }
     void Update()
     {
         hpSlider.value = Mathf.Lerp(hpSlider.value, targetHP, Time.deltaTime * 10f);
     }
 
+    private void OnDestroy()
+    {
+        QuestManager.Instance.AddProgress(QuestType.KillMonster, Enmey_name, 1);
+    }
     public void ChangeHealth(int amount)
     {
-        hpBar.SetActive(true); //¸ÂÀ¸¸é Ç¥½Ã
+        hpBar.SetActive(true); //ë§ìœ¼ë©´ í‘œì‹œ
         currentHealth += amount;
         ShowDamage(Mathf.Abs(amount));
         targetHP = currentHealth;
@@ -84,11 +88,11 @@ public class Enemy_Health : MonoBehaviour
 }
 
 [System.Serializable]
-public class LootItem //¾ÆÀÌÅÛ µå¶ø Á¤º¸ Å¬·¡½º
+public class LootItem //ì•„ì´í…œ ë“œë ì •ë³´ í´ë˜ìŠ¤
 {
-    public ItemSO itemSO; //¾ÆÀÌÅÛ Á¤º¸
-    public Vector2Int quantityRange; //¾ÆÀÌÅÛ ¼ö·®
-    [Range(0f, 1f)] public float dropChance; //È¹µæÈ®·ü
+    public ItemSO itemSO; //ì•„ì´í…œ ì •ë³´
+    public Vector2Int quantityRange; //ì•„ì´í…œ ìˆ˜ëŸ‰
+    [Range(0f, 1f)] public float dropChance; //íšë“í™•ë¥ 
 }
 
 

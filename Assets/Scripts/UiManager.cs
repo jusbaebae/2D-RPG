@@ -7,6 +7,8 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager Instance;
 
+    public StatsUi statsUi;
+
     public CanvasGroup inventoryUI;
     public CanvasGroup shopUI;
     public CanvasGroup statUI;
@@ -14,6 +16,7 @@ public class UiManager : MonoBehaviour
     public CanvasGroup equipmentUI;
 
     private UIType currentOpenUI = UIType.None;
+    public bool isInteract;
 
     private void Awake()
     {
@@ -22,13 +25,19 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
+        if (isInteract) return;
+
+        if (Input.GetButtonDown("ToggleStats"))
+        {
+            ToggleUI(UIType.Stat);
+            statsUi.UpdateAllStats();
+        }
         if (Input.GetButtonDown("ToggleInventory"))
             ToggleUI(UIType.Inventory);
         if (Input.GetButtonDown("ToggleSkillTree"))
             ToggleUI(UIType.Skill);
         if (Input.GetButtonDown("ToggleEquipment"))
             ToggleUI(UIType.Equipment);
-
         if (Input.GetKeyDown(KeyCode.Escape)) //ESC로 UI닫기
         {
             CloseAll();

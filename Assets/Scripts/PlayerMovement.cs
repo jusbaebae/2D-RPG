@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public int facingDirection = 1;
-
     public Rigidbody2D rb;
 
+    public bool isinteract;
     private bool isKnockBack;
     public bool isShooting;
 
@@ -23,11 +22,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        spum.PopulateAnimationLists();
-        spum.OverrideControllerInit();
+        if (spum != null)
+        {
+            spum.PopulateAnimationLists();
+            spum.OverrideControllerInit();
+        }
     }
     private void Update()
     {
+        if (isinteract) //대화중일때 이동 무시
+        {
+            inputDir = Vector2.zero;
+            ChangeState(PlayerState.IDLE);
+            return;
+        }
+
+        if (isKnockBack) return;
+
         inputDir.x = Input.GetAxisRaw("Horizontal");
         inputDir.y = Input.GetAxisRaw("Vertical");
 
@@ -36,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
             playerCombat.Attack();
         }
 
-        if (Input.GetButtonDown("Dash") && canDash == true)
+        if (Input.GetButtonDown("Dash") && canDash)
         {
             dashInput = true;
         }
@@ -45,6 +56,15 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (currentState == PlayerState.ATTACK) return;
+
+        if (dashInput) //대쉬
+        {
+            Dash(inputDir, 30f, 0.1f);
+            dashInput = false;
+            return;
+        }
+
+        if (isKnockBack || isDash) return;
 
         if (inputDir != Vector2.zero)
         {
@@ -60,33 +80,24 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector2.zero;
             return;
         }
-        if (isKnockBack || isDash) return;
 
-        if (inputDir.x > 0 && transform.localScale.x < 0 || inputDir.x < 0 && transform.localScale.x > 0)
+        if ((inputDir.x > 0 && transform.localScale.x < 0) || (inputDir.x < 0 && transform.localScale.x > 0))
         {
             Flip();
         }
 
-        if (dashInput && canDash) //대쉬
-        {
-            Dash(inputDir, 30f, 0.1f);
-            dashInput = false;
-            return;
-        }
-
-        rb.velocity = new Vector2(inputDir.x, inputDir.y) * StatsManager.Instance.speed; //일반적인 이동
+        rb.velocity = inputDir.normalized * StatsManager.Instance.speed; //일반적인 이동
     }
 
     void Flip()
     {
-        facingDirection *= -1;
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
     public void Knockback(Transform enemy, float force, float stunTime)
     {
         isKnockBack = true;
-        spum.PlayAnimation(PlayerState.DAMAGED, 0);
+        //ChangeState(PlayerState.DAMAGED);
         Vector2 direction = (transform.position - enemy.position).normalized;
         rb.AddForce(direction * force, ForceMode2D.Impulse);
         StartCoroutine(KnockbackCounter(stunTime));

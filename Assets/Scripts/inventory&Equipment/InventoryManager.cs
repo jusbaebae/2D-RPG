@@ -39,16 +39,19 @@ public class InventoryManager : MonoBehaviour
     private void OnEnable()
     {
         Loot.OnItemLooted += AddItem;
+        DialogueManager.OnRewardGold += AddGold;
+
     }
 
     private void OnDisable()
     {
         Loot.OnItemLooted -= AddItem;
+        DialogueManager.OnRewardGold -= AddGold;
     }
 
     public void AddItem(ItemSO itemSO, int quantity)
     {
-        if (itemSO.isGold) //아이템이 돈일경우
+        if (itemSO.isGold) //아이템이 돈일경우(나중에 분리하기)
         {
             gold += quantity;
             goldText.text = gold.ToString();
@@ -108,6 +111,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void AddGold(int quantity)
+    {
+        gold += quantity;
+        goldText.text = gold.ToString();
+    }
+
     public void DropItem(ItemSlot slot) 
     {
         DropLoot(slot.itemSO, 1);
@@ -160,7 +169,6 @@ public class InventoryManager : MonoBehaviour
                     return;
 
                 UseItem(slot);
-
                 slot.Deselect();
                 selectedSlot = null;
                 return;
@@ -169,7 +177,6 @@ public class InventoryManager : MonoBehaviour
             if (slot.itemSO.itemCategory == ItemCategory.Equipment) //아이템이 장비템이면 EquipGear()
             {
                 EquipGear(slot, slot.itemSO.itemType);
-
                 slot.Deselect();
                 selectedSlot = null;
                 return;
@@ -197,16 +204,16 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void EquipGear(ItemSlot slot, ItemType itemtype)
+    public void EquipGear(ItemSlot slot, ItemType itemtype) 
     {
         if (itemtype == ItemType.helmet)
-            helmetSlot.EquipGear(slot.itemSO);
+            helmetSlot.EquipGearImage(slot.itemSO);
         if (itemtype == ItemType.armor)
-            ArmorSlot.EquipGear(slot.itemSO);
+            ArmorSlot.EquipGearImage(slot.itemSO);
         if (itemtype == ItemType.bottom)
-            BottomSlot.EquipGear(slot.itemSO);
+            BottomSlot.EquipGearImage(slot.itemSO);
         if (itemtype == ItemType.weapon)
-            weaponSlot.EquipGear(slot.itemSO);
+            weaponSlot.EquipGearImage(slot.itemSO);
 
         slot.quantity--;
         if (slot.quantity <= 0)

@@ -24,7 +24,6 @@ public class Ghost : MonoBehaviour
 
     void CreateGhost()
     {
-        //부모 오브젝트 (잔상 묶음)
         GameObject ghostRoot = new GameObject("Ghost");
 
         ghostRoot.AddComponent<GhostFade>();
@@ -36,12 +35,10 @@ public class Ghost : MonoBehaviour
         {
             GameObject part = new GameObject("Part");
 
-            //위치/회전/스케일 복사
             part.transform.position = sr.transform.position;
             part.transform.rotation = sr.transform.rotation;
             part.transform.localScale = sr.transform.lossyScale;
 
-            //SpriteRenderer 복사
             SpriteRenderer ghostSR = part.AddComponent<SpriteRenderer>();
             ghostSR.sprite = sr.sprite;
             ghostSR.material = new Material(sr.material);

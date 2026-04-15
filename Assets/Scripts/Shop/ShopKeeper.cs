@@ -32,7 +32,7 @@ public class ShopKeeper : MonoBehaviour
                 currentShopKeeper = this;
                 OnShopStateChanged.Invoke(shopManager, true);
 
-                shopkeeperCam.transform.position = transform.position + cameraOffset; //»óÁ¡ÁÖÀÎ Ä«¸Ş¶ó ¼¼ÆÃ
+                shopkeeperCam.transform.position = transform.position + cameraOffset; //ìƒì ì£¼ì¸ ì¹´ë©”ë¼ ì„¸íŒ…
                 shopkeeperCam.gameObject.SetActive(true);
 
                 OpenItemShop();

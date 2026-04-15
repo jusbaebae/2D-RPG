@@ -5,8 +5,6 @@ using System;
 
 public class ShopManager : MonoBehaviour
 {
-    
-
     [SerializeField] private ShopSlot[] shopSlots;
 
     [SerializeField] private InventoryManager inventoryManager;

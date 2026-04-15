@@ -11,15 +11,6 @@ public class StatsUi : MonoBehaviour
     {
         UpdateAllStats();
     }
-    private void Update()
-    {
-        if (Input.GetButtonDown("ToggleStats"))
-        {
-            UiManager.Instance.ToggleUI(UIType.Stat);
-            UpdateAllStats();
-        }
-              
-    }
     public void UpdateDamage()
     {
         statsSlots[0].GetComponentInChildren<TMP_Text>().text = "Damage: " + StatsManager.Instance.damage;
