@@ -28,7 +28,7 @@ public class QuestManager : MonoBehaviour
         };
 
         questStates.Add(quest.questId, newQuest);
-
+        QuestUIManager.Instance.AddQuestLog(newQuest);
         Debug.Log($"{quest.questName} 퀘스트 수락");
     }
 
@@ -46,14 +46,14 @@ public class QuestManager : MonoBehaviour
                 continue;
 
             quest.currentProgress += amount;
+            QuestUIManager.Instance.UpdateQuest();
             Debug.Log("퀘스트 타입 : " + type);
-            Debug.Log($"{targetId} 한마리 잡았음");
+            Debug.Log($"{targetId} 1마리");
             if (quest.currentProgress >= quest.targetProgress)
             {
                 CompleteQuest(quest.questData.questId);
             }
         }
-        
     }
 
     public void CompleteQuest(string questId) //퀘스트 완료
@@ -67,6 +67,42 @@ public class QuestManager : MonoBehaviour
 
         Debug.Log($"{quest.questData.questName} 완료");
     }
+
+    public void RemoveQuest(QuestComponent questComponent, QuestData questData) //퀘스트 삭제
+    {
+        if (questComponent != null)
+        {
+            questComponent.RemoveQuest(questData);
+            questStates.Remove(questData.questId);
+            QuestUIManager.Instance.RemoveQuestLog(questData.questId);
+            Debug.Log("퀘스트 삭제 완료");
+        }
+    }
+
+    public QuestState GetTalkQuestForNPC(string npcId)
+    {
+        foreach (QuestState questState in questStates.Values)
+        {
+            if (!questState.isAccepted)
+                continue;
+
+            if (questState.isCompleted)
+                continue;
+
+            if (questState.questData.questType != QuestType.TalkToNPC)
+                continue;
+
+            if (questState.questData.targetid == npcId)
+            {
+                Debug.Log("말걸기퀘스트확인");
+                return questState;
+            }
+        }
+
+        return null;
+    }
+
+
 
     public bool IsQuestAccepted(string questId)
     {

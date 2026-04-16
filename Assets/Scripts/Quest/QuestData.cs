@@ -31,6 +31,10 @@ public class QuestData : ScriptableObject
 
     [TextArea]
     public string[] completeDialogueLines; //완료후
+
+    [Header("목표 NPC 전용 대사(TalkToNPC)")]
+    [TextArea]
+    public string[] targetNpcDialogueLines;
 }
 
 public enum QuestType

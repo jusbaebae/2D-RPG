@@ -27,6 +27,7 @@ public class NPCController : MonoBehaviour
     {
         currentState = NPCState.Interacting;
         interactable?.Interact();
+        QuestManager.Instance.AddProgress(QuestType.TalkToNPC, Name, 1);
     }
 
     public void OnDialogueClosed() //상태 복구 함수

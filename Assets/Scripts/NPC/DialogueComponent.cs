@@ -26,6 +26,13 @@ public class DialogueComponent : MonoBehaviour , IInteractable
     public void StartDialogue()
     {
         QuestData availableQuest = quest.GetAvailableQuest(playerLevel.level);
+        QuestState talkQuest = QuestManager.Instance.GetTalkQuestForNPC(npcController.Name);
+
+        if(talkQuest != null)
+        {
+            DialogueManager.Instance.ShowDialogue(talkQuest.questData.targetNpcDialogueLines, npcController, false);
+            return;
+        }
 
         if (availableQuest == null)
         {

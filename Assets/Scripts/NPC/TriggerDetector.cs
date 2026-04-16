@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TriggerDetector : MonoBehaviour
 {
     public Animator anim;
     private NPCController npc;
 
+    public TextMeshPro npcname;
+    public GameObject npcnamebox;
     public GameObject dialogueIcon;
-
+    public GameObject questIcon;
     private void Awake()
     {
         npc = GetComponent<NPCController>();
+        npcname.text = npc.Name;
+        npcnamebox.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,6 +39,7 @@ public class TriggerDetector : MonoBehaviour
             if (anim != null)
             {
                 anim.SetBool("PlayerInRange", false);
+                questIcon.SetActive(false);
                 dialogueIcon.SetActive(false);
             }
             npc.currentState = NPCState.Idle;

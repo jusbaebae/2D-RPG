@@ -15,7 +15,6 @@ public class QuestComponent : MonoBehaviour
                 return quest;
             }
         }
-
         return null;
     }
 

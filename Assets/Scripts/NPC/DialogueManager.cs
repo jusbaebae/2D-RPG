@@ -44,20 +44,15 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!dialoguePanel.activeSelf || currentLines == null) return;
+        if (!dialoguePanel.activeSelf || currentLines == null || !canNext) return;
 
         bool isLastQuestLine = currentIndex == currentLines.Length - 1 && isquest; //퀘스트 마지막 라인
 
-        if (!isLastQuestLine && canNext && Input.GetButtonDown("Interact"))
+        if (Input.GetButtonDown("Interact"))
         {
-            if (isTyping)
-            {
-                CompleteCurrentLine();
-            }
-            else
-            {
-                NextDialogue();
-            }
+            if (isLastQuestLine) return;
+
+            HandleDialogueInput();
         }
 
         if (dialoguePanel.activeSelf && Input.GetButtonDown("Cancel"))
@@ -186,18 +181,16 @@ public class DialogueManager : MonoBehaviour
 
     private void HandleDialogueInput()
     {
-        if (currentIndex != currentLines.Length - 1 || !isquest)
+        if (currentIndex == currentLines.Length - 1 && isquest) return;
+
+        if (isTyping)
         {
-            if (isTyping)
-            {
-                CompleteCurrentLine();
-            }
-            else
-            {
-                NextDialogue();
-            }
+            CompleteCurrentLine();
         }
-        
+        else
+        {
+            NextDialogue();
+        }
     }
 
     public void OnDialoguePanelClick() //클릭으로 대화 넘기기
@@ -218,13 +211,10 @@ public class DialogueManager : MonoBehaviour
     {
         OnRewardexp(currentQuestData.rewardExp);
         OnRewardGold(currentQuestData.rewardGold);
+
         QuestComponent quest = currentNPC.GetComponent<QuestComponent>();
-        if(quest != null)
-        {
-            quest.RemoveQuest(currentQuestData);
-            Debug.Log(currentQuestData);
-            Debug.Log("퀘스트 삭제 완료");
-        }
+        QuestManager.Instance.RemoveQuest(quest, currentQuestData);
+
         currentQuestData = null;
         CloseDialogue();
     }

@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fed7deca2d11014abbf7013e342ac0c, type: 3}
   m_Name: New Quest 2
   m_EditorClassIdentifier: 
-  questId: 1
+  questId: 2
   questName: "\uB2EC\uB369\uC774\uD55C\uD14C \uB9D0\uAC78\uAE30"
   questType: 2
   targetid: "\uB2EC\uB369\uC774"
   targetProgress: 1
   description: "\uB2EC\uB369\uC774\uD55C\uD14C \uB9D0\uAC70\uB294\uAC70\uB2E4 \uBCA0\uC774\uBCA0"
   requiredLevel: 3
-  rewardGold: 20
-  rewardExp: 5
+  rewardGold: 50
+  rewardExp: 30
   acceptDialogueLines:
   - "\u314E\u3147"
   - "\uB2EC\uB369\uC774 \uD55C\uD14C \uB9D0\uC880 \uAC78\uC5B4\uBD10\uB77C"
   progressDialogueLines:
   - "\uBE68\uB9AC \uB9D0\uC548\uAC78\uACE0 \uBB50\uD568?"
   completeDialogueLines:
-  - 
+  - "\uC774\uAC78 \uC9C4\uC9DC\uAC70\uB124 \u314B\u314B"
+  targetNpcDialogueLines:
+  - "\uBB50\uC57C \uC774 \uB9D0\uB9B0 \uAC1C\uBF09\uB530\uAD6C\uB294...."

@@ -14,6 +14,7 @@ public class UiManager : MonoBehaviour
     public CanvasGroup statUI;
     public CanvasGroup skillUI;
     public CanvasGroup equipmentUI;
+    public CanvasGroup questUI;
 
     private UIType currentOpenUI = UIType.None;
     public bool isInteract;
@@ -38,6 +39,8 @@ public class UiManager : MonoBehaviour
             ToggleUI(UIType.Skill);
         if (Input.GetButtonDown("ToggleEquipment"))
             ToggleUI(UIType.Equipment);
+        if (Input.GetButtonDown("ToggleQuest"))
+            ToggleUI(UIType.Quest);
         if (Input.GetKeyDown(KeyCode.Escape)) //ESC로 UI닫기
         {
             CloseAll();
@@ -78,6 +81,9 @@ public class UiManager : MonoBehaviour
             case UIType.Equipment:
                 SetUI(equipmentUI, true);
                 break;
+            case UIType.Quest:
+                SetUI(questUI, true);
+                break;
         }
 
         Time.timeScale = 0;
@@ -91,6 +97,7 @@ public class UiManager : MonoBehaviour
         SetUI(statUI, false);
         SetUI(skillUI, false);
         SetUI(equipmentUI, false);
+        SetUI(questUI, false);
 
         Time.timeScale = 1;
         currentOpenUI = UIType.None;
@@ -111,5 +118,6 @@ public enum UIType
     Stat,
     Skill,
     Shop,
-    Equipment
+    Equipment,
+    Quest
 }
