@@ -7,6 +7,7 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+
     private NPCController currentNPC;
     private QuestData currentQuestData;
     public PlayerMovement pmove;

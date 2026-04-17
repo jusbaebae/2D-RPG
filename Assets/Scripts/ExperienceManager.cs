@@ -7,6 +7,8 @@ using System;
 
 public class ExperienceManager : MonoBehaviour
 {
+    public static ExperienceManager Instance;
+
     public int level;
     public int currentExp;
     private int expToLevel = 10;
@@ -63,5 +65,12 @@ public class ExperienceManager : MonoBehaviour
     {
         expSlider.maxValue = expToLevel;
         currentLevelText.text = "Level: " + level;
+    }
+
+    public void FillData(PlayerData data)
+    {
+        data.level = level;
+        data.exp = currentExp;
+        data.maxexp = expToLevel;
     }
 }

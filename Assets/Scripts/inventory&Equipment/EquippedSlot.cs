@@ -14,7 +14,7 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Sprite DefaultslotImage; //기존 슬롯 이미지
 
-    private ItemSO equippedItem; //기존 아이템 정보
+    public ItemSO equippedItem; //기존 아이템 정보
 
     [SerializeField]
     private SpriteRenderer[] playerDisplayImage; //Preview 이미지 변경

@@ -63,4 +63,13 @@ public class StatsManager : MonoBehaviour
         int critcheck = Mathf.Min(StatsManager.Instance.crit, 100);
         isCrit = Random.Range(0, 100) < critcheck;
     }
+
+    public void FillData(PlayerData data)
+    {
+        data.currenthp = currentHealth;
+        data.maxhp = maxHealth;
+        data.damage = damage;
+        data.crit = crit;
+        data.speed = speed;
+    }
 }

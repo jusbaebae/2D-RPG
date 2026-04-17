@@ -113,4 +113,23 @@ public class QuestManager : MonoBehaviour
     {
         return questStates.ContainsKey(questId) && questStates[questId].isCompleted;
     }
+
+    public List<QuestStateData> GetSaveData() //딕셔너리는 Jsonutility로 저장이 안되므로 List로 변환
+    {
+        List<QuestStateData> list = new List<QuestStateData>();
+
+        foreach (var pair in questStates)
+        {
+            var q = pair.Value;
+
+            list.Add(new QuestStateData
+            {
+                questId = pair.Key,
+                isAccepted = q.isAccepted,
+                isCompleted = q.isCompleted,
+                currentProgress = q.currentProgress
+            });
+        }
+        return list;
+    }
 }

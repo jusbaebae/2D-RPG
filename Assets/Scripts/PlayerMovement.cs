@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
+
     public Rigidbody2D rb;
 
     public bool isinteract;
@@ -148,5 +150,22 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         canDash = true;
+    }
+
+    public PlayerData GetSaveData()
+    {
+        PlayerData data = new PlayerData();
+
+        // 위치
+        Vector3 pos = transform.position;
+        data.posx = pos.x;
+        data.posy = pos.y;
+
+        // 스탯
+        StatsManager.Instance.FillData(data);
+        ExperienceManager.Instance.FillData(data);
+
+        Debug.Log("데이터 저장 완료!");
+        return data;
     }
 }

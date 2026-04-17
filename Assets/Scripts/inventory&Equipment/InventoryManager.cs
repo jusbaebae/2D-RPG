@@ -6,6 +6,8 @@ using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance;
+
     //아이템 슬롯//
     public InventorySlot[] itemSlots;
 
@@ -229,6 +231,42 @@ public class InventoryManager : MonoBehaviour
             selectedSlot.Deselect();
             selectedSlot = null;
         }
+    }
+
+    public InventoryData GetSaveData()
+    {
+        InventoryData data = new InventoryData();
+
+        // 인벤토리
+        data.items = new List<InventoryItemData>();
+        foreach (var slot in itemSlots)
+        {
+            data.items.Add(new InventoryItemData
+            {
+                itemId = slot.itemSO != null ? slot.itemSO.itemName : null,
+                count = slot.quantity
+            });
+        }
+
+        // 골드
+        data.gold = gold;
+
+        return data;
+    }
+
+    public EquipSaveData GetEquipSaveData()
+    {
+        EquipSaveData equipdata = new EquipSaveData();
+        // 장비
+        equipdata = new EquipSaveData
+        {
+            helmetId = helmetSlot.equippedItem?.itemName,
+            armorId = ArmorSlot.equippedItem?.itemName,
+            bottomId = BottomSlot.equippedItem?.itemName,
+            weaponId = weaponSlot.equippedItem?.itemName
+        };
+
+        return equipdata;
     }
 }
 
