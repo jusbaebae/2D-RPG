@@ -18,4 +18,5 @@ public class PlayerData
     public int damage;
     public int crit;
     public int speed;
+    public int skillPoint;
 }

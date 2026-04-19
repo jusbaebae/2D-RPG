@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class QuestUIManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class QuestUIManager : MonoBehaviour
     public TextMeshProUGUI expText;
     public TextMeshProUGUI goldText;
 
-    private QuestState currentSelectedQuest;
+    public QuestState currentSelectedQuest;
 
     private Dictionary<string, GameObject> questLogs = new Dictionary<string, GameObject>(); //퀘스트 UI용 딕셔너리
     private void Awake()
@@ -29,6 +30,8 @@ public class QuestUIManager : MonoBehaviour
         Instance = this;
         descPanel.SetActive(false);
     }
+
+    
 
     public void AddQuestLog(QuestState questState)
     {
@@ -58,7 +61,7 @@ public class QuestUIManager : MonoBehaviour
 
         if (currentSelectedQuest.questData.questType == QuestType.KillMonster)
         {
-            progressText.text =  $"목표 마리수 : {currentSelectedQuest.currentProgress} / {currentSelectedQuest.targetProgress}";
+            progressText.text = $"목표 마리수 : {currentSelectedQuest.currentProgress} / {currentSelectedQuest.questData.targetProgress}";
         }
         else if (currentSelectedQuest.questData.questType == QuestType.TalkToNPC)
         {
@@ -75,5 +78,28 @@ public class QuestUIManager : MonoBehaviour
         }
 
         descPanel.SetActive(false);
+    }
+
+    public void RefreshUI()
+    {
+        //기존 UI 제거
+        foreach (Transform child in logParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        questLogs.Clear();
+
+        //다시 생성
+
+        foreach (var pair in QuestManager.Instance.questStates)
+        {
+            var questId = pair.Key;
+            var state = pair.Value;
+
+            if (state.status == QuestStatus.Available) continue;
+
+            AddQuestLog(state);
+        }
     }
 }

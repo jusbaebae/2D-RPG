@@ -5,9 +5,7 @@ using UnityEngine.EventSystems;
 
 public class UiDrag : MonoBehaviour, IDragHandler
 {
-
     public Canvas canvas;
-
     private RectTransform rectTransform;
 
     void Start()

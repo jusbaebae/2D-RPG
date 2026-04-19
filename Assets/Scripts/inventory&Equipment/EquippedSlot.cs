@@ -108,4 +108,64 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
             slotuse = false;
         }
     }
+
+    public void LoadSet(ItemSO item)
+    {
+        equippedItem = item;
+
+        if (item == null)
+        {
+            Clear();
+            return;
+        }
+
+        slotImage.sprite = item.icon;
+
+        //외형 변경
+        switch (item.itemType)
+        {
+            case ItemType.armor:
+                playerDisplayImage[0].sprite = item.armorSprites.body;
+                playerDisplayImage[1].sprite = item.armorSprites.leftArm;
+                playerDisplayImage[2].sprite = item.armorSprites.rightArm;
+                playerImage[0].sprite = item.armorSprites.body;
+                playerImage[1].sprite = item.armorSprites.leftArm;
+                playerImage[2].sprite = item.armorSprites.rightArm;
+                break;
+
+            case ItemType.bottom:
+                playerDisplayImage[0].sprite = item.bottomSprites.leftLeg;
+                playerDisplayImage[1].sprite = item.bottomSprites.rightLeg;
+                playerImage[0].sprite = item.bottomSprites.leftLeg;
+                playerImage[1].sprite = item.bottomSprites.rightLeg;
+                break;
+
+            default:
+                playerDisplayImage[0].sprite = item.icon;
+                playerImage[0].sprite = item.icon;
+                break;
+        }
+
+        slotuse = true;
+    }
+
+    public void Clear()
+    {
+        slotImage.sprite = DefaultslotImage;
+
+        equippedItem = null;
+        slotuse = false;
+
+        //캐릭터 이미지 초기화
+        for (int i = 0; i < playerDisplayImage.Length; i++)
+        {
+            playerDisplayImage[i].sprite = null;
+        }
+
+        for (int i = 0; i < playerImage.Length; i++)
+        {
+            playerImage[i].sprite = null;
+        }
+    }
+
 }

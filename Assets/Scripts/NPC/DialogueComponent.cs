@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueComponent : MonoBehaviour , IInteractable
+public class DialogueComponent : MonoBehaviour, IInteractable
 {
     [TextArea]
     public string[] dialogueLines;
 
     private NPCController npcController;
-    private QuestComponent quest;
-    private ExperienceManager playerLevel;
 
     private void Awake()
     {
         npcController = GetComponent<NPCController>();
-        quest = GetComponent<QuestComponent>();
-        playerLevel = FindAnyObjectByType<ExperienceManager>();
     }
 
     public void Interact()
@@ -25,32 +21,40 @@ public class DialogueComponent : MonoBehaviour , IInteractable
 
     public void StartDialogue()
     {
-        QuestData availableQuest = quest.GetAvailableQuest(playerLevel.level);
-        QuestState talkQuest = QuestManager.Instance.GetTalkQuestForNPC(npcController.Name);
+        QuestData bestQuest = QuestManager.Instance.GetPriorityQuestForNPC(npcController.id); //대표퀘스트
+        QuestState talkQuest = QuestManager.Instance.GetTalkQuestForNPC(npcController.Name); //말걸기 퀘스트
 
-        if(talkQuest != null)
+        Debug.Log("TalkQuest 있음?");
+        Debug.Log(talkQuest != null);
+
+        //말걸기 퀘스트 전용 대사
+        if (talkQuest != null)
         {
             DialogueManager.Instance.ShowDialogue(talkQuest.questData.targetNpcDialogueLines, npcController, false);
             return;
         }
 
-        if (availableQuest == null)
+        //기본 대사
+        if (bestQuest == null)
         {
             DialogueManager.Instance.ShowDialogue(dialogueLines, npcController, false);
             return;
         }
 
-        if (QuestManager.Instance.IsQuestCompleted(availableQuest.questId))
+        //퀘스트 전용 대사
+        if (QuestManager.Instance.IsQuestCompleted(bestQuest.questId))
         {
-            DialogueManager.Instance.RewardDialogue(availableQuest.completeDialogueLines, npcController, true, availableQuest);
+            DialogueManager.Instance.RewardDialogue(bestQuest.completeDialogueLines, npcController, true, bestQuest);
         }
-        else if (QuestManager.Instance.IsQuestAccepted(availableQuest.questId))
+        else if (QuestManager.Instance.IsQuestAccepted(bestQuest.questId))
         {
-            DialogueManager.Instance.ShowDialogue(availableQuest.progressDialogueLines, npcController, false);
+            DialogueManager.Instance.ShowDialogue(bestQuest.progressDialogueLines, npcController, false);
         }
         else
         {
-            DialogueManager.Instance.ShowDialogue(availableQuest.acceptDialogueLines, npcController, true, availableQuest);
+            DialogueManager.Instance.ShowDialogue(bestQuest.acceptDialogueLines,npcController,true, bestQuest);
         }
+
+        Debug.Log(bestQuest);
     }
 }

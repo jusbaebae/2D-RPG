@@ -22,6 +22,11 @@ public class PlayerMovement : MonoBehaviour
     bool canDash = true;
     PlayerState currentState; //상태 전환하기
 
+    void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         if (spum != null)
@@ -164,8 +169,26 @@ public class PlayerMovement : MonoBehaviour
         // 스탯
         StatsManager.Instance.FillData(data);
         ExperienceManager.Instance.FillData(data);
+        SkillTreeManager.Instance.FillData(data);
 
         Debug.Log("데이터 저장 완료!");
         return data;
+    }
+
+    public void GetLoadData(PlayerData data)
+    {
+        // 위치 복원
+        transform.position = new Vector3(data.posx, data.posy, transform.position.z);
+
+        // 스탯 복원
+        StatsManager.Instance.LoadFromData(data);
+
+        // 경험치 복원
+        ExperienceManager.Instance.LoadFromData(data);
+
+        //스킬 포인트 복원
+        SkillTreeManager.Instance.LoadFromData(data);
+
+        Debug.Log("플레이어 데이터 로드 완료!");
     }
 }

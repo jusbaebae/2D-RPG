@@ -213,8 +213,9 @@ public class DialogueManager : MonoBehaviour
         OnRewardexp(currentQuestData.rewardExp);
         OnRewardGold(currentQuestData.rewardGold);
 
-        QuestComponent quest = currentNPC.GetComponent<QuestComponent>();
-        QuestManager.Instance.RemoveQuest(quest, currentQuestData);
+        QuestUIManager.Instance.RemoveQuestLog(currentQuestData.questId);
+        QuestManager.Instance.RewardQuest(currentQuestData.questId);
+        QuestManager.Instance.OnQuestAccepted(currentQuestData.npcId);
 
         currentQuestData = null;
         CloseDialogue();

@@ -141,4 +141,20 @@ public class InventorySlot : ItemSlot, IPointerClickHandler, IBeginDragHandler,I
     {
         selectBorder.SetActive(false);
     }
+
+    public void Set(ItemSO item, int count)
+    {
+        itemSO = item;
+        quantity = count;
+
+        UpdateUI();
+    }
+
+    public void Clear()
+    {
+        itemSO = null;
+        quantity = 0;
+
+        UpdateUI();
+    }
 }

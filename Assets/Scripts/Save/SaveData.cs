@@ -6,7 +6,8 @@ public class SaveData
 {
     public PlayerData player;
     public InventoryData inventory;
-    public InventoryItemData inventoryItem;
     public EquipSaveData equip;
     public List<QuestStateData> quests;
+    public EquipmentData equipmentItem;
+    public List<SkillSaveData> skills;
 }

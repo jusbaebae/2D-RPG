@@ -7,23 +7,25 @@ using TMPro;
 public class StatsManager : MonoBehaviour
 {
     public static StatsManager Instance;
+
     public StatsUi statsUI;
     public TMP_Text healthtext;
     public HPBar hpbar;
 
-    [Header("Combat Stats")]
+    [Header("공격력 스탯")]
     public int damage;
     public int crit;
+    public int defense;
     public bool isCrit;
     public float weaponRange;
     public float knockbackForce;
     public float knockbackTime;
     public float stunTime;
 
-    [Header("Movement Stats")]
+    [Header("이동 스탯")]
     public int speed;
 
-    [Header("Health Stats")]
+    [Header("체력 스탯")]
     public int maxHealth;
     public int currentHealth;
 
@@ -35,14 +37,14 @@ public class StatsManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void UpdateMaxHealth(int amount)
+    public void UpdateMaxHealth(int amount) //최대 체력 업데이트
     {
         maxHealth += amount;
         healthtext.text = currentHealth + "/ " + maxHealth;
         hpbar.SetMaxHealth(maxHealth);
     }
 
-    public void UpdateHealth(int amount)
+    public void UpdateHealth(int amount) //체력 업데이트
     {
         currentHealth += amount;
         if (currentHealth >= maxHealth)
@@ -52,24 +54,35 @@ public class StatsManager : MonoBehaviour
         healthtext.text = currentHealth + " / " + maxHealth;
     }
 
-    public void UpdateSpeed(int amount)
+    public void UpdateSpeed(int amount) //속도 업데이트
     {
         speed += amount;
         statsUI.UpdateAllStats();
     }
 
-    public void CritCheck()
+    public void CritCheck() //치명타 체크
     {
         int critcheck = Mathf.Min(StatsManager.Instance.crit, 100);
         isCrit = Random.Range(0, 100) < critcheck;
     }
 
-    public void FillData(PlayerData data)
+    public void FillData(PlayerData data) //세이브 데이터
     {
         data.currenthp = currentHealth;
         data.maxhp = maxHealth;
         data.damage = damage;
         data.crit = crit;
         data.speed = speed;
+    }
+
+    public void LoadFromData(PlayerData data) //로드 데이터
+    {
+        currentHealth = data.currenthp;
+        maxHealth = data.maxhp;
+        damage = data.damage;
+        crit = data.crit;
+        speed = data.speed;
+
+        statsUI.UpdateAllStats();
     }
 }

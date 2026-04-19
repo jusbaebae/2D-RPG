@@ -18,6 +18,14 @@ public class ExperienceManager : MonoBehaviour
 
     public static event Action<int> OnLevelUp;
 
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     private void Start()
     {
         UpdateUi();
@@ -57,6 +65,7 @@ public class ExperienceManager : MonoBehaviour
     {
         level++;
         currentExp -= expToLevel;
+        SkillTreeManager.Instance.availablePoints += 3;
         expToLevel = Mathf.RoundToInt(expToLevel * expGrowthMultiplier);
         OnLevelUp?.Invoke(1);
     }
@@ -72,5 +81,13 @@ public class ExperienceManager : MonoBehaviour
         data.level = level;
         data.exp = currentExp;
         data.maxexp = expToLevel;
+    }
+
+    public void LoadFromData(PlayerData data)
+    {
+        level = data.level;
+        currentExp = data.exp;
+
+        UpdateUi();
     }
 }

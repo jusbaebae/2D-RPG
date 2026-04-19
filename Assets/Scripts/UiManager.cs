@@ -11,7 +11,6 @@ public class UiManager : MonoBehaviour
 
     public CanvasGroup inventoryUI;
     public CanvasGroup shopUI;
-    public CanvasGroup statUI;
     public CanvasGroup skillUI;
     public CanvasGroup equipmentUI;
     public CanvasGroup questUI;
@@ -28,17 +27,15 @@ public class UiManager : MonoBehaviour
     {
         if (isInteract) return;
 
-        if (Input.GetButtonDown("ToggleStats"))
-        {
-            ToggleUI(UIType.Stat);
-            statsUi.UpdateAllStats();
-        }
         if (Input.GetButtonDown("ToggleInventory"))
             ToggleUI(UIType.Inventory);
         if (Input.GetButtonDown("ToggleSkillTree"))
             ToggleUI(UIType.Skill);
         if (Input.GetButtonDown("ToggleEquipment"))
+        {
             ToggleUI(UIType.Equipment);
+            statsUi.UpdateAllStats();
+        }
         if (Input.GetButtonDown("ToggleQuest"))
             ToggleUI(UIType.Quest);
         if (Input.GetKeyDown(KeyCode.Escape)) //ESC로 UI닫기
@@ -69,9 +66,6 @@ public class UiManager : MonoBehaviour
             case UIType.Inventory:
                 SetUI(inventoryUI, true);
                 break;
-            case UIType.Stat:
-                SetUI(statUI, true);
-                break;
             case UIType.Skill:
                 SetUI(skillUI, true);
                 break;
@@ -94,7 +88,6 @@ public class UiManager : MonoBehaviour
     {
         SetUI(inventoryUI, false);
         SetUI(shopUI, false);
-        SetUI(statUI, false);
         SetUI(skillUI, false);
         SetUI(equipmentUI, false);
         SetUI(questUI, false);
@@ -115,7 +108,6 @@ public enum UIType
 {
     None,
     Inventory,
-    Stat,
     Skill,
     Shop,
     Equipment,

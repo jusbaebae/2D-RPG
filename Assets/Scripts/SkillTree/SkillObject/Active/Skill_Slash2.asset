@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8034427a450174ca55d9cc6501d745, type: 3}
+  m_Name: Skill_Slash2
+  m_EditorClassIdentifier: 
+  skillid: 1007
+  skillName: "2\uB2E8 \uBCA0\uAE30"
+  skilldescription: "\uC801\uC5D0\uAC8C \uBE60\uB978 2\uC5F0\uC18D \uACF5\uACA9\uC744
+    \uAC00\uD55C\uB2E4\n(\uBB34\uAE30\uB97C \uC7A5\uCC29\uD574\uC57C\uC9C0 \uC0AC\uC6A9\uD560
+    \uC218 \uC788\uB2E4)"
+  skillIcon: {fileID: 21300000, guid: b855210befe62460880af947a417d021, type: 3}
+  skillType: 1
+  maxLevel: 5
+  levelData:
+  - level: 1
+    requirePoint: 0
+    value: 0
+    cooltime: 0
+  - level: 2
+    requirePoint: 0
+    value: 0
+    cooltime: 0
+  - level: 3
+    requirePoint: 0
+    value: 0
+    cooltime: 0
+  - level: 4
+    requirePoint: 0
+    value: 0
+    cooltime: 0
+  - level: 5
+    requirePoint: 0
+    value: 0
+    cooltime: 0
+  skillSFX: {fileID: 0}

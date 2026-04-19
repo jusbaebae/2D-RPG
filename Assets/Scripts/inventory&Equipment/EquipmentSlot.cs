@@ -8,7 +8,7 @@ public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, 
 {
     public Image itemImage;
 
-    public InventoryManager inventoryManager;
+    private InventoryManager inventoryManager;
     private static ShopManager activeShop;
     public GameObject selectBorder;
 
@@ -136,5 +136,21 @@ public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, 
     public override void Deselect()
     {
         selectBorder.SetActive(false);
+    }
+
+    public void Set(ItemSO item, int count)
+    {
+        itemSO = item;
+        quantity = count;
+
+        UpdateUI();
+    }
+
+    public void Clear()
+    {
+        itemSO = null;
+        quantity = 0;
+
+        UpdateUI();
     }
 }

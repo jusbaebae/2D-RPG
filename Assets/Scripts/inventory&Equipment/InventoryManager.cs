@@ -27,6 +27,13 @@ public class InventoryManager : MonoBehaviour
 
     ItemSlot selectedSlot;
 
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
     private void Start()
     {
         foreach(var slot in itemSlots)
@@ -233,11 +240,15 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public InventoryData GetSaveData()
+    public InventoryData GetSaveItemData() //아이템 슬롯 저장
     {
         InventoryData data = new InventoryData();
 
-        // 인벤토리
+        foreach (var slot in itemSlots)
+        {
+            Debug.Log($"슬롯: {slot.itemSO}, 개수: {slot.quantity}");
+        }
+
         data.items = new List<InventoryItemData>();
         foreach (var slot in itemSlots)
         {
@@ -248,16 +259,82 @@ public class InventoryManager : MonoBehaviour
             });
         }
 
-        // 골드
         data.gold = gold;
 
         return data;
     }
 
-    public EquipSaveData GetEquipSaveData()
+    public void GetLoadItemData(InventoryData data) //아이템 슬롯 데이터 로드
+    {
+        //기존 슬롯 초기화
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            itemSlots[i].Clear();
+        }
+
+        for (int i = 0; i < data.items.Count; i++)
+        {
+            var itemData = data.items[i];
+
+            if (itemData.itemId == null)
+                continue;
+
+            ItemSO item = ItemDatabase.Instance.Get(itemData.itemId); //아이템 데이터 베이스에서 id가져오기
+
+            itemSlots[i].Set(item, itemData.count);
+        }
+
+        gold = data.gold;
+    }
+
+    public EquipmentData GetSaveEquipItemData() //장비 슬롯 데이터 저장
+    {
+        EquipmentData data = new EquipmentData();
+
+        foreach (var slot in equipmentSlots)
+        {
+            Debug.Log($"슬롯: {slot.itemSO}");
+        }
+
+        // 인벤토리
+        data.equips = new List<EquipmentItemData>();
+        foreach (var slot in equipmentSlots)
+        {
+            data.equips.Add(new EquipmentItemData
+            {
+                itemId = slot.itemSO != null ? slot.itemSO.itemName : null,
+                count = slot.quantity
+            }); 
+        }
+        return data;
+    }
+
+    public void GetLoadEquipItemData(EquipmentData data) //장비 슬롯 데이터 로드
+    {
+        // 기존 슬롯 초기화
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            equipmentSlots[i].Clear();
+        }
+
+        // 아이템 복구
+        for (int i = 0; i < data.equips.Count; i++)
+        {
+            var itemData = data.equips[i];
+
+            if (itemData.itemId == null)
+                continue;
+
+            ItemSO item = ItemDatabase.Instance.Get(itemData.itemId);
+
+            equipmentSlots[i].Set(item, itemData.count);
+        }
+    }
+
+    public EquipSaveData GetEquipSaveData() // 장착중인 장비 데이터 저장
     {
         EquipSaveData equipdata = new EquipSaveData();
-        // 장비
+        
         equipdata = new EquipSaveData
         {
             helmetId = helmetSlot.equippedItem?.itemName,
@@ -265,8 +342,15 @@ public class InventoryManager : MonoBehaviour
             bottomId = BottomSlot.equippedItem?.itemName,
             weaponId = weaponSlot.equippedItem?.itemName
         };
-
         return equipdata;
+    }
+
+    public void GetLoadEquipData(EquipSaveData data) //장착중인 장비 데이터 저장
+    {
+        helmetSlot.LoadSet(ItemDatabase.Instance.Get(data.helmetId));
+        ArmorSlot.LoadSet(ItemDatabase.Instance.Get(data.armorId));
+        BottomSlot.LoadSet(ItemDatabase.Instance.Get(data.bottomId));
+        weaponSlot.LoadSet(ItemDatabase.Instance.Get(data.weaponId));
     }
 }
 

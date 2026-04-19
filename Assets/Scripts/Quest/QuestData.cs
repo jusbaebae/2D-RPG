@@ -5,9 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Quest")]
 [System.Serializable]
 public class QuestData : ScriptableObject
-{    
+{
     [Header("퀘스트 정보")]
     public string questId;
+    public int npcId;
     public string questName;
     public QuestType questType;
     public string targetid;

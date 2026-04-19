@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item")]
 public class ItemSO : ScriptableObject
 {
+    [Header("아이템 정보")]
     public string itemName;
     [TextArea]public string itemDescription;
     public Sprite icon;
@@ -14,18 +15,18 @@ public class ItemSO : ScriptableObject
     public bool isGold;
     public int stackSize;
 
-    [Header("Stats")]
+    [Header("아이템 능력치")]
     public int currentHealth;
     public int maxHealth;
     public int speed;
     public int damage;
 
-    [Header("For Temporary Items")]
+    [Header("지속 시간")]
     public float duration;
 
-    [Header("Equipment Sprites")] //스프라이트 형태가 다르기때문에 각각조정
+    [Header("장비 스프라이트_갑옷")] //스프라이트 형태가 다르기때문에 각각조정
     public ArmorSprites armorSprites;
-    [Header("Equipment Sprites")]
+    [Header("장비 스프라이트_신발")]
     public BottomSprites bottomSprites;
 }
 

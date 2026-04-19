@@ -10,11 +10,18 @@ public class QuestComponent : MonoBehaviour
     {
         foreach (var quest in questList)
         {
-            if (playerLevel >= quest.requiredLevel)
-            {
-                return quest;
-            }
+            if (playerLevel < quest.requiredLevel)
+                continue;
+
+            if (QuestManager.Instance.IsQuestAccepted(quest.questId))
+                continue;
+
+            if (QuestManager.Instance.IsQuestCompleted(quest.questId))
+                continue;
+
+            return quest;
         }
+
         return null;
     }
 

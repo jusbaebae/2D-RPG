@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
+    public static SkillManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void OnEnable()
     {
         SkillsSlot.OnAbilityPointSpent += HandleAbilityPointSpent;

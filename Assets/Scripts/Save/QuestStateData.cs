@@ -6,7 +6,6 @@ using UnityEngine;
 public class QuestStateData
 {
     public string questId;
-    public bool isAccepted;
-    public bool isCompleted;
+    public QuestStatus status;
     public int currentProgress;
 }

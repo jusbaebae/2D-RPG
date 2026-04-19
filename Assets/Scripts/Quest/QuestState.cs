@@ -5,10 +5,15 @@ using UnityEngine;
 public class QuestState
 {
     public QuestData questData;
-
-    public bool isAccepted;
-    public bool isCompleted;
-
+    public QuestStatus status;
     public int currentProgress;
-    public int targetProgress;
+}
+
+public enum QuestStatus
+{
+    None,  
+    Available, 
+    InProgress,
+    Complete,
+    Rewarded
 }

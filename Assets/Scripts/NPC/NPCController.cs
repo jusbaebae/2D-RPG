@@ -4,23 +4,38 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
+    private TriggerDetector trigger;
     private IInteractable interactable;
+    public int id;
     public string Name;
     public NPCState currentState;
-    private QuestComponent questComponent;
 
-    public QuestComponent Quest => questComponent;
     private void Awake()
     {
+        trigger = GetComponent<TriggerDetector>();
         interactable = GetComponent<IInteractable>();
     }
-
+    private void Start()
+    {
+        QuestManager.Instance.OnQuestAccepted += HandleQuestAccepted;
+    }
+    private void OnDisable()
+    {
+        QuestManager.Instance.OnQuestAccepted -= HandleQuestAccepted;
+    }
     private void Update()
     {
         if (Input.GetButtonDown("Interact") && currentState == NPCState.PlayerDetected)
         {
             Interact();
         }
+    }
+    private void HandleQuestAccepted(int npcId)
+    {
+        if (id != npcId) return;
+
+        QuestState state = QuestManager.Instance.GetQuestStateForNPC(id);
+        trigger.UpdateNPCIcon(state);
     }
 
     public void Interact()
