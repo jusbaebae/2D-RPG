@@ -21,7 +21,7 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private SpriteRenderer[] playerImage; //Player 이미지 변경
 
-    private bool slotuse = false;
+    public bool slotuse = false;
     private void Start()
     {
         DefaultslotImage = slotImage.sprite; //기존 슬롯 이미지 저장
@@ -63,7 +63,7 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
         }
         slotuse = true;
     }
-    public void UnEquipGearImage(ItemSO item)
+    public void UnEquipGearImage(ItemSO item) //현재 장착된 장비해제
     {
         if (item == null) return;
 
@@ -109,7 +109,8 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void LoadSet(ItemSO item)
+
+    public void LoadSet(ItemSO item) //장착된 장비데이터 로드하기
     {
         equippedItem = item;
 

@@ -18,5 +18,8 @@ public class PlayerData
     public int damage;
     public int crit;
     public int speed;
+    public int defense;
     public int skillPoint;
+
+    public bool canDash;
 }

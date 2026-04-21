@@ -213,7 +213,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void EquipGear(ItemSlot slot, ItemType itemtype) 
+    public void EquipGear(ItemSlot slot, ItemType itemtype)  //장비 장착
     {
         if (itemtype == ItemType.helmet)
             helmetSlot.EquipGearImage(slot.itemSO);
@@ -238,6 +238,11 @@ public class InventoryManager : MonoBehaviour
             selectedSlot.Deselect();
             selectedSlot = null;
         }
+    }
+
+    public bool IsWeaponEquipped() //무기가 장착되었는지 확인하기
+    {
+        return weaponSlot.slotuse && weaponSlot.equippedItem != null && weaponSlot.equippedItem.itemType == ItemType.weapon;
     }
 
     public InventoryData GetSaveItemData() //아이템 슬롯 저장
@@ -345,7 +350,7 @@ public class InventoryManager : MonoBehaviour
         return equipdata;
     }
 
-    public void GetLoadEquipData(EquipSaveData data) //장착중인 장비 데이터 저장
+    public void GetLoadEquipData(EquipSaveData data) //장착중인 장비 데이터 로드
     {
         helmetSlot.LoadSet(ItemDatabase.Instance.Get(data.helmetId));
         ArmorSlot.LoadSet(ItemDatabase.Instance.Get(data.armorId));

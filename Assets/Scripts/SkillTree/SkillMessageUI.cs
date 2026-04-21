@@ -30,30 +30,25 @@ public class SkillMessageUI : MonoBehaviour
         CancelButton.onClick.AddListener(Close);
     }
 
-    private bool CanUpgrade(SkillsSlot slot)
+    public void ShowUnlockUi(SkillsSlot slot)
     {
-        return slot.isUnlocked && slot.currentLevel < slot.skillSo.maxLevel;
-    }
-
-    public void Show(SkillsSlot slot)
-    {
-        isOpen = true;
         targetSlot = slot;
+        isOpen = true;
 
         panel.SetActive(true);
+        messageText.text = $"{slot.skillSo.skillName} 스킬을\n해금하시겠습니까?";
 
-        if (CanUpgrade(slot))
-        {
-            ShowConfirmUI(slot);
-        }
-        else
-        {
-            ShowFailUI(slot);
-        }
+        OkButton.gameObject.SetActive(true);
+        NoButton.gameObject.SetActive(true);
+        CancelButton.gameObject.SetActive(false);
     }
 
-    private void ShowConfirmUI(SkillsSlot slot)
+    public void ShowConfirmUI(SkillsSlot slot)
     {
+        targetSlot = slot ;
+        isOpen = true;
+
+        panel.SetActive(true);
         messageText.text = $"{slot.skillSo.skillName} 스킬을\n레벨 업 하시겠습니까?";
 
         OkButton.gameObject.SetActive(true);
@@ -61,11 +56,14 @@ public class SkillMessageUI : MonoBehaviour
         CancelButton.gameObject.SetActive(false);
     }
 
-    private void ShowFailUI(SkillsSlot slot)
+    public void ShowFailUI(SkillsSlot slot)
     {
+        isOpen = true;
+
+        panel.SetActive(true);
         if (!slot.isUnlocked)
         {
-            messageText.text = "아직 해금되지 않은 스킬입니다.";
+            messageText.text = "아직 해금할 수 없습니다.\n선행 스킬을 먼저 마스터 해주세요.";
         }
         else
         {
@@ -79,7 +77,9 @@ public class SkillMessageUI : MonoBehaviour
 
     public void FailPointUI()
     {
-        
+        isOpen = true;
+
+        panel.SetActive(true);
         messageText.text = "포인트가 부족합니다.";
 
         OkButton.gameObject.SetActive(false);

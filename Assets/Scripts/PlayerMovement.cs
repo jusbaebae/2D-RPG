@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance;
 
+    public Animator anim;
+
     public Rigidbody2D rb;
 
     public bool isinteract;
@@ -17,14 +19,17 @@ public class PlayerMovement : MonoBehaviour
     public Ghost ghost;
 
     public Vector2 inputDir;
+    public int cooltime; //대쉬 쿨타임
     bool dashInput; //대쉬 입력
     bool isDash; //대쉬 시간
-    bool canDash = true;
+    public bool canDash = false; //대쉬 해금 여부 
+    
     PlayerState currentState; //상태 전환하기
 
     void Awake()
     {
         Instance = this;
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -40,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         if (isinteract) //대화중일때 이동 무시
         {
             inputDir = Vector2.zero;
-            ChangeState(PlayerState.IDLE);
+            ChangeState(PlayerState.IDLE, 0);
             return;
         }
 
@@ -53,6 +58,17 @@ public class PlayerMovement : MonoBehaviour
         {
             playerCombat.Attack();
         }
+
+        /*if (Input.GetKeyDown("n")) //강타 애니메이션
+        {
+            ChangeState(PlayerState.ATTACK, 1);
+            playerCombat.FinishAttacking();
+        }*/
+        /*if (Input.GetKeyDown("m")) //힐 애니메이션
+        {
+            ChangeState(PlayerState.OTHER, 1);
+            playerCombat.FinishAttacking();
+        }*/
 
         if (Input.GetButtonDown("Dash") && canDash)
         {
@@ -75,11 +91,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputDir != Vector2.zero)
         {
-            ChangeState(PlayerState.MOVE); 
+            ChangeState(PlayerState.MOVE, 0); 
         }
         else
         {
-            ChangeState(PlayerState.IDLE);
+            ChangeState(PlayerState.IDLE, 0);
         }
 
         if (isShooting == true)
@@ -93,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
-        rb.velocity = inputDir.normalized * StatsManager.Instance.speed; //일반적인 이동
+        rb.velocity = inputDir.normalized * (StatsManager.Instance.speed / 10); //일반적인 이동
     }
 
     void Flip()
@@ -127,12 +143,12 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(DashCooldown());
     }
 
-    public void ChangeState(PlayerState newState) //애니메이션 상태 전환
+    public void ChangeState(PlayerState newState, int index) //애니메이션 상태 전환
     {
         if (currentState == newState) return;
 
         currentState = newState;
-        spum.PlayAnimation(newState, 0);
+        spum.PlayAnimation(newState, index);
     }
 
     IEnumerator KnockbackCounter(float stunTime)
@@ -153,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DashCooldown() //대쉬 쿨타임
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(cooltime);
         canDash = true;
     }
 
@@ -165,6 +181,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pos = transform.position;
         data.posx = pos.x;
         data.posy = pos.y;
+        data.canDash = canDash; //대쉬 해금여부
 
         // 스탯
         StatsManager.Instance.FillData(data);
@@ -179,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // 위치 복원
         transform.position = new Vector3(data.posx, data.posy, transform.position.z);
+        canDash = data.canDash;
 
         // 스탯 복원
         StatsManager.Instance.LoadFromData(data);
@@ -191,4 +209,6 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("플레이어 데이터 로드 완료!");
     }
+
+    
 }

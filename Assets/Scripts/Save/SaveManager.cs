@@ -49,6 +49,7 @@ public class SaveManager : MonoBehaviour
         PlayerMovement.Instance.GetLoadData(data.player);
         InventoryManager.Instance.GetLoadEquipItemData(data.equipmentItem);
         SkillTreeManager.Instance.GetLoadSkillData(data.skills);
+        SkillManager.Instance.GetLoadSkillUIData(data.skills);
 
         Debug.Log("현재파일: "+ data +"로드가 정상적으로 완료되었습니다"); ;
     }

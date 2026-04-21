@@ -18,6 +18,9 @@ public class SkillSO : ScriptableObject
 
     [Header("스킬 효과음")]
     public AudioClip skillSFX;
+
+    [Header("스킬 효과 프리팹")]
+    public GameObject skillPrefab;
 }
 
 

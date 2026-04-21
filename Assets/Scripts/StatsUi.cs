@@ -20,9 +20,9 @@ public class StatsUi : MonoBehaviour
     public void UpdateAllStats() //스탯 실시간 업데이트
     {
         levelText.text = ExperienceManager.Instance.level.ToString();
-        damageText.text = StatsManager.Instance.damage.ToString();
-        speedText.text = StatsManager.Instance.speed.ToString();
-        defenseText.text = StatsManager.Instance.defense.ToString();
+        damageText.text = Mathf.RoundToInt(StatsManager.Instance.damage).ToString();
+        speedText.text = Mathf.RoundToInt(StatsManager.Instance.speed).ToString();
+        defenseText.text = Mathf.RoundToInt(StatsManager.Instance.defense).ToString();
         critText.text = StatsManager.Instance.crit + "%";
         healthText.text = StatsManager.Instance.currentHealth.ToString() + " / " + StatsManager.Instance.maxHealth.ToString();
     }

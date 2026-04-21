@@ -20,15 +20,16 @@ MonoBehaviour:
   maxLevel: 3
   levelData:
   - level: 1
-    requirePoint: 1
-    value: 0
-    cooltime: 0
+    requirePoint: 10
+    value: 1.3
+    cooltime: 7
   - level: 2
-    requirePoint: 3
-    value: 0
-    cooltime: 0
+    requirePoint: 10
+    value: 1.5
+    cooltime: 6
   - level: 3
-    requirePoint: 5
-    value: 0
-    cooltime: 0
+    requirePoint: 15
+    value: 2
+    cooltime: 5
   skillSFX: {fileID: 0}
+  skillPrefab: {fileID: 5177810881878475479, guid: e3ec1e231e49647d3a7e5ec25ccf8369, type: 3}

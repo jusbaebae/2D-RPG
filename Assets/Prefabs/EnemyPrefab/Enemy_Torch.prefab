@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca409bcb1ccfa4747b1e862514b2a09f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 3
   attackPoint: {fileID: 7035651835387892508}
   weaponRange: 1.2
   knockbackforce: 10
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c5f7e8f891f03428f8f69632029135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4
   attackRange: 1.2
   attackCooldown: 1.5
   playerDetectRange: 4
@@ -608,8 +608,8 @@ MonoBehaviour:
   ExpReward: 3
   damageTextPrefab: {fileID: 6892059751814402074, guid: 044f8879c0402f04781339b55e8d4cb0, type: 3}
   deathEffect: {fileID: 161544526464053854, guid: 17c038d1379ff404f86e2e69f20cac04, type: 3}
-  currentHealth: 5
-  maxHealth: 5
+  currentHealth: 100
+  maxHealth: 100
   hpSlider: {fileID: 3728234211908845897}
   hpBar: {fileID: 5186488162344171940}
   lootTable:

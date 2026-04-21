@@ -20,7 +20,8 @@ MonoBehaviour:
   maxLevel: 1
   levelData:
   - level: 1
-    requirePoint: 30
+    requirePoint: 50
     value: 0
     cooltime: 0
   skillSFX: {fileID: 0}
+  skillPrefab: {fileID: 0}

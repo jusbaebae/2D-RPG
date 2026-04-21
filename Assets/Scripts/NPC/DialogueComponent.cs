@@ -24,8 +24,8 @@ public class DialogueComponent : MonoBehaviour, IInteractable
         QuestData bestQuest = QuestManager.Instance.GetPriorityQuestForNPC(npcController.id); //대표퀘스트
         QuestState talkQuest = QuestManager.Instance.GetTalkQuestForNPC(npcController.Name); //말걸기 퀘스트
 
-        Debug.Log("TalkQuest 있음?");
-        Debug.Log(talkQuest != null);
+        //Debug.Log("TalkQuest 있음?");
+        //Debug.Log(talkQuest != null);
 
         //말걸기 퀘스트 전용 대사
         if (talkQuest != null)

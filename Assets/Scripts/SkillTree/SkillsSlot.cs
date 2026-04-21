@@ -14,7 +14,8 @@ public class SkillsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private SkillInfo skillInfo;
 
     public int currentLevel;
-    public bool isUnlocked;
+    public bool isUnlocked; //해금 여부
+    public bool isUnlockable; //해금 가능 여부
 
     public Image ButtonImage;
     public Image skillIcon;
@@ -32,19 +33,27 @@ public class SkillsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    public void TryUpgradeSkill() //스킬 레벨 업그레이드
+    public void TryUpgradeSkill() //스킬 해금, 업그레이드
     {
-        if(isUnlocked && currentLevel < skillSo.maxLevel)
+        if (!isUnlocked)
         {
-            currentLevel++;
             OnAbilityPointSpent?.Invoke(this);
-
-            if(currentLevel >= skillSo.maxLevel)
-            {
-                OnSkillMaxed?.Invoke();
-            }
+            isUnlocked = true;
+            currentLevel++;
             UpdateUI();
         }
+        else
+        {
+            OnAbilityPointSpent?.Invoke(this);
+            currentLevel++;
+            UpdateUI();
+        }
+        
+        if(currentLevel >= skillSo.maxLevel)
+        {
+            OnSkillMaxed?.Invoke();
+        }
+        UpdateUI();
     }
 
     public bool CanUnlockSkill() //선행 스킬 검사
@@ -59,13 +68,13 @@ public class SkillsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         return true;
     }
 
-    public void Unlock() //스킬 해금
+    public void Unlockable() //스킬 해금 가능
     {
-        isUnlocked = true;
+        isUnlockable = true;
         UpdateUI();
     }
 
-    public int GetRequiredPoint() //레벨 별 요구 포인트
+    public int GetRequiredPoint() //다음 레벨 별 요구 포인트
     {
         if (currentLevel >= skillSo.levelData.Length)
             return 0;
@@ -78,7 +87,6 @@ public class SkillsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         skillIcon.sprite = skillSo.skillIcon;
         if (isUnlocked)
         {
-            skillButton.interactable = true;
             if(currentLevel == skillSo.maxLevel)
             {
                 skillLevelText.text = "LV.MAX";
@@ -92,7 +100,6 @@ public class SkillsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else
         {
-            skillButton.interactable = false;
             skillLevelText.text = "Locked";
             ButtonImage.color = Color.grey;
             skillIcon.color = Color.grey;
@@ -121,6 +128,4 @@ public class SkillsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (skillInfo != null) skillInfo.FollowMouse();
     }
-
-    
 }

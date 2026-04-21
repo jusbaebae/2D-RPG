@@ -33,31 +33,45 @@ public class SkillTreeManager : MonoBehaviour
     {
         foreach(SkillsSlot slot in skillSlots)
         {
-            slot.skillButton.onClick.AddListener(() => CheckAvailablePoints(slot));
+            slot.skillButton.onClick.AddListener(() => Checkslot(slot));
         }
+
         UpdateAbilityPoints(0);
     }
 
-    private void CheckAvailablePoints(SkillsSlot slot)
+    private void Checkslot(SkillsSlot slot)
     {
         if (SkillMessageUI.Instance.isOpen) return;
 
-        if (availablePoints >= slot.GetRequiredPoint())
+        if (!slot.isUnlocked && !slot.isUnlockable)
         {
-            SkillMessageUI.Instance.Show(slot);
+            SkillMessageUI.Instance.ShowFailUI(slot); //완전 잠금
+        }
+        else if (availablePoints < slot.GetRequiredPoint())
+        {
+            SkillMessageUI.Instance.FailPointUI(); //포인트 부족 
+        }
+        else if (!slot.isUnlocked && slot.isUnlockable)
+        {
+            SkillMessageUI.Instance.ShowUnlockUi(slot); // 해금 가능
+        }
+        else if (slot.currentLevel >= slot.skillSo.maxLevel)
+        {
+            SkillMessageUI.Instance.ShowFailUI(slot); //이미 만렙
         }
         else
         {
-            SkillMessageUI.Instance.FailPointUI();
+            SkillMessageUI.Instance.ShowConfirmUI(slot); //업그레이드
         }
+
+        //Debug.Log("Checkslot 호출");
     }
 
-    private void HandleAbilityPointSpent(SkillsSlot slot)
+    private void HandleAbilityPointSpent(SkillsSlot slot) 
     {
-        if(availablePoints > 0)
-        {
-            UpdateAbilityPoints(-slot.GetRequiredPoint());
-        }
+        UpdateAbilityPoints(-slot.GetRequiredPoint());
+
+        //Debug.Log("HandleAbilityPointSpent 호출");
     }
 
     private void HandleSkillMaxed()
@@ -65,14 +79,14 @@ public class SkillTreeManager : MonoBehaviour
         foreach(SkillsSlot slot in skillSlots)
         {
             if(!slot.isUnlocked && slot.CanUnlockSkill())
-                slot.Unlock();
+                slot.Unlockable();
         }
     }
 
     public void UpdateAbilityPoints(int amount) //스킬포인트 나타내기
     {
         availablePoints += amount;
-        pointsText.text = "Points: " + availablePoints;
+        pointsText.text = "Points : " + availablePoints;
     }
 
     public List<SkillSaveData> GetSaveSkillData()
@@ -103,7 +117,6 @@ public class SkillTreeManager : MonoBehaviour
                     slot.currentLevel = save.currentLevel;
                     slot.isUnlocked = save.isUnlocked;
                     slot.UpdateUI(); //UI업데이트 필수
-                
                 }
             }
         }

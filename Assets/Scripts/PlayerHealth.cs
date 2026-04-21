@@ -6,11 +6,30 @@ using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
+    SpriteRenderer[] renderers;
+
+    public GameObject damageTextPrefab;
+    public GameObject HealTextPrefab;
+    public GameObject ReviveEffect;
+
     public TMP_Text healthText;
     public HPBar hpbar;
 
+    Color[] originalColors;
+     //원래 스프라이트 색 저장하기
+
+    void Awake()
+    {
+        renderers = GetComponentsInChildren<SpriteRenderer>();
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            originalColors[i] = renderers[i].color;
+        }
+    }
     void Start()
     {
+        
         StatsManager.Instance.currentHealth = StatsManager.Instance.maxHealth;
         healthText.text = StatsManager.Instance.currentHealth + " / " + StatsManager.Instance.maxHealth;
         hpbar.SetMaxHealth(StatsManager.Instance.maxHealth);
@@ -20,7 +39,10 @@ public class PlayerHealth : MonoBehaviour
     {
         StatsManager.Instance.currentHealth += amount;
         healthText.text = StatsManager.Instance.currentHealth + " / " + StatsManager.Instance.maxHealth;
+        ShowDamage(Mathf.Abs(amount));
         hpbar.SetHealth(StatsManager.Instance.currentHealth);
+
+        StartCoroutine(HitFlash());
 
         if (StatsManager.Instance.currentHealth <= 0)
         {
@@ -28,8 +50,60 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
-        gameObject.SetActive(false);
+        PlayerMovement.Instance.ChangeState(PlayerState.DEATH, 0);
+    }
+
+    void ShowDamage(int damage) //데미지 효과
+    {
+        GameObject dmg = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
+        dmg.GetComponent<DamageText>().SetDamage(damage);
+    }
+
+    public void ShowHeal(int Heal) //힐 텍스트 효과
+    {
+        GameObject dmg = Instantiate(HealTextPrefab, transform.position, Quaternion.identity);
+        dmg.GetComponent<DamageText>().SetDamage(Heal);
+    }
+
+    IEnumerator HitFlash() //맞으면 깜빡이는 효과
+    {
+        float duration = 0.2f;
+        float interval = 0.05f;
+
+        float time = 0;
+
+        
+
+        while (time < duration) //맞으면 깜빡깜빡하기
+        {
+            SetColor(Color.red);
+            yield return new WaitForSeconds(interval);
+
+            RestoreColor(originalColors);
+            yield return new WaitForSeconds(interval);
+
+            time += interval * 2;
+        }
+
+        //저장했던 색깔 복구
+        RestoreColor(originalColors);
+    }
+
+    void SetColor(Color color)
+    {
+        foreach (var r in renderers)
+        {
+            r.color = color;
+        }
+    }
+
+    void RestoreColor(Color[] colors)
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].color = colors[i];
+        }
     }
 }

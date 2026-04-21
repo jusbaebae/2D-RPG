@@ -12,6 +12,8 @@ public class StatsManager : MonoBehaviour
     public TMP_Text healthtext;
     public HPBar hpbar;
 
+    public PlayerHealth playerHealth;
+
     [Header("공격력 스탯")]
     public int damage;
     public int crit;
@@ -42,6 +44,7 @@ public class StatsManager : MonoBehaviour
         maxHealth += amount;
         healthtext.text = currentHealth + "/ " + maxHealth;
         hpbar.SetMaxHealth(maxHealth);
+        statsUI.UpdateAllStats();
     }
 
     public void UpdateHealth(int amount) //체력 업데이트
@@ -52,6 +55,7 @@ public class StatsManager : MonoBehaviour
 
         hpbar.SetHealth(currentHealth);
         healthtext.text = currentHealth + " / " + maxHealth;
+        statsUI.UpdateAllStats();
     }
 
     public void UpdateSpeed(int amount) //속도 업데이트
@@ -66,6 +70,11 @@ public class StatsManager : MonoBehaviour
         isCrit = Random.Range(0, 100) < critcheck;
     }
 
+    public void ShowHealText(int amount)
+    {
+        playerHealth.ShowHeal(amount);
+    }
+
     public void FillData(PlayerData data) //세이브 데이터
     {
         data.currenthp = currentHealth;
@@ -73,6 +82,7 @@ public class StatsManager : MonoBehaviour
         data.damage = damage;
         data.crit = crit;
         data.speed = speed;
+        data.defense = defense;
     }
 
     public void LoadFromData(PlayerData data) //로드 데이터
@@ -82,6 +92,7 @@ public class StatsManager : MonoBehaviour
         damage = data.damage;
         crit = data.crit;
         speed = data.speed;
+        defense = data.defense;
 
         statsUI.UpdateAllStats();
     }
