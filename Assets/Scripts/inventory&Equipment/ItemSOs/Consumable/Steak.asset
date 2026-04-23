@@ -18,9 +18,19 @@ MonoBehaviour:
   itemCategory: 0
   itemType: 4
   isGold: 0
+  saleprice: 10
   stackSize: 99
   currentHealth: 0
   maxHealth: 0
   speed: 0
   damage: 1
+  defense: 0
+  crit: 0
   duration: 0
+  armorSprites:
+    body: {fileID: 0}
+    leftArm: {fileID: 0}
+    rightArm: {fileID: 0}
+  bottomSprites:
+    leftLeg: {fileID: 0}
+    rightLeg: {fileID: 0}

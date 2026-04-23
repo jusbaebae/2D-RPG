@@ -8,10 +8,11 @@ using Random = UnityEngine.Random;
 
 public class Enemy_Health : MonoBehaviour
 {
-    public string Enmey_name;
+    public string Enemy_name;
     public int ExpReward;
 
     public static event Action<int>  OnMonsterDefeated;
+    public event Action Ondeath;
 
     public GameObject damageTextPrefab;
     public GameObject deathEffect;
@@ -21,12 +22,10 @@ public class Enemy_Health : MonoBehaviour
 
     public Slider hpSlider;
     public GameObject hpBar;
-    float targetHP;
+    protected float targetHP;
 
     public List<LootItem> lootTable;
     public GameObject lootPrefab; //아이템 정보
-
-    public event Action Ondeath;
 
     private void Start()
     {
@@ -44,9 +43,10 @@ public class Enemy_Health : MonoBehaviour
 
     private void OnDestroy()
     {
-        QuestManager.Instance.AddProgress(QuestType.KillMonster, Enmey_name, 1);
+        QuestManager.Instance.AddProgress(QuestType.KillMonster, Enemy_name, 1);
+        //Debug.Log(Enemy_name + "잡았다");
     }
-    public void ChangeHealth(int amount)
+    public virtual void ChangeHealth(int amount)
     {
         hpBar.SetActive(true); //맞으면 표시
         currentHealth += amount;
@@ -59,14 +59,10 @@ public class Enemy_Health : MonoBehaviour
         }
         else if(currentHealth <= 0)
         {
-            Ondeath?.Invoke();
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
-            OnMonsterDefeated(ExpReward);
-            DropLoot();
-            Destroy(gameObject);
+            InvokeDeath();
         }
     }
-    void ShowDamage(int damage)
+    protected void ShowDamage(int damage)
     {
         GameObject dmg = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
         dmg.GetComponent<DamageText>().SetDamage(damage);
@@ -84,6 +80,15 @@ public class Enemy_Health : MonoBehaviour
                 obj.GetComponent<Loot>().Initialize(loot.itemSO, amount, true); 
             }
         }
+    }
+
+    protected void InvokeDeath() //죽었는지 확인하기
+    {
+        Ondeath?.Invoke();
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        OnMonsterDefeated(ExpReward);
+        DropLoot();
+        Destroy(gameObject);
     }
 }
 

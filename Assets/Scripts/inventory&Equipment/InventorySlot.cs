@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : ItemSlot, IPointerClickHandler, IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
+public class InventorySlot : ItemSlot, IPointerClickHandler, 
+    IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler, 
+    IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     public Image itemImage;
     public TMP_Text quantityText;
@@ -13,6 +15,8 @@ public class InventorySlot : ItemSlot, IPointerClickHandler, IBeginDragHandler,I
     public InventoryManager inventoryManager;
     private static ShopManager activeShop;
     public GameObject selectBorder;
+
+    [SerializeField] private itemInfo info;
     private void Start()
     {
         inventoryManager = GetComponentInParent<InventoryManager>();
@@ -130,6 +134,25 @@ public class InventorySlot : ItemSlot, IPointerClickHandler, IBeginDragHandler,I
             //두개 다 아이템이면 교환
             inventoryManager.SwapItems(draggedSlot, this);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //if (SkillMessageUI.Instance.isOpen) return;
+
+        if (itemSO == null) return;
+
+        info.ShowItemInfo(itemSO);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        info.HideItemInfo();
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        if (info != null) info.FollowMouse();
     }
 
     public override void Select()

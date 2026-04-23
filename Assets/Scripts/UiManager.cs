@@ -71,6 +71,7 @@ public class UiManager : MonoBehaviour
                 break;
             case UIType.Shop:
                 SetUI(shopUI, true);
+                SetUI(inventoryUI, true);
                 break;
             case UIType.Equipment:
                 SetUI(equipmentUI, true);

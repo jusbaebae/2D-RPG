@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StrongHit : ISkillLogic
 {
-    //임시용
     public IEnumerator Execute(PlayerMovement player, SkillSO skill, int level)
     {
         player.ChangeState(PlayerState.ATTACK, 1);

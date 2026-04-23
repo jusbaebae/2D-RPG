@@ -5,21 +5,25 @@ using UnityEngine;
 public class Enemy_Movement : MonoBehaviour
 {
     public float speed;
-    public float attackRange = 2;
-    public float attackCooldown = 2;
-    public float playerDetectRange = 5;
+    public float attackRange;
+    public float attackCooldown;
+    public float playerDetectRange;
+
     public Transform detectionPoint;
     public LayerMask playerLayer;
 
-    private float attackCooldownTimer;
-    private int facingDirection = -1;
-    private EnemyState enemyState;
+    protected bool isPlayerDetected;
+    public bool isImmuneToKnockback; //ë„‰ë°± ë©´ì—­
 
-    private Rigidbody2D rb;
-    private Transform player;
-    private Animator anim;
+    protected float attackCooldownTimer;
+    protected int facingDirection = -1;
+    protected EnemyState enemyState;
 
-    // Start is called before the first frame update
+    public Rigidbody2D rb;
+    public Transform player;
+    protected Animator anim;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,39 +31,30 @@ public class Enemy_Movement : MonoBehaviour
         ChangeState(EnemyState.Idle);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(enemyState != EnemyState.KnockBack)
-        {
-            CheckForPlayer();
-            if (attackCooldownTimer > 0)
-            {
-                attackCooldownTimer -= Time.deltaTime;
-            }
+        if (enemyState == EnemyState.KnockBack) return;
 
-            if (enemyState == EnemyState.Chasing)
-            {
-                Chase();
-            }
-            else if (enemyState == EnemyState.Attacking)
-            {
-                rb.velocity = Vector2.zero;
-            }
+        CheckForPlayer();
+        HandleCombat();
+
+        if (attackCooldownTimer > 0)
+        {
+            attackCooldownTimer -= Time.deltaTime;
+
         }
     }
-    void Chase()
+    protected void Chase()
     {
-        if(Vector2.Distance(transform.position, player.transform.position) <= attackRange && attackCooldownTimer <= 0)
-        {
-            attackCooldownTimer = attackCooldown;
-            ChangeState(EnemyState.Attacking);
-        }
-        else if (player.position.x > transform.position.x && facingDirection == -1
-                || player.position.x < transform.position.x && facingDirection == 1)
+        if (player == null) return;
+
+        //ë°©í–¥ ë’¤ì§‘ê¸°
+        if (player.position.x > transform.position.x && facingDirection == -1 || player.position.x < transform.position.x && facingDirection == 1)
         {
             Flip();
         }
+
+        //ì´ë™
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction * speed;
     }
@@ -70,54 +65,74 @@ public class Enemy_Movement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.x);
     }
 
-    private void CheckForPlayer()
+    protected void CheckForPlayer() //í”Œë ˆì´ì–´ ê°ì§€
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(detectionPoint.position, playerDetectRange, playerLayer);
 
-        if(hits.Length > 0)
+        if (hits.Length > 0)
         {
             player = hits[0].transform;
-
-            //ÇÃ·¹ÀÌ¾î°¡ °ø°İ¹üÀ§³»¿¡ ÀÖ´ÂÁö °ø°İÄğÅ¸ÀÓÀÌ ¿Ï·áµÇ¾ú´ÂÁö È®ÀÎ
-            if (Vector2.Distance(transform.position, player.position) < attackRange && attackCooldownTimer <= 0)
-            {
-                attackCooldownTimer = attackCooldown;
-                ChangeState(EnemyState.Attacking);
-            }
-            //ÇÃ·¹ÀÌ¾î°¡ »çÁ¤°Å¸®¿¡´Â ÀÖÁö¸¸ °ø°İ¹üÀ§³»¿¡ ¾øÀ»¶§ ÇÃ·¹ÀÌ¾î Ãß°İ
-            else if (Vector2.Distance(transform.position, player.position) > attackRange && enemyState != EnemyState.Attacking)
-            {
-                ChangeState(EnemyState.Chasing);
-            }
+            isPlayerDetected = true;
         }
-        //¾Æ¿¹ »çÁ¤°Å¸®¹ÛÀ¸·Î¹ş¾î³ª¸é ½¬´Â¸ğ¼ÇÀ¸·Î º¯°æ
         else
+        {
+            isPlayerDetected = false;
+            player = null;
+        }
+    }
+
+    protected virtual void HandleCombat() //ê³µê²© ì²˜ë¦¬
+    {
+        if (!isPlayerDetected)
         {
             rb.velocity = Vector2.zero;
             ChangeState(EnemyState.Idle);
+            return;
         }
+
+        float dist = Vector2.Distance(transform.position, player.position);
+
+        if (dist <= attackRange && attackCooldownTimer <= 0)
+        {
+            attackCooldownTimer = attackCooldown;
+            ChangeState(EnemyState.Attacking);
+            rb.velocity = Vector2.zero;
+        }
+        else if (dist > attackRange && enemyState != EnemyState.Attacking)
+        {
+            ChangeState(EnemyState.Chasing);
+            Chase();
+        }
+
+        //Debug.Log($"player: {player}, detected: {isPlayerDetected}");
     }
 
     public void ChangeState(EnemyState newState)
     {
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç ÁßÁö
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ì¤‘ì§€
         if (enemyState == EnemyState.Idle)
             anim.SetBool("IsIdle", false);
         else if (enemyState == EnemyState.Chasing)
             anim.SetBool("IsMoving", false);
         else if (enemyState == EnemyState.Attacking)
             anim.SetBool("IsAttacking", false);
+        else if (enemyState == EnemyState.Skill)
+            anim.SetBool("IsSkill", false);
 
-        //»óÅÂ ¾÷µ¥ÀÌÆ®
+        //ìƒíƒœ ì—…ë°ì´íŠ¸
         enemyState = newState;
 
-        //»õ·Î¿î ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        //ìƒˆë¡œìš´ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         if (enemyState == EnemyState.Idle)
             anim.SetBool("IsIdle", true);
         else if (enemyState == EnemyState.Chasing)
             anim.SetBool("IsMoving", true);
         else if (enemyState == EnemyState.Attacking)
             anim.SetBool("IsAttacking", true);
+        else if (enemyState == EnemyState.Skill)
+            anim.SetBool("IsSkill", true);
+
+
     }
 
     private void OnDrawGizmos()
@@ -132,6 +147,7 @@ public enum EnemyState
     Idle,
     Chasing,
     Attacking,
-    KnockBack
+    KnockBack,
+    Skill
 }
 

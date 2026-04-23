@@ -19,6 +19,12 @@ public class Enemy_KnockBack : MonoBehaviour
 
     public void Knockback(Transform forceTransform, float knockbackForce, float knockbackTime, float stunTime)
     {
+        if (enemy_Movement.isImmuneToKnockback) 
+        {
+            StartCoroutine(HitFlash());
+            return;
+        }
+
         enemy_Movement.ChangeState(EnemyState.KnockBack);
         StartCoroutine(stunTimer(knockbackTime,stunTime));
         StartCoroutine(HitFlash());

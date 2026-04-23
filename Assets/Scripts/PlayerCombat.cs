@@ -39,6 +39,7 @@ public class PlayerCombat : MonoBehaviour
     }
     public void DealDamage() //일반 공격용(단일)
     {
+        StatsManager.Instance.isCrit = false;
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.position, StatsManager.Instance.weaponRange, enemyLayer);
         int minDamage = Mathf.RoundToInt(StatsManager.Instance.damage * 0.7f); //최소 데미지
         if(minDamage <= 0)

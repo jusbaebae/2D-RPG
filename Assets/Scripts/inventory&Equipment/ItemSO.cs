@@ -12,14 +12,19 @@ public class ItemSO : ScriptableObject
     public ItemCategory itemCategory;
     public ItemType itemType;
 
+    [Header("기타 정보")]
     public bool isGold;
+    public int saleprice;
     public int stackSize;
+
 
     [Header("아이템 능력치")]
     public int currentHealth;
     public int maxHealth;
     public int speed;
     public int damage;
+    public int defense;
+    public int crit;
 
     [Header("지속 시간")]
     public float duration;

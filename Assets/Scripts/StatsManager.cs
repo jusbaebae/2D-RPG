@@ -66,7 +66,7 @@ public class StatsManager : MonoBehaviour
 
     public void CritCheck() //치명타 체크
     {
-        int critcheck = Mathf.Min(StatsManager.Instance.crit, 100);
+        int critcheck = Mathf.Min(crit, 100);
         isCrit = Random.Range(0, 100) < critcheck;
     }
 
