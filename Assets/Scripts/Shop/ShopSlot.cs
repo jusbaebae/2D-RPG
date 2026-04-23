@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class ShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
+    public ShopPopup popup;
     public ItemSO itemSO;
     public TMP_Text itemNameText;
     public TMP_Text priceText;
@@ -29,7 +30,8 @@ public class ShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnBuyButtonClicked()
     {
-        shopManager.TryBuyItem(itemSO, price);
+        //구매 팝업
+        popup.OpenPopup(itemSO, ShopMode.Buy, price,InventoryManager.Instance.gold, 0);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

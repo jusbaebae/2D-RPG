@@ -38,12 +38,15 @@ public class ItemSOEditor : Editor
 
         //나머지 공통 필드
         EditorGUILayout.PropertyField(serializedObject.FindProperty("isGold"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("saleprice"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("stackSize"));
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("currentHealth"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("maxHealth"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("speed"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("damage"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("defense"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("crit"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("duration"));
 
         serializedObject.ApplyModifiedProperties();

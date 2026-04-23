@@ -12,6 +12,7 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
     public Image itemImage;
     public TMP_Text quantityText;
 
+    public ShopPopup popup;
     public InventoryManager inventoryManager;
     private static ShopManager activeShop;
     public GameObject selectBorder;
@@ -51,9 +52,8 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
         {
             if(activeShop != null)
             {
-                activeShop.SellItem(itemSO);
-                quantity--;
-                UpdateUI();
+                popup.OpenPopup(itemSO, ShopMode.Sell, itemSO.saleprice, InventoryManager.Instance.gold, quantity);
+                //Debug.Log(quantity);
             }
             else
             {

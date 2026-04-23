@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 446401f36ab035146a8b48fe8c67191c, type: 3}
+  m_Script: {fileID: 11500000, guid: 87780f34f40acfe44b42720542e86d89, type: 3}
   m_Name: Steak
   m_EditorClassIdentifier: 
   itemName: Steak
@@ -18,7 +18,7 @@ MonoBehaviour:
   itemCategory: 0
   itemType: 4
   isGold: 0
-  saleprice: 10
+  saleprice: 7
   stackSize: 99
   currentHealth: 0
   maxHealth: 0

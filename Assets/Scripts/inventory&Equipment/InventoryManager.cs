@@ -211,6 +211,7 @@ public class InventoryManager : MonoBehaviour
             }
             slot.UpdateUI();
         }
+        Debug.Log("UseItem 발동!");
     }
 
     public void EquipGear(ItemSlot slot, ItemType itemtype)  //장비 장착

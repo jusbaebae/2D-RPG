@@ -8,6 +8,7 @@ public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, 
 {
     public Image itemImage;
 
+    public ShopPopup popup;
     private InventoryManager inventoryManager;
     private static ShopManager activeShop;
     public GameObject selectBorder;
@@ -46,8 +47,7 @@ public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, 
         {
             if (activeShop != null)
             {
-                activeShop.SellItem(itemSO);
-                quantity--;
+                popup.OpenPopup(itemSO, ShopMode.Sell, itemSO.saleprice,InventoryManager.Instance.gold, quantity);
                 UpdateUI();
             }
             else

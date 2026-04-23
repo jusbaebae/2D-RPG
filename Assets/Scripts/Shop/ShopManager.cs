@@ -5,9 +5,16 @@ using System;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
+
     [SerializeField] private ShopSlot[] shopSlots;
 
     [SerializeField] private InventoryManager inventoryManager;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     public void PopulateShopItems(List<ShopItems> shopItems)
     {
@@ -24,15 +31,15 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void TryBuyItem(ItemSO itemSO, int price)
+    public void TryBuyItem(ItemSO itemSO, int price, int amount)
     {
         if (itemSO != null && inventoryManager.gold >= price)
         {
             if (HasSpaceForItem(itemSO))
             {
-                inventoryManager.gold -= price;
+                inventoryManager.gold -= price * amount;
                 inventoryManager.goldText.text = inventoryManager.gold.ToString();
-                inventoryManager.AddItem(itemSO, 1);
+                inventoryManager.AddItem(itemSO, amount);
             }
         }
     }
@@ -49,16 +56,17 @@ public class ShopManager : MonoBehaviour
         return false;
     }
 
-    public void SellItem(ItemSO itemSO)
+    public void SellItem(ItemSO itemSO, int count)
     {
-        if (itemSO == null)
-            return;
-        foreach(var slot in shopSlots)
+        if (itemSO == null) return;
+        foreach(var slot in inventoryManager.itemSlots)
         {
             if(slot.itemSO == itemSO)
             {
-                inventoryManager.gold += slot.price;
+                slot.quantity -= count;
+                inventoryManager.gold += itemSO.saleprice * count;
                 inventoryManager.goldText.text = inventoryManager.gold.ToString();
+                slot.UpdateUI();
                 return;
             }
         }
