@@ -32,11 +32,14 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
         if (item == null) return;
         if (slotuse) //장비 교체
         {
+            StatsManager.Instance.RemoveStat(equippedItem);
             inventoryManager.AddItem(equippedItem, 1);
         }
 
         equippedItem = item; //현재 장착된 장비 기억하기
         slotImage.sprite = item.icon;
+
+        StatsManager.Instance.AddStat(item); //장비 능력치 적용
 
         switch (item.itemType)
         {
@@ -68,6 +71,8 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
         if (item == null) return;
 
         slotImage.sprite = DefaultslotImage;
+
+        StatsManager.Instance.RemoveStat(equippedItem);
         inventoryManager.AddItem(equippedItem, 1);
 
         switch (item.itemType)

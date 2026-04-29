@@ -8,18 +8,14 @@ public class ShopKeeper : MonoBehaviour
     public static ShopKeeper currentShopKeeper;
 
     public Animator anim;
-    public CanvasGroup shopCanvasGroup;
-    public ShopManager shopManager;
 
     [SerializeField] private List<ShopItems> shopItems;
     [SerializeField] private List<ShopItems> shopWeapons;
     [SerializeField] private List<ShopItems> shopArmours;
 
-    [SerializeField] private Camera shopkeeperCam;
-    [SerializeField] private Vector3 cameraOffset = new Vector3(0, 0, -1);
-
     public static event Action<ShopManager, bool> OnShopStateChanged;
     private bool playerInRange;
+    bool isopen;
 
     private void Update()
     {
@@ -27,44 +23,40 @@ public class ShopKeeper : MonoBehaviour
         {
             if (Input.GetButtonDown("Interact"))
             {
+                isopen = !isopen;
                 UiManager.Instance.ToggleUI(UIType.Shop);
 
                 currentShopKeeper = this;
-                OnShopStateChanged.Invoke(shopManager, true);
-
-                shopkeeperCam.transform.position = transform.position + cameraOffset; //상점주인 카메라 세팅
-                shopkeeperCam.gameObject.SetActive(true);
+                OnShopStateChanged.Invoke(ShopManager.Instance, isopen);
 
                 OpenItemShop();
             }
             else if(Input.GetButtonDown("Cancel"))
             {
+                isopen = false;
                 currentShopKeeper = null;
-                OnShopStateChanged.Invoke(shopManager, false);
-
-                shopkeeperCam.gameObject.SetActive(false);
+                OnShopStateChanged.Invoke(ShopManager.Instance, isopen);
             }
         }
     }
 
     public void OpenItemShop()
     {
-        shopManager.PopulateShopItems(shopItems);
+        ShopManager.Instance.PopulateShopItems(shopItems);
     }
     public void OpenWeaponShop()
     {
-        shopManager.PopulateShopItems(shopWeapons);
+        ShopManager.Instance.PopulateShopItems(shopWeapons);
     }
     public void OpenArmourShop()
     {
-        shopManager.PopulateShopItems(shopArmours);
+        ShopManager.Instance.PopulateShopItems(shopArmours);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            anim.SetBool("playerInRange", true);
             playerInRange = true;
         }
     }
@@ -73,7 +65,6 @@ public class ShopKeeper : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            anim.SetBool("playerInRange", false);
             playerInRange = false;
         }
     }

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler,
+    IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     public Image itemImage;
 
@@ -13,6 +14,7 @@ public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, 
     private static ShopManager activeShop;
     public GameObject selectBorder;
 
+    [SerializeField] private itemInfo info;
     private void Start()
     {
         inventoryManager = GetComponentInParent<InventoryManager>();
@@ -127,6 +129,24 @@ public class EquipmentSlot : ItemSlot, IPointerClickHandler, IBeginDragHandler, 
             inventoryManager.SwapItems(draggedSlot, this);
         }
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (itemSO == null) return;
+
+        info.ShowItemInfo(itemSO);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        info.HideItemInfo();
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        if (info != null) info.FollowMouse();
+    }
+
 
     public override void Select()
     {

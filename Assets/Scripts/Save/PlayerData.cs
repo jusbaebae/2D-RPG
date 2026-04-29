@@ -9,6 +9,7 @@ public class PlayerData
 
     public float posx;
     public float posy;
+    public float cooltime;
 
     public int currenthp;
     public int maxhp;
@@ -17,7 +18,7 @@ public class PlayerData
     public int maxexp;
     public int damage;
     public int crit;
-    public int speed;
+    public float speed;
     public int defense;
     public int skillPoint;
 

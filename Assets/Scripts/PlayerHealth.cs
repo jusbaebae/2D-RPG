@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,8 +16,7 @@ public class PlayerHealth : MonoBehaviour
     public TMP_Text healthText;
     public HPBar hpbar;
 
-    Color[] originalColors;
-     //원래 스프라이트 색 저장하기
+    Color[] originalColors; //원래 스프라이트 색 저장하기
 
     void Awake()
     {
@@ -29,7 +29,6 @@ public class PlayerHealth : MonoBehaviour
     }
     void Start()
     {
-        
         StatsManager.Instance.currentHealth = StatsManager.Instance.maxHealth;
         healthText.text = StatsManager.Instance.currentHealth + " / " + StatsManager.Instance.maxHealth;
         hpbar.SetMaxHealth(StatsManager.Instance.maxHealth);
@@ -37,6 +36,8 @@ public class PlayerHealth : MonoBehaviour
     }
     public void ChangeHealth(int amount)
     {
+        if (PlayerMovement.Instance.isInvincible) return;
+
         StatsManager.Instance.currentHealth += amount;
         healthText.text = StatsManager.Instance.currentHealth + " / " + StatsManager.Instance.maxHealth;
         ShowDamage(Mathf.Abs(amount));
@@ -46,12 +47,19 @@ public class PlayerHealth : MonoBehaviour
 
         if (StatsManager.Instance.currentHealth <= 0)
         {
+            //부활 체크
+            if (SkillManager.Instance.TryRevive())
+                return;
+
             Die();
+            StartCoroutine(ReSpawn());
+            //Debug.Log("부활스킬없어서 그냥 죽었다!");
         }
     }
 
     public void Die()
     {
+        PlayerMovement.Instance.isInvincible = true;
         PlayerMovement.Instance.ChangeState(PlayerState.DEATH, 0);
     }
 
@@ -105,5 +113,16 @@ public class PlayerHealth : MonoBehaviour
         {
             renderers[i].color = colors[i];
         }
+    }
+
+    IEnumerator ReSpawn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SceneTransition.Instance.LoadTransition(GameManager.Instance.previousScene);
+        yield return new WaitForSeconds(1f);
+        StatsManager.Instance.UpdateHealth(9999);
+        PlayerMovement.Instance.ChangeState(PlayerState.IDLE, 0);
+        PlayerMovement.Instance.isInvincible = false;
+        SaveManager.Instance.SaveGame();
     }
 }

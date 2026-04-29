@@ -21,6 +21,4 @@ public class QuestLog : MonoBehaviour
     {
         QuestUIManager.Instance.ShowQuestDescription(questState);
     }
-
-    
 }

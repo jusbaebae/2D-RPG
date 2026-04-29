@@ -6,25 +6,13 @@ public class ChargeSkill : BossSkill
 {
     public GameObject telegraphObject;
 
+    [SerializeField] private GameObject hitbox;
+
     public float chargeSpeed;
     public float chargeTime; //해당 시간만큼 돌진
     public float skillTime; //범위 표기후 돌진발동시간
     public float maxDistance;
     public float moved = 0;
-
-    bool isCharging = false;
-
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (!isCharging) return;
-
-        if (coll.gameObject.CompareTag("Player"))
-        {
-            coll.gameObject.GetComponent<PlayerHealth>().ChangeHealth(-10);
-            coll.gameObject.GetComponent<PlayerMovement>().Knockback(transform, 15, 0.3f);
-            //Debug.Log("돌진중 맞았다!");
-        }
-    }
 
     public override IEnumerator UseSkill(Boss_Movement boss)
     {
@@ -45,8 +33,8 @@ public class ChargeSkill : BossSkill
 
         HideTelegraph();
 
-        isCharging = true;
-        
+        hitbox.SetActive(true);
+
         while (timer < chargeTime && moved < maxDistance)
         {
             Vector2 move = dir * chargeSpeed * Time.deltaTime;
@@ -62,7 +50,7 @@ public class ChargeSkill : BossSkill
 
         boss.isUsingSkill = false;
         boss.isImmuneToKnockback = false;
-        isCharging = false;
+        hitbox.SetActive(false);
     }
 
     float offsetDistance = 5f; //Telegraph 위치 조정

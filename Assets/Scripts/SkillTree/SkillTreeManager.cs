@@ -13,7 +13,16 @@ public class SkillTreeManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
 
     private void OnEnable()

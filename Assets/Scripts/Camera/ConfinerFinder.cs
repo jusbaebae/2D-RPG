@@ -6,21 +6,23 @@ using Cinemachine;
 
 public class ConfinerFinder : MonoBehaviour
 {
-    private void OnEnable()
+    IEnumerator Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
+        yield return new WaitForEndOfFrame();
         CinemachineConfiner2D confiner = GetComponent<CinemachineConfiner2D>();
-        confiner.m_BoundingShape2D = GameObject.FindWithTag("Confiner").GetComponent<PolygonCollider2D>();
-    }
 
+        // 1. 태그로 오브젝트 찾기
+        GameObject confinerObj = GameObject.FindWithTag("Confiner");
+        if (confinerObj != null)
+        {
+            PolygonCollider2D collider = confinerObj.GetComponent<PolygonCollider2D>();
+            if (collider != null)
+            {
+                confiner.m_BoundingShape2D = collider;
+                confiner.InvalidateCache();
+                Debug.Log("Confiner 연결 성공!");
+            }
+        }
+    }
 }
 

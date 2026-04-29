@@ -21,12 +21,22 @@ public class PlayerSkillController : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
 
         skillMap = new Dictionary<int, ISkillLogic>()
         {
             { 1004, new StrongHit() },
             { 1005, new Heal() } ,
+            { 1006, new Revive() } ,
             { 1007, new DoubleSlash() }
         };
     }
@@ -48,11 +58,13 @@ public class PlayerSkillController : MonoBehaviour
         {
             SkillSO skill = equippedSkills[key];
             int currentLevel = SkillManager.Instance.skillLevels[skill.skillid];
+            //Debug.Log(currentLevel);
+            //Debug.Log(skill.levelData[currentLevel].cooltime);
 
             //쿨타임 체크
             if (IsCoolingDown(skill))
             {
-                Debug.Log("현재 쿨타임");
+                //Debug.Log("현재 쿨타임");
                 return;
             }
 
@@ -66,17 +78,16 @@ public class PlayerSkillController : MonoBehaviour
         }
     }
 
-    void ExecuteSkill(SkillSO skill, int level)
+    public void ExecuteSkill(SkillSO skill, int level)
     {
         int currentLevel = level; // 현재 레벨 가져오기
-        var data = skill.levelData[currentLevel];
 
         if (skillMap.TryGetValue(skill.skillid, out var logic))
         {
             StartCoroutine(logic.Execute(PlayerMovement.Instance, skill, currentLevel));
         }
 
-        Debug.Log($"{skill.skillName} 시전!");
+        //Debug.Log($"{skill.skillName} 시전!");
     }
 
     public void EquipSkill(KeyCode key, SkillsSlot slot)

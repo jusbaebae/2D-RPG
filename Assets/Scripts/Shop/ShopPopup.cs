@@ -28,7 +28,7 @@ public class ShopPopup : MonoBehaviour
     public Button plusButton;
     public Button confirmButton;
 
-    public Color normalColor = Color.white;
+    public Color normalColor = Color.black;
     public Color warningColor = Color.red;
 
     public void OpenPopup(ItemSO item, ShopMode mode, int price, int playerGold, int playerItemCount)

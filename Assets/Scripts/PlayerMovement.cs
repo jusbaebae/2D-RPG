@@ -13,13 +13,14 @@ public class PlayerMovement : MonoBehaviour
     public bool isinteract;
     private bool isKnockBack;
     public bool isShooting;
+    public bool isInvincible;
 
     public SPUM_Prefabs spum;
     public PlayerCombat playerCombat;
     public Ghost ghost;
 
     public Vector2 inputDir;
-    public int cooltime; //대쉬 쿨타임
+    public float cooltime; //대쉬 쿨타임
     bool dashInput; //대쉬 입력
     bool isDash; //대쉬 시간
     public bool canDash = false; //대쉬 해금 여부 
@@ -28,7 +29,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
         anim = GetComponentInChildren<Animator>();
     }
 
@@ -42,15 +52,16 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (currentState == PlayerState.DEATH) return;
+
+        if (isKnockBack) return;
+
         if (isinteract) //대화중일때 이동 무시
         {
             inputDir = Vector2.zero;
             ChangeState(PlayerState.IDLE, 0);
             return;
         }
-
-        if (isKnockBack) return;
-
         inputDir.x = Input.GetAxisRaw("Horizontal");
         inputDir.y = Input.GetAxisRaw("Vertical");
 
@@ -58,17 +69,6 @@ public class PlayerMovement : MonoBehaviour
         {
             playerCombat.Attack();
         }
-
-        /*if (Input.GetKeyDown("n")) //강타 애니메이션
-        {
-            ChangeState(PlayerState.ATTACK, 1);
-            playerCombat.FinishAttacking();
-        }*/
-        /*if (Input.GetKeyDown("m")) //힐 애니메이션
-        {
-            ChangeState(PlayerState.OTHER, 1);
-            playerCombat.FinishAttacking();
-        }*/
 
         if (Input.GetButtonDown("Dash") && canDash)
         {
@@ -78,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (currentState == PlayerState.DEATH) return;
         if (currentState == PlayerState.ATTACK) return;
 
         if (dashInput) //대쉬
@@ -182,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
         data.posx = pos.x;
         data.posy = pos.y;
         data.canDash = canDash; //대쉬 해금여부
+        data.cooltime = cooltime;
 
         // 스탯
         StatsManager.Instance.FillData(data);
@@ -194,9 +196,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetLoadData(PlayerData data)
     {
-        // 위치 복원
-        transform.position = new Vector3(data.posx, data.posy, transform.position.z);
         canDash = data.canDash;
+        cooltime = data.cooltime;
 
         // 스탯 복원
         StatsManager.Instance.LoadFromData(data);
@@ -209,6 +210,4 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("플레이어 데이터 로드 완료!");
     }
-
-    
 }

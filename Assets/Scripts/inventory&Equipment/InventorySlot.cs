@@ -138,8 +138,6 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //if (SkillMessageUI.Instance.isOpen) return;
-
         if (itemSO == null) return;
 
         info.ShowItemInfo(itemSO);

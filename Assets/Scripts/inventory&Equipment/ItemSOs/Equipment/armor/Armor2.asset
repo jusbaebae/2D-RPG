@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87780f34f40acfe44b42720542e86d89, type: 3}
   m_Name: Armor2
   m_EditorClassIdentifier: 
-  itemName: Armor2
-  itemDescription: "\uBAB8\uD1B52"
+  itemName: "\uCCA0\uAC11\uC637"
+  itemDescription: "\uCCA0\uB85C \uB9CC\uB4E0 \uAC11\uC637\uC774\uB2E4\n\uBB34\uAC81\uC9C0\uB9CC
+    \uC6C0\uC9C1\uC774\uB294\uB370 \uC9C0\uC7A5\uC740\uC5C6\uB2E4"
   icon: {fileID: 21300000, guid: 3afe1b51a2e1d304c9d074bc3c59c26e, type: 3}
   itemCategory: 1
   itemType: 1
@@ -21,7 +22,7 @@ MonoBehaviour:
   saleprice: 0
   stackSize: 1
   currentHealth: 0
-  maxHealth: 0
+  maxHealth: 100
   speed: 0
   damage: 0
   defense: 0

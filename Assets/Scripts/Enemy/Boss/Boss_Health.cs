@@ -5,11 +5,9 @@ using UnityEngine;
 public class Boss_Health : Enemy_Health
 {
     private Boss_Movement boss_Movement;
-    private Animator anim;
     void Awake()
     {
         boss_Movement = GetComponent<Boss_Movement>();
-        anim = GetComponent<Animator>();
     }
 
     public override void ChangeHealth(int amount)

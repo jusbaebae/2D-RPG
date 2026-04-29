@@ -35,8 +35,8 @@ public class HealSkill : BossSkill
         boss.isImmuneToKnockback = false;
         isHeal = false;
 
-        Debug.Log("보스현재 체력: " + boss_health.currentHealth + "보스현재 체력: " + boss_health.maxHealth);
-        Debug.Log("현재 쿨타임 : " + lastUseTime);
+        //Debug.Log("보스현재 체력: " + boss_health.currentHealth + "보스최대 체력: " + boss_health.maxHealth);
+        //Debug.Log("현재 쿨타임 : " + lastUseTime);
     }
 
     public bool CanUse()
@@ -47,7 +47,7 @@ public class HealSkill : BossSkill
     public void ShowEffect() //애니메이션 키 프레임 함수
     {
         if (!isHeal) return;
-        int healAmount = Mathf.RoundToInt(boss_health.maxHealth * 0.1f);
+        int healAmount = boss_health.maxHealth;
         boss_health.ChangeHealth(healAmount);
         GameObject obj = Instantiate(HealEffect, transform.position, Quaternion.identity);
         Destroy(obj, 2f);

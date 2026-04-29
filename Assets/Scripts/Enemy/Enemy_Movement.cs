@@ -8,6 +8,7 @@ public class Enemy_Movement : MonoBehaviour
     public float attackRange;
     public float attackCooldown;
     public float playerDetectRange;
+    public float originPlayerDetechRange;
 
     public Transform detectionPoint;
     public LayerMask playerLayer;
@@ -24,15 +25,25 @@ public class Enemy_Movement : MonoBehaviour
     protected Animator anim;
 
 
-    void Start()
+    protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         ChangeState(EnemyState.Idle);
+        originPlayerDetechRange = playerDetectRange;
     }
 
-    void Update()
+    protected void Update()
     {
+        if (PlayerMovement.Instance.isInvincible)
+        {
+            playerDetectRange = 0;
+        }
+        else
+        {
+            playerDetectRange = originPlayerDetechRange;
+        }
+
         if (enemyState == EnemyState.KnockBack) return;
 
         CheckForPlayer();
@@ -44,6 +55,23 @@ public class Enemy_Movement : MonoBehaviour
 
         }
     }
+
+    protected void FixedUpdate()
+    {
+        if (enemyState == EnemyState.Attacking || enemyState == EnemyState.KnockBack || enemyState == EnemyState.Skill)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
+        //Debug.Log("속도: " + rb.velocity + " / 크기: " + rb.velocity.magnitude);
+        if (enemyState == EnemyState.Chasing)
+        {
+            Vector2 dir = (player.position - transform.position).normalized;
+            //Debug.Log("dir: " + dir.magnitude);
+            rb.velocity = dir * speed;
+        }
+    }
     protected void Chase()
     {
         if (player == null) return;
@@ -53,22 +81,21 @@ public class Enemy_Movement : MonoBehaviour
         {
             Flip();
         }
-
-        //이동
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.velocity = direction * speed;
+        //Debug.Log(rb.velocity.magnitude);
     }
 
     void Flip()
     {
         facingDirection *= -1;
-        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.x);
+        Vector3 scale = transform.localScale;
+        scale.x *= -1; //X만 뒤집기
+        transform.localScale = scale;
     }
 
     protected void CheckForPlayer() //플레이어 감지
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(detectionPoint.position, playerDetectRange, playerLayer);
-
+        
         if (hits.Length > 0)
         {
             player = hits[0].transform;
@@ -83,10 +110,14 @@ public class Enemy_Movement : MonoBehaviour
 
     protected virtual void HandleCombat() //공격 처리
     {
-        if (!isPlayerDetected)
+        if (!isPlayerDetected || enemyState == EnemyState.KnockBack)
         {
-            rb.velocity = Vector2.zero;
-            ChangeState(EnemyState.Idle);
+            if (enemyState != EnemyState.KnockBack)
+            {
+                rb.velocity = Vector2.zero; 
+                ChangeState(EnemyState.Idle);
+            }
+               
             return;
         }
 
@@ -131,8 +162,6 @@ public class Enemy_Movement : MonoBehaviour
             anim.SetBool("IsAttacking", true);
         else if (enemyState == EnemyState.Skill)
             anim.SetBool("IsSkill", true);
-
-
     }
 
     private void OnDrawGizmos()

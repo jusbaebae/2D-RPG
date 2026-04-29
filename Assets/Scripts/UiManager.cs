@@ -7,20 +7,30 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager Instance;
 
-    public StatsUi statsUi;
-
-    public CanvasGroup inventoryUI;
+    public CanvasGroup inventoryUI; 
     public CanvasGroup shopUI;
-    public CanvasGroup skillUI;
+    public CanvasGroup skillUI; 
     public CanvasGroup equipmentUI;
     public CanvasGroup questUI;
+    public GameObject SettingPanel;
+    public SettingPanel PanelBtnCS;
+    public StatsUi statsUi;
 
     private UIType currentOpenUI = UIType.None;
     public bool isInteract;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
 
     private void Update()
@@ -38,6 +48,10 @@ public class UiManager : MonoBehaviour
         }
         if (Input.GetButtonDown("ToggleQuest"))
             ToggleUI(UIType.Quest);
+        if (Input.GetButtonDown("ToggleSetting"))
+        {
+            ToggleUI(UIType.Setting);
+        }
         if (Input.GetKeyDown(KeyCode.Escape)) //ESC로 UI닫기
         {
             CloseAll();
@@ -61,37 +75,40 @@ public class UiManager : MonoBehaviour
     {
         CloseAll();
 
-        switch (type)
-        {
-            case UIType.Inventory:
-                SetUI(inventoryUI, true);
-                break;
-            case UIType.Skill:
-                SetUI(skillUI, true);
-                break;
-            case UIType.Shop:
-                SetUI(shopUI, true);
-                SetUI(inventoryUI, true);
-                break;
-            case UIType.Equipment:
+        switch (type) 
+        { 
+            case UIType.Inventory: 
+                SetUI(inventoryUI, true); 
+                break; 
+            case UIType.Skill: 
+                SetUI(skillUI, true); 
+                break; 
+            case UIType.Shop: 
+                SetUI(shopUI, true); 
+                SetUI(inventoryUI, true); 
+                break; 
+            case UIType.Equipment: 
                 SetUI(equipmentUI, true);
                 break;
             case UIType.Quest:
                 SetUI(questUI, true);
                 break;
+            case UIType.Setting:
+                SettingPanel.SetActive(true);
+                PanelBtnCS.SetBtn();
+                break;
         }
-
-        Time.timeScale = 0;
         currentOpenUI = type;
     }
 
     public void CloseAll()
     {
-        SetUI(inventoryUI, false);
-        SetUI(shopUI, false);
+        SetUI(inventoryUI, false); 
+        SetUI(shopUI, false); 
         SetUI(skillUI, false);
-        SetUI(equipmentUI, false);
+        SetUI(equipmentUI, false); 
         SetUI(questUI, false);
+        SettingPanel.SetActive(false);
 
         Time.timeScale = 1;
         currentOpenUI = UIType.None;
@@ -99,6 +116,8 @@ public class UiManager : MonoBehaviour
 
     void SetUI(CanvasGroup ui, bool state)
     {
+        if (!ui) return;
+
         ui.alpha = state ? 1 : 0;
         ui.blocksRaycasts = state;
         ui.interactable = state;
@@ -112,5 +131,6 @@ public enum UIType
     Skill,
     Shop,
     Equipment,
-    Quest
+    Quest,
+    Setting
 }

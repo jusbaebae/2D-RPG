@@ -33,7 +33,7 @@ public class PlayerCombat : MonoBehaviour
             timer = cooldown;
             playerMovement.ChangeState(PlayerState.ATTACK, 0);
             StartCoroutine(AttackCall());
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Sword);
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Sword);
             FinishAttacking();
         }
     }
@@ -50,7 +50,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (enemies.Length > 0)
         {
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Hit);
             StatsManager.Instance.CritCheck();
             if (StatsManager.Instance.isCrit)
             {

@@ -24,4 +24,4 @@ MonoBehaviour:
     value: 0
     cooltime: 0
   skillSFX: {fileID: 0}
-  skillPrefab: {fileID: 0}
+  skillPrefab: {fileID: 8852317036030865052, guid: 576198ea9dedc445fa23b00f1a129ab2, type: 3}

@@ -10,4 +10,9 @@ public class SaveData
     public List<QuestStateData> quests;
     public EquipmentData equipmentItem;
     public List<SkillSaveData> skills;
+
+    [Header("리스폰 포인트")]
+    public Vector3 respawnPosition;
+    public string respawnScene;
+    public SceneType savedSceneType;
 }

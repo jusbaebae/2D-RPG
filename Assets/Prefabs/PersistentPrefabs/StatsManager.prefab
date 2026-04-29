@@ -47,13 +47,15 @@ MonoBehaviour:
   statsUI: {fileID: 0}
   healthtext: {fileID: 0}
   hpbar: {fileID: 0}
-  damage: 1
+  playerHealth: {fileID: 0}
+  damage: 500
   crit: 10
+  defense: 0
   isCrit: 0
   weaponRange: 0.1
   knockbackForce: 10
   knockbackTime: 0.15
   stunTime: 0.2
-  speed: 5
+  speed: 50
   maxHealth: 20
   currentHealth: 20

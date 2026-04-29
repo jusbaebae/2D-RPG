@@ -25,7 +25,7 @@ public class StatsManager : MonoBehaviour
     public float stunTime;
 
     [Header("이동 스탯")]
-    public int speed;
+    public float speed;
 
     [Header("체력 스탯")]
     public int maxHealth;
@@ -34,16 +34,26 @@ public class StatsManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
         else
-            Destroy(gameObject);
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
 
     public void UpdateMaxHealth(int amount) //최대 체력 업데이트
     {
         maxHealth += amount;
+
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+
         healthtext.text = currentHealth + "/ " + maxHealth;
         hpbar.SetMaxHealth(maxHealth);
+        hpbar.SetHealth(currentHealth);
         statsUI.UpdateAllStats();
     }
 
@@ -75,6 +85,32 @@ public class StatsManager : MonoBehaviour
         playerHealth.ShowHeal(amount);
     }
 
+    public void AddStat(ItemSO item)
+    {
+        damage += item.damage;
+        defense += item.defense;
+        maxHealth += item.maxHealth;
+        speed += item.speed;
+        crit += item.crit;
+
+        healthtext.text = currentHealth + " / " + maxHealth;
+        hpbar.SetMaxHealth(maxHealth);
+        statsUI.UpdateAllStats();
+    }
+
+    public void RemoveStat(ItemSO item)
+    {
+        damage -= item.damage;
+        defense -= item.defense;
+        maxHealth -= item.maxHealth;
+        speed -= item.speed;
+        crit -= item.crit;
+
+        healthtext.text = currentHealth + " / " + maxHealth;
+        hpbar.SetMaxHealth(maxHealth);
+        statsUI.UpdateAllStats();
+    }
+
     public void FillData(PlayerData data) //세이브 데이터
     {
         data.currenthp = currentHealth;
@@ -93,7 +129,10 @@ public class StatsManager : MonoBehaviour
         crit = data.crit;
         speed = data.speed;
         defense = data.defense;
+        healthtext.text = currentHealth + "/ " + maxHealth;
 
         statsUI.UpdateAllStats();
+        hpbar.SetHealth(currentHealth);
+        hpbar.SetMaxHealth(maxHealth);
     }
 }

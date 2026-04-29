@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class Boss_Movement : Enemy_Movement
 {
-    public Boss_Health boss_health;
+    private Boss_Health boss_health;
+    private Boss_Combat boss_Combat;
 
     public List<BossSkill> skills;
 
     public bool isDead;
     public bool isUsingSkill;
-    void Awake()
+    public bool hasUsedHeal;
+
+    new void Start()
     {
+        base.Start();
+        boss_health = GetComponent<Boss_Health>();
+        boss_Combat = GetComponent<Boss_Combat>();
         isUsingSkill = false;
     }
-    void Update()
+    new void Update()
     {
-        if (enemyState == EnemyState.KnockBack) return;
+        base.Update();
         if (isDead) 
         {
             //현재 애니메이션 중지
@@ -35,14 +41,12 @@ public class Boss_Movement : Enemy_Movement
         }
         
         if (isUsingSkill) return;
+    }
 
-        CheckForPlayer();
-        HandleCombat();
-
-        if (attackCooldownTimer > 0)
-        {
-            attackCooldownTimer -= Time.deltaTime;
-        }
+    new void FixedUpdate()
+    {
+        if (isUsingSkill) return;
+        base.FixedUpdate();
     }
 
     protected override void HandleCombat()
@@ -77,10 +81,14 @@ public class Boss_Movement : Enemy_Movement
         {
             if (skill is HealSkill heal)
             {
-                if (heal.CanUse() && boss_health.currentHealth < boss_health.maxHealth * 0.5f)
+                if (!hasUsedHeal && heal.CanUse() && boss_health.currentHealth < boss_health.maxHealth * 0.5f)
                 {
+                    hasUsedHeal = true;
+
                     //힐 스킬 보스체력이 50%이하로 내려가면 사용
                     StartCoroutine(heal.UseSkill(this));
+
+                    boss_Combat.IncreaseDamage();
                     return;
                 }
             }

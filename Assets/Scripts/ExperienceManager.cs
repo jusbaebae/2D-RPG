@@ -21,9 +21,15 @@ public class ExperienceManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
         else
-            Destroy(gameObject);
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
 
     private void Start()
@@ -35,7 +41,7 @@ public class ExperienceManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            GainExperience(2);
+            GainExperience(10);
         }
         expSlider.value = Mathf.Lerp(expSlider.value, currentExp, Time.deltaTime * 5f);
     }

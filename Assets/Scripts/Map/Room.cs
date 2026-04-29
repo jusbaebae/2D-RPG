@@ -1,0 +1,221 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class Room : MonoBehaviour
+{
+    public Vector2Int gridPos;
+    public RoomType type;
+
+    public List<DoorSlot> doorSlots;
+    public Transform spawnPoint;
+    public List<GameObject> BossSpawnPoint;
+    public PolygonCollider2D confiner;
+
+    public bool isCleared = false;
+    private bool playerInside = false;
+
+    [SerializeField] private GameObject monsterPrefab;
+    [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private GameObject portalPrefab;
+    [SerializeField] private GameObject TreasureBox;
+    [SerializeField] private LayerMask obstacleLayer;
+    private int aliveMonsterCount = 0;
+
+    Vector3 debugPos; //디버그용
+
+    void Awake()
+    {
+        foreach (var slot in doorSlots)
+        {
+            slot.wall.SetActive(true);
+            slot.door.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (playerInside) return;
+
+        if (collision.CompareTag("Player"))
+        {
+            //Debug.Log("플레이어 인식완료!");
+            playerInside = true;
+
+            if (!isCleared)
+            {
+                CloseDoors();
+                if (type == RoomType.Start)
+                {
+                    ClearRoom();
+                }
+                else if (type == RoomType.Normal) 
+                {
+                    SpawnMonsters();
+                } 
+                else if (type == RoomType.Boss)
+                {
+                    SpawnMonsters();
+                    SpawnBoss(); //보스잡으면 나머지 몬스터 다죽게 설정해보기
+                    aliveMonsterCount++; //보스 1마리추가
+                }
+                else if (type == RoomType.Treasure)
+                {
+                    ClearRoom();
+                    TreasureBox.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void SpawnMonsters()
+    {
+        int spawnCount = Random.Range(4, 7);
+
+        List<Vector3> positions = new List<Vector3>();
+        aliveMonsterCount = 0;
+        
+        for (int i = 0; i < spawnCount; i++)
+        {
+            Vector3 center = transform.position;
+            float radius = 10f;
+            Vector3 pos = GetValidPositionInCircle(center, radius, positions);
+            debugPos = pos;
+
+            if (float.IsInfinity(pos.x) || float.IsInfinity(pos.y)) continue; //불가능한 자리면 넘기기
+
+            GameObject monster = Instantiate(monsterPrefab, pos, Quaternion.identity);
+            monster.GetComponent<Enemy_Health>().Init(this);
+
+            positions.Add(pos);
+            aliveMonsterCount++;
+        }
+
+       //Debug.Log("몬스터 생성");
+    }
+
+    public void SpawnBoss()
+    {
+        if (BossSpawnPoint.Count == 0) return;
+
+        //랜덤 위치 선택
+        int index = Random.Range(0, BossSpawnPoint.Count);
+        GameObject spawnPoint = BossSpawnPoint[index];
+
+        GameObject boss = Instantiate(bossPrefab, spawnPoint.transform.position, Quaternion.identity);
+
+        Boss_Health bossScript = boss.GetComponent<Boss_Health>();
+        bossScript.Init(this);
+        bossScript.Ondeath += () => SpawnPortal(boss.transform.position);
+        bossScript.Ondeath += () => ClearRoom();
+        //Debug.Log("보스 생성");
+    }
+
+    void SpawnPortal(Vector3 pos)
+    {
+        Instantiate(portalPrefab, pos, Quaternion.identity);
+    }
+
+    Vector3 GetValidPositionInCircle(Vector3 center, float radius, List<Vector3> existingPositions)
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            //원 안에서 랜덤 좌표 구하기
+            Vector2 rand = Random.insideUnitCircle * radius;
+            Vector3 pos = center + new Vector3(rand.x, rand.y, 0);
+
+            //장애물 체크
+            if (Physics2D.OverlapCircle(pos, 1f, obstacleLayer)) continue;
+
+            //플레이어 주변에 생성 안되게
+            if (Vector2.Distance(pos, spawnPoint.position) < 5f) continue;
+
+            
+            bool tooClose = false;
+            //몬스터 간 거리 체크
+            foreach (var other in existingPositions)
+            {
+                if (Vector3.Distance(pos, other) < 3f)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+
+            if (tooClose)
+                continue;
+
+            return pos;
+        }
+
+        return Vector3.negativeInfinity;
+    }
+
+    public void ClearRoom() //방안에 몬스터를 다 잡았는지 확인
+    {
+        //Debug.Log("클리어 처리 완료!");
+        isCleared = true;
+        OpenDoors(); //클리어하면 방안에 모든 문 열기
+    }
+
+    public void CloseDoors()
+    {
+        foreach (var slot in doorSlots)
+        {
+            if (slot.door.gameObject.activeSelf)
+            {
+                slot.door.Close();
+            }
+        }
+    }
+
+    public void OpenDoors()
+    {
+        foreach (var slot in doorSlots)
+        {
+            if (slot.door.gameObject.activeSelf)
+            {
+                slot.door.Open();
+            }
+        }
+    }
+
+    public void SetConnection(DoorDirection dir, Room room)
+    {
+        foreach (var slot in doorSlots)
+        {
+            if (slot.direction == dir)
+            {
+                slot.wall.SetActive(false);       // 벽 제거
+                slot.door.gameObject.SetActive(true); // 문 생성
+                CloseDoors();
+                slot.door.connectedRoom = room; //문이랑 연결된 방 저장
+            }
+        }
+    }
+
+    public void OnMonsterDead()
+    {
+        aliveMonsterCount--;
+
+        if (aliveMonsterCount <= 0)
+        {
+            ClearRoom();
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(debugPos, 10f);
+    }
+}
+
+public enum RoomType
+{
+    Start,
+    Normal,
+    Treasure,
+    Boss
+}

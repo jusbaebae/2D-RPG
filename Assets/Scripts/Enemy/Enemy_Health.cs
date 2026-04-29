@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class Enemy_Health : MonoBehaviour
 {
+    public Room room;
+
     public string Enemy_name;
     public int ExpReward;
 
@@ -46,6 +48,11 @@ public class Enemy_Health : MonoBehaviour
         QuestManager.Instance.AddProgress(QuestType.KillMonster, Enemy_name, 1);
         //Debug.Log(Enemy_name + "잡았다");
     }
+    public void Init(Room room)
+    {
+        this.room = room;
+    }
+
     public virtual void ChangeHealth(int amount)
     {
         hpBar.SetActive(true); //맞으면 표시
@@ -82,12 +89,13 @@ public class Enemy_Health : MonoBehaviour
         }
     }
 
-    protected void InvokeDeath() //죽었는지 확인하기
+    public void InvokeDeath() //죽었는지 확인하기
     {
         Ondeath?.Invoke();
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         OnMonsterDefeated(ExpReward);
         DropLoot();
+        room.OnMonsterDead();
         Destroy(gameObject);
     }
 }

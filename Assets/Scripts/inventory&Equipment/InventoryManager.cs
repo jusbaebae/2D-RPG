@@ -30,9 +30,15 @@ public class InventoryManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
         else
-            Destroy(gameObject);
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
     private void Start()
     {
@@ -290,7 +296,7 @@ public class InventoryManager : MonoBehaviour
             itemSlots[i].Set(item, itemData.count);
         }
 
-        gold = data.gold;
+        AddGold(data.gold);
     }
 
     public EquipmentData GetSaveEquipItemData() //장비 슬롯 데이터 저장

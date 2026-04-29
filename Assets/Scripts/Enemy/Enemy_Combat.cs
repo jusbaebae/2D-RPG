@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class Enemy_Combat : MonoBehaviour
 {
-    public int damage = 1;
+    public float damage = 1;
     public Transform attackPoint;
     public float weaponRange;
     public float knockbackforce;
     public float stunTime;
     public LayerMask playerLayer;
 
-    public void Attack()
+    protected void Attack()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, weaponRange, playerLayer);
 
         if(hits.Length > 0)
         {
-            hits[0].GetComponent<PlayerHealth>().ChangeHealth(-damage);
+            hits[0].GetComponent<PlayerHealth>().ChangeHealth(-(int)damage);
             hits[0].GetComponent<PlayerMovement>().Knockback(transform, knockbackforce, stunTime);
         }
     }
 
-    private void OnDrawGizmos()
+    protected void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, weaponRange);

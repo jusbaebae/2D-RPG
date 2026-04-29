@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     private int currentIndex;
 
     private bool canNext = false;
+    public bool blockInteract = false;
     public bool isquest; //퀘스트 마지막라인은 자동 스킵 불가능하게
 
     //타이핑 텍스트 효과
@@ -39,7 +40,16 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
         dialoguePanel.SetActive(false);
     }
 
@@ -127,12 +137,15 @@ public class DialogueManager : MonoBehaviour
 
     public void CloseDialogue()
     {
+        blockInteract = true;
+        StartCoroutine(ReleaseInteract());
+
         currentNPC?.OnDialogueClosed();
         currentNPC = null;
 
         UiManager.Instance.isInteract = false;
-
         pmove.isinteract = false;
+
         dialoguePanel.SetActive(false);
         nextIcon.SetActive(false);
         acceptButton.SetActive(false);
@@ -219,5 +232,11 @@ public class DialogueManager : MonoBehaviour
 
         currentQuestData = null;
         CloseDialogue();
+    }
+
+    private IEnumerator ReleaseInteract() //대화끝난후에 잠깐 대화 막기(중복대화 방지)
+    {
+        yield return new WaitForSeconds(0.2f);
+        blockInteract = false;
     }
 }

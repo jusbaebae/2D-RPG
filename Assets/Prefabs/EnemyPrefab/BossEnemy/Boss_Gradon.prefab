@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2835788535270501033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4979549679820534047}
+  - component: {fileID: 55523073838344275}
+  m_Layer: 7
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4979549679820534047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2835788535270501033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.97, y: -0.23, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2357135227481595503}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &55523073838344275
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2835788535270501033}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -1.0081177, y: 0.03574896}
+  m_Size: {x: 1.6582642, y: 2.1444502}
+  m_Direction: 0
 --- !u!1 &4416358518858460100
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 5611304918040569654}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.69, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -354,7 +423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26, y: 470.00015}
+  m_AnchoredPosition: {x: 26, y: 440}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7289773342485049247
@@ -412,14 +481,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -448,7 +517,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -81.80481, y: 0, z: -86.34961, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -466,12 +535,13 @@ GameObject:
   - component: {fileID: 7719017742699755589}
   - component: {fileID: 8753072903277165256}
   - component: {fileID: 1462708308985744361}
-  - component: {fileID: 4546912952230356204}
+  - component: {fileID: 120327683191845176}
   - component: {fileID: 8182329316624913385}
   - component: {fileID: 2139336278951871260}
   - component: {fileID: 2019151148891029020}
   - component: {fileID: 2540486550307809497}
   - component: {fileID: 8635272712857603734}
+  - component: {fileID: 522719066419927199}
   m_Layer: 7
   m_Name: Boss_Gradon
   m_TagString: Untagged
@@ -496,6 +566,7 @@ Transform:
   - {fileID: 8206851415148051698}
   - {fileID: 8911424380355944675}
   - {fileID: 8716443935854911271}
+  - {fileID: 4979549679820534047}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7719017742699755589
@@ -614,7 +685,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.043336153, y: -0.40898988}
   m_Size: {x: 1.5767512, y: 2.0290756}
   m_Direction: 0
---- !u!114 &4546912952230356204
+--- !u!114 &120327683191845176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -623,12 +694,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7770452429782829721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca409bcb1ccfa4747b1e862514b2a09f, type: 3}
+  m_Script: {fileID: 11500000, guid: ad8f0ef1d30e6634aaae3275c5cfc70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 10
   attackPoint: {fileID: 7035651835387892508}
-  weaponRange: 2
+  weaponRange: 2.5
   knockbackforce: 20
   stunTime: 0.3
   playerLayer:
@@ -650,15 +721,20 @@ MonoBehaviour:
   attackRange: 2
   attackCooldown: 1
   playerDetectRange: 7
+  originPlayerDetechRange: 0
   detectionPoint: {fileID: 8206851415148051698}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  isImmuneToKnockback: 0
   rb: {fileID: 0}
   player: {fileID: 0}
   skills:
   - {fileID: 8635272712857603734}
+  - {fileID: 522719066419927199}
+  isDead: 0
   isUsingSkill: 0
+  hasUsedHeal: 0
 --- !u!95 &2139336278951871260
 Animator:
   serializedVersion: 7
@@ -693,6 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d4f27ffca31e447a4f87010f777bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  room: {fileID: 0}
   Enemy_name: Boss_Gradon
   ExpReward: 30
   damageTextPrefab: {fileID: 6892059751814402074, guid: 044f8879c0402f04781339b55e8d4cb0, type: 3}
@@ -737,11 +814,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   telegraphObject: {fileID: 8482132693030578553}
+  hitbox: {fileID: 2835788535270501033}
   chargeSpeed: 20
   chargeTime: 1
   skillTime: 0.5
   maxDistance: 10
   moved: 0
+--- !u!114 &522719066419927199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770452429782829721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e576fdad6dbc6a478129317fbdc75e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss_health: {fileID: 2019151148891029020}
+  HealEffect: {fileID: 3253112666094814500, guid: f13481aeab0d149449a4abe35ea67b9a, type: 3}
+  cooldown: 30
+  anim: {fileID: 0}
 --- !u!1 &7824445371387172207
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,7 +902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 30, y: -30}
+  m_AnchoredPosition: {x: 30, y: -51}
   m_SizeDelta: {x: 1750, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7874846925803928814

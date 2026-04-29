@@ -27,11 +27,18 @@ public class QuestUIManager : MonoBehaviour
     private Dictionary<string, GameObject> questLogs = new Dictionary<string, GameObject>(); //퀘스트 UI용 딕셔너리
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
         descPanel.SetActive(false);
     }
-
-    
 
     public void AddQuestLog(QuestState questState)
     {
@@ -94,12 +101,12 @@ public class QuestUIManager : MonoBehaviour
 
         foreach (var pair in QuestManager.Instance.questStates)
         {
-            var questId = pair.Key;
             var state = pair.Value;
 
-            if (state.status == QuestStatus.Available) continue;
-
-            AddQuestLog(state);
+            if (state.status == QuestStatus.InProgress || state.status == QuestStatus.Complete) //퀘스트가 진행중일때 표시
+            {
+                AddQuestLog(state);
+            }
         }
     }
 }

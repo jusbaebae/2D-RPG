@@ -8,9 +8,20 @@ public class SkillManager : MonoBehaviour
 
     public Dictionary<int, int> skillLevels = new Dictionary<int, int>();
 
+    private bool hasRevived = false;
+
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
     private void OnEnable()
     {
@@ -78,10 +89,8 @@ public class SkillManager : MonoBehaviour
         {
             case 1003: //대쉬 -> 이미 있음
                 PlayerMovement.Instance.canDash = true;
-                PlayerMovement.Instance.cooltime = (int)slot.skillSo.levelData[slot.currentLevel].cooltime;
-                break;
-
-            case 1006: //부활 -> death함수에 따로 구분짓기
+                PlayerMovement.Instance.cooltime = slot.skillSo.levelData[slot.currentLevel].cooltime;
+                //Debug.Log((int)slot.skillSo.levelData[slot.currentLevel].cooltime);
                 break;
 
             default:
@@ -114,6 +123,27 @@ public class SkillManager : MonoBehaviour
 
             //Debug.Log(save.skillid + " currentlevel ->"+ skillLevels[save.skillid]);
         }
+    }
+
+    public bool TryRevive() //부활 가능여부 판단하기
+    {
+        int id = 1006; //부활 스킬id
+
+        if (hasRevived)
+            return false;
+
+        if (!skillLevels.TryGetValue(id, out int level))
+            return false;
+
+        if (level == 0)
+        {
+            hasRevived = true;
+            SkillSO skillSO = SkillDatabase.Instance.GetSkill(id);
+            PlayerSkillController.Instance.ExecuteSkill(skillSO, level);
+            return true;
+        }
+
+        return false;
     }
 
     KeyCode GetKeyForSkill(int skillId)
