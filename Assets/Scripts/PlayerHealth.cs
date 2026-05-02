@@ -66,13 +66,13 @@ public class PlayerHealth : MonoBehaviour
     void ShowDamage(int damage) //데미지 효과
     {
         GameObject dmg = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
-        dmg.GetComponent<DamageText>().SetDamage(damage);
+        dmg.GetComponent<DamageText>().SetDamage(damage,false);
     }
 
     public void ShowHeal(int Heal) //힐 텍스트 효과
     {
         GameObject dmg = Instantiate(HealTextPrefab, transform.position, Quaternion.identity);
-        dmg.GetComponent<DamageText>().SetDamage(Heal);
+        dmg.GetComponent<DamageText>().SetDamage(Heal,false);
     }
 
     IEnumerator HitFlash() //맞으면 깜빡이는 효과
@@ -118,7 +118,7 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator ReSpawn()
     {
         yield return new WaitForSeconds(0.5f);
-        SceneTransition.Instance.LoadTransition(GameManager.Instance.previousScene);
+        SceneTransition.Instance.StartTransition(SaveManager.Instance.respawnScene);
         yield return new WaitForSeconds(1f);
         StatsManager.Instance.UpdateHealth(9999);
         PlayerMovement.Instance.ChangeState(PlayerState.IDLE, 0);

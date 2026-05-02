@@ -72,7 +72,7 @@ public class Enemy_Health : MonoBehaviour
     protected void ShowDamage(int damage)
     {
         GameObject dmg = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
-        dmg.GetComponent<DamageText>().SetDamage(damage);
+        dmg.GetComponent<DamageText>().SetDamage(damage,StatsManager.Instance.isCrit);
     }
 
     public void DropLoot()
@@ -84,7 +84,8 @@ public class Enemy_Health : MonoBehaviour
                 int amount = Random.Range(loot.quantityRange.x, loot.quantityRange.y+1);
                 Vector3 offset = Random.insideUnitCircle * 1f;
                 GameObject obj = Instantiate(lootPrefab, transform.position + offset, Quaternion.identity);
-                obj.GetComponent<Loot>().Initialize(loot.itemSO, amount, true); 
+                obj.GetComponent<Loot>().Initialize(loot.itemSO, amount, true);
+                obj.GetComponent<ItemPop>().Pop();
             }
         }
     }
@@ -96,6 +97,7 @@ public class Enemy_Health : MonoBehaviour
         OnMonsterDefeated(ExpReward);
         DropLoot();
         room.OnMonsterDead();
+        room.spawnedMonsters.Remove(this);
         Destroy(gameObject);
     }
 }

@@ -562,16 +562,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c5f7e8f891f03428f8f69632029135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wanderRadius: 3
+  wanderMoveTime: 3
+  wanderIdleTime: 2
+  WanderSpeed: 2
   speed: 4
   attackRange: 1.2
   attackCooldown: 1.5
   playerDetectRange: 4
+  originPlayerDetechRange: 0
   detectionPoint: {fileID: 8206851415148051698}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  isImmuneToKnockback: 0
   rb: {fileID: 0}
   player: {fileID: 0}
+  anim: {fileID: 2139336278951871260}
 --- !u!95 &2139336278951871260
 Animator:
   serializedVersion: 7
@@ -606,6 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0d75fc350ce1b4c92a95521ddfcddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  room: {fileID: 0}
   Enemy_name: Enemy_Torch
   ExpReward: 3
   damageTextPrefab: {fileID: 6892059751814402074, guid: 044f8879c0402f04781339b55e8d4cb0, type: 3}
@@ -637,6 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180c19b39a2e21343b488c10f600852e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 7719017742699755589}
 --- !u!1 &7824445371387172207
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class UiManager : MonoBehaviour
     public StatsUi statsUi;
 
     private UIType currentOpenUI = UIType.None;
-    public bool isInteract;
+    public bool isInteract; //대화창 용도
 
     private void Awake()
     {
@@ -98,6 +98,7 @@ public class UiManager : MonoBehaviour
                 PanelBtnCS.SetBtn();
                 break;
         }
+        PlayerMovement.Instance.isinteract = true;
         currentOpenUI = type;
     }
 
@@ -112,6 +113,7 @@ public class UiManager : MonoBehaviour
 
         Time.timeScale = 1;
         currentOpenUI = UIType.None;
+        PlayerMovement.Instance.isinteract = false;
     }
 
     void SetUI(CanvasGroup ui, bool state)

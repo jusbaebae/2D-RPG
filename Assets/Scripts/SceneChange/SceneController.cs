@@ -35,6 +35,11 @@ public class SceneController : MonoBehaviour
         if(CurrentSceneType == SceneType.Town)
         {
             SaveManager.Instance.OnEnterTown();
+            AudioManager.Instance.PlayBgm(AudioManager.BgmType.Town);
+        }
+        if (CurrentSceneType == SceneType.Dungeon)
+        {
+            AudioManager.Instance.PlayBgm(AudioManager.BgmType.Dungeon);
         }
     }
 }

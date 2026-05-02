@@ -24421,8 +24421,14 @@ MonoBehaviour:
   - {fileID: 7029880684929962248}
   - {fileID: 3807335804551659715}
   confiner: {fileID: 4856963382697104170}
+  depth: 0
   isCleared: 0
-  monsterPrefab: {fileID: 7770452429782829721, guid: b84dee45926942b46af14232fa0a13ed, type: 3}
+  Monsters:
+  - {fileID: 11400000, guid: b61e1a439f4d9484888c1f9dbe1e399a, type: 2}
+  - {fileID: 11400000, guid: 95e44ca2bb63a064b954b977e100c4fb, type: 2}
+  - {fileID: 11400000, guid: 276a2e4f8dac57d4db7b61f4f49ccf02, type: 2}
+  - {fileID: 11400000, guid: 22c087d96c801c447b5622965f234548, type: 2}
+  spawnedMonsters: []
   bossPrefab: {fileID: 7770452429782829721, guid: 69bbab0bbf8b9ef4bb37f71704fc5edf, type: 3}
   portalPrefab: {fileID: 5385913401752869603, guid: ad75a323bbbd6d348b800bde7faec80f, type: 3}
   TreasureBox: {fileID: 5173610179547168650}

@@ -12,7 +12,8 @@ public class ReturnPortal : MonoBehaviour
     {
         if (canUse && Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene(GameManager.Instance.previousScene);
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
+            DungeonManager.Instance.uianim.Show(DungeonManager.Instance.ReturnUI);
             StartCoroutine(Save());
         }
     }
@@ -38,7 +39,7 @@ public class ReturnPortal : MonoBehaviour
 
     IEnumerator Save()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); //방이동시간
         SaveManager.Instance.SaveGame();
     }
 }

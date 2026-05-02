@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 4298500902878227045}
   - component: {fileID: 241196810816776124}
   - component: {fileID: 3758508764333404332}
-  - component: {fileID: 8910330737226613662}
+  - component: {fileID: 20230269901881504}
   m_Layer: 5
   m_Name: EnemyDamage
   m_TagString: Untagged
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3758508764333404332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8910330737226613662
+--- !u!114 &20230269901881504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,5 +249,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5d994f6df032b4eaf4909b3abb2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  lifeTime: 0.25
+  moveDistance: 1.5
+  duration: 0.8

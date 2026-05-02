@@ -174,10 +174,18 @@ public class DialogueManager : MonoBehaviour
     {
         isTyping = true;
         dialogueText.text = "";
+        int soundIndex = 0;
+
 
         foreach (char c in line)
         {
             dialogueText.text += c;
+            soundIndex++;
+
+            if(soundIndex % 3 == 0)
+            {
+                AudioManager.Instance.PlaySfx(AudioManager.Sfx.Dialogue);
+            }
             yield return new WaitForSeconds(0.04f);
         }
 

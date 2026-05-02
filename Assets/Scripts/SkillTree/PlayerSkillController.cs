@@ -43,7 +43,10 @@ public class PlayerSkillController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) AttemptSkill(KeyCode.LeftShift);
+        if (Input.GetKeyDown(KeyCode.LeftShift) && PlayerMovement.Instance.inputDir != Vector2.zero)
+        {
+            AttemptSkill(KeyCode.LeftShift);
+        } 
         if (Input.GetKeyDown(KeyCode.Z)) AttemptSkill(KeyCode.Z);
         if (Input.GetKeyDown(KeyCode.X)) AttemptSkill(KeyCode.X);
         if (Input.GetKeyDown(KeyCode.C) && InventoryManager.Instance.IsWeaponEquipped())

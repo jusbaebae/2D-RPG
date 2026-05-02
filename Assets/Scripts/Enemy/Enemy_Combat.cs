@@ -11,14 +11,15 @@ public class Enemy_Combat : MonoBehaviour
     public float stunTime;
     public LayerMask playerLayer;
 
-    protected void Attack()
+    public void Attack()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, weaponRange, playerLayer);
-
-        if(hits.Length > 0)
+        //Debug.Log(hits.Length);
+        if (hits.Length > 0)
         {
             hits[0].GetComponent<PlayerHealth>().ChangeHealth(-(int)damage);
             hits[0].GetComponent<PlayerMovement>().Knockback(transform, knockbackforce, stunTime);
+            //Debug.Log(attackPoint);
         }
     }
 

@@ -32,9 +32,10 @@ public class PlayerCombat : MonoBehaviour
         {
             timer = cooldown;
             playerMovement.ChangeState(PlayerState.ATTACK, 0);
+            playerMovement.isSlash = true;
+            StopAllCoroutines();
             StartCoroutine(AttackCall());
             AudioManager.Instance.PlaySfx(AudioManager.Sfx.Sword);
-            FinishAttacking();
         }
     }
     public void DealDamage() //일반 공격용(단일)
@@ -100,6 +101,7 @@ public class PlayerCombat : MonoBehaviour
             //적 위치에 이펙트 생성
             if (hitEffect != null)
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Sfx.Hit);
                 GameObject obj = Instantiate(hitEffect, enemyCol.transform.position, Quaternion.identity);
                 Destroy(obj, 1f);
             }
@@ -108,6 +110,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void FinishAttacking() //공격 끝나면 상태바꾸기
     {
+        playerMovement.isSlash = false;
         playerMovement.ChangeState(PlayerState.IDLE, 0);
     }
 
@@ -124,7 +127,8 @@ public class PlayerCombat : MonoBehaviour
     }
     IEnumerator AttackCall()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.3f);
         DealDamage();
+        FinishAttacking();
     }
 }

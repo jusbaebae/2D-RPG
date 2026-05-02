@@ -182,6 +182,7 @@ public class DungeonGenerator : MonoBehaviour
                 if (rooms.ContainsKey(next) && !distance.ContainsKey(next))
                 {
                     distance[next] = distance[current] + 1;
+                    rooms[next].depth = distance[next];
                     queue.Enqueue(next);
                 }
             }

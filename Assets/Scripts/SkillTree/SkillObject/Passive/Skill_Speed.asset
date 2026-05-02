@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillid: 1002
   skillName: "\uC774\uC18D \uD6C8\uB828"
-  skilldescription: "\uC774\uB3D9 \uC18D\uB3C4\uAC00 \uC99D\uAC00\uD55C\uB2E4"
+  skilldescription: "\uBC14\uB78C\uC744 \uC77D\uACE0 \uB300\uC9C0\uB97C \uB51B\uB294
+    \uAE30\uC220.\n\uC219\uB828 \uB2E8\uACC4\uAC00 \uB192\uC544\uC9C8\uC218\uB85D
+    \uC6C0\uC9C1\uC784\uC740 \n\uC810\uC810 \uC778\uAC04\uC758 \uC601\uC5ED\uC744
+    \uBC97\uC5B4\uB098\uAE30 \uC2DC\uC791\uD55C\uB2E4."
   skillIcon: {fileID: 21300000, guid: cb06b92c36c5d48d48323acc8e4ebe7d, type: 3}
   skillType: 0
   maxLevel: 5
@@ -36,7 +39,8 @@ MonoBehaviour:
     value: 5
     cooltime: 0
   - level: 5
-    requirePoint: 4
+    requirePoint: 5
     value: 10
     cooltime: 0
   skillSFX: {fileID: 0}
+  skillPrefab: {fileID: 0}

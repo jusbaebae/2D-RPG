@@ -11,8 +11,14 @@ public class ChargeHitbox : MonoBehaviour
     {
         if (coll.CompareTag("Player"))
         {
+            //Debug.Log("맞았다!!");
             coll.GetComponent<PlayerHealth>().ChangeHealth(-damage);
             coll.GetComponent<PlayerMovement>().Knockback(boss, 15, 0.3f);
+        }
+        else
+        {
+            //Debug.Log("뭔가 충돌함" + coll.name);
+            return;
         }
     }
 }

@@ -12,7 +12,7 @@ public class ChargeSkill : BossSkill
     public float chargeTime; //해당 시간만큼 돌진
     public float skillTime; //범위 표기후 돌진발동시간
     public float maxDistance;
-    public float moved = 0;
+    public float moved;
 
     public override IEnumerator UseSkill(Boss_Movement boss)
     {
@@ -28,8 +28,7 @@ public class ChargeSkill : BossSkill
         yield return new WaitForSeconds(skillTime);
 
         float timer = 0;
-        float maxDistance = 10f;
-        float moved = 0;
+        moved = 0;
 
         HideTelegraph();
 

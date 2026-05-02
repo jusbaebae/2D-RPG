@@ -25,6 +25,7 @@ public class MinimapManager : MonoBehaviour
 
     private void Awake()
     {
+        mapNameText.text = DungeonManager.Instance.dungeonName;
         Instance = this;
     }
 

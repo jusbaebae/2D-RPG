@@ -13,15 +13,18 @@ public class Room : MonoBehaviour
     public List<GameObject> BossSpawnPoint;
     public PolygonCollider2D confiner;
 
+    public int depth;
     public bool isCleared = false;
     private bool playerInside = false;
 
-    [SerializeField] private GameObject monsterPrefab;
+    [SerializeField] private List<MonsterData> Monsters;
+    public List<Enemy_Health> spawnedMonsters = new List<Enemy_Health>();
     [SerializeField] private GameObject bossPrefab;
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private GameObject TreasureBox;
     [SerializeField] private LayerMask obstacleLayer;
     private int aliveMonsterCount = 0;
+    
 
     Vector3 debugPos; //디버그용
 
@@ -71,8 +74,21 @@ public class Room : MonoBehaviour
 
     public void SpawnMonsters()
     {
-        int spawnCount = Random.Range(4, 7);
+        //깊이별로 몬스터 구분
+        List<MonsterData> validMonsters = Monsters.FindAll(m => depth >= m.minDepth && depth <= m.maxDepth && m.allowedRooms.Contains(this.type));
 
+        if (validMonsters.Count == 0)
+        {
+            Debug.LogWarning("이 방에 소환 가능한 몬스터가 없습니다!");
+            ClearRoom();
+            return;
+        }
+
+        //깊이별로 몬스터가 구분되면 몬스터의 가중치를 더해서 토탈 가중치구하기
+        int totalWeight = 0;
+        foreach (var m in validMonsters) totalWeight += m.weight;
+
+        int spawnCount = Random.Range(4, 7);
         List<Vector3> positions = new List<Vector3>();
         aliveMonsterCount = 0;
         
@@ -85,14 +101,36 @@ public class Room : MonoBehaviour
 
             if (float.IsInfinity(pos.x) || float.IsInfinity(pos.y)) continue; //불가능한 자리면 넘기기
 
-            GameObject monster = Instantiate(monsterPrefab, pos, Quaternion.identity);
+            //가중치를 기반으로 몬스터 뽑기
+            MonsterData selectedMonster = GetRandomMonster(validMonsters, totalWeight);
+            GameObject monster = Instantiate(selectedMonster.prefab, pos, Quaternion.identity);
             monster.GetComponent<Enemy_Health>().Init(this);
+
+            //생성된 몬스터들의 Enemy_Health를 리스트에 저장
+            Enemy_Health enemyHealth = monster.GetComponent<Enemy_Health>();
+            enemyHealth.Init(this);
+            spawnedMonsters.Add(enemyHealth);
 
             positions.Add(pos);
             aliveMonsterCount++;
         }
 
        //Debug.Log("몬스터 생성");
+    }
+
+    //가중치 랜덤 선택
+    private MonsterData GetRandomMonster(List<MonsterData> monsters, int totalWeight)
+    {
+        int pivot = Random.Range(0, totalWeight);
+        int currentWeight = 0;
+
+        foreach (var m in monsters)
+        {
+            currentWeight += m.weight;
+            if (pivot < currentWeight)
+                return m;
+        }
+        return monsters[0];
     }
 
     public void SpawnBoss()
@@ -108,8 +146,22 @@ public class Room : MonoBehaviour
         Boss_Health bossScript = boss.GetComponent<Boss_Health>();
         bossScript.Init(this);
         bossScript.Ondeath += () => SpawnPortal(boss.transform.position);
+        bossScript.Ondeath += () => KillAllMonsters();
         bossScript.Ondeath += () => ClearRoom();
         //Debug.Log("보스 생성");
+    }
+
+    //보스가 죽으면 잡몹들 한번에 처리
+    public void KillAllMonsters()
+    {
+        foreach (var monster in new List<Enemy_Health>(spawnedMonsters))
+        {
+            if (monster != null)
+            {
+                monster.InvokeDeath();
+            }
+        }
+        spawnedMonsters.Clear();
     }
 
     void SpawnPortal(Vector3 pos)

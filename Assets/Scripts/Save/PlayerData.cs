@@ -21,6 +21,4 @@ public class PlayerData
     public float speed;
     public int defense;
     public int skillPoint;
-
-    public bool canDash;
 }

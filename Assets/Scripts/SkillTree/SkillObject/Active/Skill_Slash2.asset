@@ -14,31 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillid: 1007
   skillName: "2\uB2E8 \uBCA0\uAE30"
-  skilldescription: "\uC801\uC5D0\uAC8C \uBE60\uB978 2\uC5F0\uC18D \uACF5\uACA9\uC744
-    \uAC00\uD55C\uB2E4\n(\uBB34\uAE30\uB97C \uC7A5\uCC29\uD574\uC57C\uC9C0 \uC0AC\uC6A9\uD560
-    \uC218 \uC788\uB2E4)"
+  skilldescription: "\uAC80\uACA9 \uC9C1\uD6C4 \uC774\uC5B4\uC9C0\uB294 \uCD08\uACE0\uC18D
+    \uC5F0\uC18D \uCC38\uACA9.\n\uC219\uB828\uB41C \uAC80\uC0AC\uB9CC\uC774 \uC0AC\uC6A9\uD560
+    \uC218 \uC788\uB294 \uC5F0\uC18D \uAC80\uC220\uC758 \uC815\uC218.\n(\uBB34\uAE30\uB97C
+    \uC7A5\uCC29\uD574\uC57C\uC9C0 \uC0AC\uC6A9\uD560 \uC218 \uC788\uB2E4)"
   skillIcon: {fileID: 21300000, guid: b855210befe62460880af947a417d021, type: 3}
   skillType: 1
   maxLevel: 5
   levelData:
   - level: 1
-    requirePoint: 20
+    requirePoint: 10
     value: 1
     cooltime: 13
   - level: 2
-    requirePoint: 20
+    requirePoint: 5
     value: 1.4
     cooltime: 11
   - level: 3
-    requirePoint: 24
+    requirePoint: 7
     value: 1.9
     cooltime: 9
   - level: 4
-    requirePoint: 28
+    requirePoint: 10
     value: 2.4
     cooltime: 7
   - level: 5
-    requirePoint: 30
+    requirePoint: 16
     value: 3
     cooltime: 6
   skillSFX: {fileID: 0}

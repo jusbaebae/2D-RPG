@@ -10,6 +10,7 @@ public class SkillInfo : MonoBehaviour
     public TMP_Text skillNameText;
     public TMP_Text skillDescriptionText;
     public TMP_Text skillTypeText;
+    public TMP_Text RequirePointText;
 
     [Header("현재 레벨 정보")]
     public TMP_Text levelText;
@@ -41,7 +42,6 @@ public class SkillInfo : MonoBehaviour
             skillTypeText.text = "패시브";
             skillTypeText.color = Color.blue;
         }
-        
 
         // 레벨 표시
         if (!isunlocked)
@@ -64,6 +64,17 @@ public class SkillInfo : MonoBehaviour
         // 현재 레벨 데이터 가져오기
         int index = Mathf.Clamp(currentLevel - 1, 0, skill.levelData.Length - 1);
         SkillLevelData data = skill.levelData[index];
+
+        // 요구 포인트 표시
+        if(currentLevel == skill.maxLevel)
+        {
+            RequirePointText.text = "";
+        }
+        else
+        {
+            RequirePointText.text = "필요 포인트 : " + skill.levelData[currentLevel].requirePoint.ToString();
+        }
+        
 
         List<string> stats = new List<string>();
 

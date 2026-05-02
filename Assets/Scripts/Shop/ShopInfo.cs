@@ -28,9 +28,12 @@ public class ShopInfo : MonoBehaviour
         itemDescriptionText.text = itemSO.itemDescription;
 
         List<string> stats = new List<string>();
-        if(itemSO.currentHealth > 0) stats.Add("체력: " + itemSO.currentHealth.ToString());
-        if (itemSO.damage > 0) stats.Add("공격력: " + itemSO.damage.ToString());
-        if (itemSO.speed > 0) stats.Add("이동속도: " + itemSO.speed.ToString());
+        if (itemSO.maxHealth > 0) stats.Add("최대체력\n+" + itemSO.maxHealth.ToString());
+        if (itemSO.currentHealth > 0) stats.Add("체력\n+" + itemSO.currentHealth.ToString());
+        if (itemSO.damage > 0) stats.Add("공격력\n+" + itemSO.damage.ToString());
+        if (itemSO.speed > 0) stats.Add("이동속도\n+" + itemSO.speed.ToString());
+        if (itemSO.defense > 0) stats.Add("방어력\n+" + itemSO.defense.ToString());
+        if (itemSO.crit > 0) stats.Add("치명타 확률\n+" + itemSO.crit.ToString());
 
         if (stats.Count <= 0)
             return;

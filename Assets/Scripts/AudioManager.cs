@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [Header("#BGM")]
-    public AudioClip bgmClip;
+    public AudioClip[] bgmClips;
     public float bgmVolume;
     AudioSource bgmPlayer;
 
@@ -18,9 +18,13 @@ public class AudioManager : MonoBehaviour
     AudioSource[] sfxPlayers;
     int channelindex;
 
+    public enum BgmType
+    {
+        Town,Dungeon
+    }
     public enum Sfx
     {
-        Sword,Arrow,Hit,Walk,Click,Cancel
+        Sword,Arrow,Hit,Walk,Click,Cancel,Cash,Dash,Heal,Dialogue,StrongHit,Treasure,Drop
     }
 
     void Awake()
@@ -37,13 +41,16 @@ public class AudioManager : MonoBehaviour
     }
     void Init()
     {
+        bgmVolume = PlayerPrefs.HasKey("BGM") ? PlayerPrefs.GetFloat("BGM") : 0.5f;
+        sfxVolume = PlayerPrefs.HasKey("SFX") ? PlayerPrefs.GetFloat("SFX") : 0.5f;
+
         //배경음 플레이어 초기화
         GameObject bgmObject = new GameObject("BgmPlayer");
         bgmObject.transform.parent = transform;
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
         bgmPlayer.playOnAwake = false;
+        bgmPlayer.volume = bgmVolume;
         bgmPlayer.loop = true;
-        bgmPlayer.clip = bgmClip;
 
         //효과음 플레이어 초기화
         GameObject sfxObject = new GameObject("SfxPlayer");
@@ -57,7 +64,6 @@ public class AudioManager : MonoBehaviour
         }
 
         ApplyVolume();
-        PlayBgm(true);
     }
 
     public void PlaySfx(Sfx sfx)
@@ -70,26 +76,49 @@ public class AudioManager : MonoBehaviour
         Destroy(temp, temp.clip.length);
     }
 
-    public void PlayBgm(bool isPlay)
+    public void PlayBgm(BgmType type)
     {
-        if (isPlay)
+        int index = (int)type;
+
+        if (index < 0 || index >= bgmClips.Length)
         {
-            if (bgmPlayer.clip != null && !bgmPlayer.isPlaying)
-            {
-                bgmPlayer.Play();
-            }
+            Debug.LogWarning("BGM 없음");
+            return;
         }
-        else
+
+        AudioClip clip = bgmClips[index];
+
+        if (bgmPlayer.clip == clip && bgmPlayer.isPlaying)
+            return;
+
+        StartCoroutine(FadeBgm(clip));
+    }
+
+    IEnumerator FadeBgm(AudioClip newClip)
+    {
+        float t = bgmVolume;
+
+        while (bgmPlayer.volume > 0.01f)
         {
-            bgmPlayer.Stop();
+            bgmPlayer.volume -= Time.deltaTime;
+            yield return null;
+        }
+
+        bgmPlayer.volume = 0f;
+        bgmPlayer.clip = newClip;
+        bgmPlayer.Play();
+
+        while (bgmPlayer.volume < t)
+        {
+            bgmPlayer.volume += Time.deltaTime;
+            yield return null;
         }
     }
 
     public void SetBGM(float value)
     {
         bgmVolume = value;
-        if (bgmPlayer != null)
-            bgmPlayer.volume = bgmVolume;
+        if (bgmPlayer != null) bgmPlayer.volume = bgmVolume;
 
         PlayerPrefs.SetFloat("BGM", bgmVolume);
     }
@@ -100,8 +129,7 @@ public class AudioManager : MonoBehaviour
 
         foreach (var sfx in sfxPlayers)
         {
-            if (sfx != null)
-                sfx.volume = sfxVolume;
+            if (sfx != null) sfx.volume = sfxVolume;
         }
 
         PlayerPrefs.SetFloat("SFX", sfxVolume);

@@ -61,7 +61,7 @@ public class SaveManager : MonoBehaviour
 
         StartCoroutine(LoadSceneAndRestoreData(data));
 
-        Debug.Log("현재파일: "+ data +"로드가 정상적으로 완료되었습니다"); ;
+        Debug.Log("현재파일: "+ data +"로드가 정상적으로 완료되었습니다");
     }
     public bool HasSaveData()
     {

@@ -15,8 +15,8 @@ public class SettingUI : MonoBehaviour
     private void Start()
     {
         // 저장값 불러오기
-        bgmSlider.value = PlayerPrefs.GetFloat("BGM", 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFX", 1f);
+        bgmSlider.value = PlayerPrefs.GetFloat("BGM", 0.5f);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFX", 0.5f);
 
         // 초기 적용
         AudioManager.Instance.SetBGM(bgmSlider.value);
@@ -25,7 +25,6 @@ public class SettingUI : MonoBehaviour
         // 이벤트 연결
         bgmSlider.onValueChanged.AddListener(AudioManager.Instance.SetBGM);
         sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFX);
-
     }
 
     void Update()

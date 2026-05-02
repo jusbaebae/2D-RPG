@@ -28,7 +28,7 @@ public class Boss_Movement : Enemy_Movement
             //현재 애니메이션 중지
             if (enemyState == EnemyState.Idle)
                 anim.SetBool("IsIdle", false);
-            else if (enemyState == EnemyState.Chasing)
+            else if (enemyState == EnemyState.Chasing || enemyState == EnemyState.Wander)
                 anim.SetBool("IsMoving", false);
             else if (enemyState == EnemyState.Attacking)
                 anim.SetBool("IsAttacking", false);

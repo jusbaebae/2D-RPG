@@ -14,29 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillid: 1005
   skillName: "\uD790"
-  skilldescription: "\uCCB4\uB825\uC744 \uC77C\uC815\uB7C9 \uD68C\uBCF5\uD55C\uB2E4"
+  skilldescription: "\uC0DD\uBA85\uC758 \uB9C8\uB825\uC744 \uB04C\uC5B4\uB0B4 \uC0C1\uCC98\uB97C
+    \uCE58\uC720\uD558\uB294 \uD68C\uBCF5 \uB9C8\uBC95.\n\uC808\uB9DD\uC801\uC778
+    \uC0C1\uD669\uC5D0\uC11C\uB3C4 \uB2E4\uC2DC \uC77C\uC5B4\uC124 \uC218 \uC788\uAC8C
+    \uB9CC\uB4DC\uB294 \uD76C\uB9DD\uC758 \uD798."
   skillIcon: {fileID: 21300000, guid: 8da8c5946ece14d55966ca178fda2632, type: 3}
   skillType: 1
   maxLevel: 5
   levelData:
   - level: 1
-    requirePoint: 20
+    requirePoint: 10
     value: 5
     cooltime: 30
   - level: 2
-    requirePoint: 10
+    requirePoint: 4
     value: 12
     cooltime: 30
   - level: 3
-    requirePoint: 15
+    requirePoint: 6
     value: 20
     cooltime: 30
   - level: 4
-    requirePoint: 20
+    requirePoint: 8
     value: 30
     cooltime: 30
   - level: 5
-    requirePoint: 30
+    requirePoint: 10
     value: 50
     cooltime: 30
   skillSFX: {fileID: 0}

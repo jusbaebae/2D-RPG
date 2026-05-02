@@ -7,6 +7,8 @@ using UnityEngine;
 public class SkillMessageUI : MonoBehaviour
 {
     public static SkillMessageUI Instance;
+    
+    public UIAnim uianim;
 
     public bool isOpen = false;
 
@@ -24,7 +26,6 @@ public class SkillMessageUI : MonoBehaviour
         Instance = this;
 
         panel.SetActive(false);
-
         OkButton.onClick.AddListener(Confirm);
         NoButton.onClick.AddListener(Close);
         CancelButton.onClick.AddListener(Close);
@@ -35,7 +36,8 @@ public class SkillMessageUI : MonoBehaviour
         targetSlot = slot;
         isOpen = true;
 
-        panel.SetActive(true);
+        uianim.Show(panel);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
         messageText.text = $"{slot.skillSo.skillName} 스킬을\n해금하시겠습니까?";
 
         OkButton.gameObject.SetActive(true);
@@ -48,7 +50,8 @@ public class SkillMessageUI : MonoBehaviour
         targetSlot = slot ;
         isOpen = true;
 
-        panel.SetActive(true);
+        uianim.Show(panel);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
         messageText.text = $"{slot.skillSo.skillName} 스킬을\n레벨 업 하시겠습니까?";
 
         OkButton.gameObject.SetActive(true);
@@ -60,7 +63,8 @@ public class SkillMessageUI : MonoBehaviour
     {
         isOpen = true;
 
-        panel.SetActive(true);
+        uianim.Show(panel);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
         if (!slot.isUnlocked)
         {
             messageText.text = "아직 해금할 수 없습니다.\n선행 스킬을 먼저 마스터 해주세요.";
@@ -79,7 +83,8 @@ public class SkillMessageUI : MonoBehaviour
     {
         isOpen = true;
 
-        panel.SetActive(true);
+        uianim.Show(panel);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
         messageText.text = "포인트가 부족합니다.";
 
         OkButton.gameObject.SetActive(false);
@@ -90,13 +95,17 @@ public class SkillMessageUI : MonoBehaviour
     private void Confirm()
     {
         targetSlot?.TryUpgradeSkill();
-        Close();
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
+        isOpen = false;
+        targetSlot = null;
+        uianim.Hide(panel);
     }
 
     private void Close()
     {
         isOpen = false;
         targetSlot = null;
-        panel.SetActive(false);
+        uianim.Hide(panel);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Cancel);
     }
 }

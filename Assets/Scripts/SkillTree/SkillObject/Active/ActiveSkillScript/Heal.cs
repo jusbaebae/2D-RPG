@@ -7,6 +7,7 @@ public class Heal : ISkillLogic
     public IEnumerator Execute(PlayerMovement player, SkillSO skill, int level)
     {
         player.ChangeState(PlayerState.OTHER, 1);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Heal);
 
         yield return new WaitForSeconds(0.2f);
 

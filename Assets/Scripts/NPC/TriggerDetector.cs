@@ -14,8 +14,11 @@ public class TriggerDetector : MonoBehaviour
     private void Awake()
     {
         npc = GetComponent<NPCController>();
-        npcname.text = npc.Name;
-        npcnamebox.SetActive(true);
+        if(npcname != null && npcnamebox != null)
+        {
+            npcname.text = npc.Name;
+            npcnamebox.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

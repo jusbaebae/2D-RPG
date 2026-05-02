@@ -11,6 +11,7 @@ public class SettingPanel : MonoBehaviour
     public GameObject villageMenu;
     public GameObject QuitMenu;
 
+    public SettingUI setui;
     public UIAnim uiAnim;
     private SubMenuType currentType;
 
@@ -67,6 +68,9 @@ public class SettingPanel : MonoBehaviour
                 break;
         }
 
+        PlayerPrefs.SetFloat("BGM", setui.bgmSlider.value);
+        PlayerPrefs.SetFloat("SFX", setui.sfxSlider.value);
+        PlayerPrefs.Save();
         currentType = SubMenuType.None;
     }
 
@@ -82,7 +86,7 @@ public class SettingPanel : MonoBehaviour
     {
         OnClose(SubMenuType.Village);
         UiManager.Instance.CloseAll();
-        SceneTransition.Instance.LoadTransition(GameManager.Instance.previousScene);
+        SceneTransition.Instance.StartTransition(GameManager.Instance.previousScene);
     }
     public void OnComfirmQuit()
     {

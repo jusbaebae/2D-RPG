@@ -296,7 +296,8 @@ public class InventoryManager : MonoBehaviour
             itemSlots[i].Set(item, itemData.count);
         }
 
-        AddGold(data.gold);
+        gold = data.gold;
+        goldText.text = gold.ToString();
     }
 
     public EquipmentData GetSaveEquipItemData() //장비 슬롯 데이터 저장

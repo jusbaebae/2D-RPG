@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4979549679820534047}
   - component: {fileID: 55523073838344275}
-  m_Layer: 7
+  - component: {fileID: 471022878243269284}
+  m_Layer: 11
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,9 +67,23 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -1.0081177, y: 0.03574896}
-  m_Size: {x: 1.6582642, y: 2.1444502}
+  m_Offset: {x: -1.0759823, y: 0.03574896}
+  m_Size: {x: 1.7939944, y: 2.1444502}
   m_Direction: 0
+--- !u!114 &471022878243269284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2835788535270501033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5eec9203bee25a49b5a72d89fe3c598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
+  boss: {fileID: 2357135227481595503}
 --- !u!1 &4416358518858460100
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,6 +732,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f07c3a4499a2d34aa7c560212be6640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wanderRadius: 3
+  wanderMoveTime: 3
+  wanderIdleTime: 2
   speed: 7
   attackRange: 2
   attackCooldown: 1
@@ -726,9 +744,13 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   isImmuneToKnockback: 0
   rb: {fileID: 0}
   player: {fileID: 0}
+  anim: {fileID: 2139336278951871260}
   skills:
   - {fileID: 8635272712857603734}
   - {fileID: 522719066419927199}
@@ -801,6 +823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180c19b39a2e21343b488c10f600852e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 7719017742699755589}
 --- !u!114 &8635272712857603734
 MonoBehaviour:
   m_ObjectHideFlags: 0

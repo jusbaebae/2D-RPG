@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(AutoSaveRoutine());
+        AudioManager.Instance.PlayBgm(AudioManager.BgmType.Town);
     }
 
     private void MarkPersistentObject()
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "StartScene") return;
 
-            SaveManager.Instance.SaveGame();
+        SaveManager.Instance.SaveGame();
     }
 
     private void CleanUpAndDestroy()
@@ -72,6 +73,14 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60f);
             if (!SceneManager.GetActiveScene().isLoaded) continue;
+
+            string sceneName = SceneManager.GetActiveScene().name;
+            if (sceneName == "StartScene") //시작씬이면 자동저장X
+            {
+                //Debug.Log("시작 씬이므로 자동 저장을 건너뜁니다.");
+                continue;
+            }
+
             SaveManager.Instance.SaveGame();
         }
     }

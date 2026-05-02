@@ -15,6 +15,8 @@ public class ShopPopup : MonoBehaviour
     int playerGold;
     int unitPrice; //슬롯 구매가
 
+    public UIAnim uianim;
+
     public GameObject Popup;
 
     public Slider amountSlider;
@@ -33,8 +35,8 @@ public class ShopPopup : MonoBehaviour
 
     public void OpenPopup(ItemSO item, ShopMode mode, int price, int playerGold, int playerItemCount)
     {
-        Popup.SetActive(true);
-
+        uianim.Show(Popup);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
         currentItem = item;
         currentMode = mode;
         unitPrice = price;
@@ -126,7 +128,8 @@ public class ShopPopup : MonoBehaviour
             ShopManager.Instance.SellItem(currentItem, currentAmount);
         }
 
-        ClosePopup();
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Cash);
+        uianim.Hide(Popup);
     }
 
     public void OnSliderChanged(float value)
@@ -138,7 +141,8 @@ public class ShopPopup : MonoBehaviour
 
     public void ClosePopup()
     {
-        Popup.SetActive(false);
+        uianim.Hide(Popup);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Cancel);
         UpdateUI();
     }
 }

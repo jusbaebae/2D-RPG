@@ -40,6 +40,7 @@ public class TreasureBox : MonoBehaviour
     }
     void Open()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Treasure);
         GetComponent<Collider2D>().enabled = false;
 
         isOpened = true;

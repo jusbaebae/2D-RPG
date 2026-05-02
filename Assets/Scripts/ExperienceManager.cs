@@ -41,7 +41,7 @@ public class ExperienceManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            GainExperience(10);
+            GainExperience(100);
         }
         expSlider.value = Mathf.Lerp(expSlider.value, currentExp, Time.deltaTime * 5f);
     }
@@ -49,7 +49,7 @@ public class ExperienceManager : MonoBehaviour
     public void GainExperience(int amount)
     {
         currentExp += amount;
-        if(currentExp >= expToLevel)
+        while (currentExp >= expToLevel)
         {
             LevelUp();
         }
@@ -71,9 +71,10 @@ public class ExperienceManager : MonoBehaviour
     {
         level++;
         currentExp -= expToLevel;
-        SkillTreeManager.Instance.availablePoints += 3;
-        expToLevel = Mathf.RoundToInt(expToLevel * expGrowthMultiplier);
-        OnLevelUp?.Invoke(1);
+        if (level < 20) expToLevel = Mathf.CeilToInt(expToLevel * 1.1f);
+        else if (level < 50) expToLevel = Mathf.CeilToInt(expToLevel * 1.07f);
+        else expToLevel = Mathf.CeilToInt(expToLevel * 1.04f);
+        OnLevelUp?.Invoke(4);
     }
 
     public void UpdateUi()
@@ -93,6 +94,7 @@ public class ExperienceManager : MonoBehaviour
     {
         level = data.level;
         currentExp = data.exp;
+        expToLevel = data.maxexp;
 
         UpdateUi();
     }

@@ -6,14 +6,13 @@ public class Enemy_KnockBack : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Enemy_Movement enemy_Movement;
-    SpriteRenderer sprite;
+    public SpriteRenderer sprite;
     Color originalColor;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         enemy_Movement = GetComponent<Enemy_Movement>();
-        sprite = GetComponent<SpriteRenderer>();
         originalColor = sprite.color;
     }
 

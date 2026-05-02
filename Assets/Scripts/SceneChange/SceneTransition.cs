@@ -8,7 +8,7 @@ public class SceneTransition : MonoBehaviour
 {
     public static SceneTransition Instance;
 
-    public RectTransform panel;
+    public CanvasGroup panel;
     public float duration = 0.2f;
     public float holdTime = 0.5f;
 
@@ -22,7 +22,6 @@ public class SceneTransition : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
-        panel.localScale = Vector3.zero;
     }
 
     public void StartTransition(string sceneName)
@@ -37,12 +36,13 @@ public class SceneTransition : MonoBehaviour
 
     public IEnumerator TransitionRoutine(string sceneName, bool isload)
     {
-        panel.localScale = Vector3.zero;
-
-        yield return panel.DOScale(1.1f, duration).SetEase(Ease.InOutExpo) .WaitForCompletion();
+        panel.alpha = 0f;
+        panel.gameObject.SetActive(true);
 
         //씬이동
         GameManager.Instance.ActiveAll();
+        GameManager.Instance.previousScene = SceneManager.GetActiveScene().name;
+        yield return panel.DOFade(1f, duration).SetEase(Ease.InOutExpo).WaitForCompletion();
         if (isload)
         {
             SaveManager.Instance.LoadGame();
@@ -59,6 +59,6 @@ public class SceneTransition : MonoBehaviour
 
         yield return new WaitForSeconds(holdTime);
 
-        yield return panel.DOScale(0f, duration).SetEase(Ease.InExpo).WaitForCompletion();
+        yield return panel.DOFade(0f, duration).SetEase(Ease.InExpo).WaitForCompletion();
     }
 }

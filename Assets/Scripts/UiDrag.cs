@@ -8,9 +8,6 @@ public class UiDrag : MonoBehaviour, IDragHandler
     public RectTransform targetPanel;
     public Canvas canvas;
 
-
-    private Vector2 offset;
-
     void Start()
     {
         if (canvas == null)

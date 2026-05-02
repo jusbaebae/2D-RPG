@@ -108,7 +108,8 @@ public class SkillTreeManager : MonoBehaviour
             {
                 skillid = slot.skillSo.skillid,
                 currentLevel = slot.currentLevel,
-                isUnlocked = slot.isUnlocked
+                isUnlocked = slot.isUnlocked,
+                isUnlockable = slot.isUnlockable
             });
         }
 
@@ -125,7 +126,13 @@ public class SkillTreeManager : MonoBehaviour
                 {
                     slot.currentLevel = save.currentLevel;
                     slot.isUnlocked = save.isUnlocked;
+                    slot.isUnlockable = save.isUnlockable;
                     slot.UpdateUI(); //UI업데이트 필수
+
+                    if(slot.skillSo.skillid == 1003 && slot.isUnlocked)
+                    {
+                        PlayerMovement.Instance.canDash = true;
+                    }
                 }
             }
         }

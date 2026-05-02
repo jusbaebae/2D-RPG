@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isKnockBack;
     public bool isShooting;
     public bool isInvincible;
+    public bool isSlash;
 
     public SPUM_Prefabs spum;
     public PlayerCombat playerCombat;
@@ -56,6 +57,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (isKnockBack) return;
 
+        if (Input.GetButtonDown("Dash") && canDash)
+        {
+            dashInput = true;
+            if (isSlash)
+            {
+                isSlash = false;
+                playerCombat.StopAllCoroutines();
+                ChangeState(PlayerState.IDLE, 0);
+            }
+        }
+
         if (isinteract) //대화중일때 이동 무시
         {
             inputDir = Vector2.zero;
@@ -65,26 +77,27 @@ public class PlayerMovement : MonoBehaviour
         inputDir.x = Input.GetAxisRaw("Horizontal");
         inputDir.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("Slash") && playerCombat.enabled == true && Time.timeScale != 0)
+        if (Input.GetButtonDown("Slash") && playerCombat.enabled && Time.timeScale != 0)
         {
             playerCombat.Attack();
-        }
-
-        if (Input.GetButtonDown("Dash") && canDash)
-        {
-            dashInput = true;
+            rb.velocity = Vector2.zero;
         }
     }
 
     void FixedUpdate()
     {
         if (currentState == PlayerState.DEATH) return;
-        if (currentState == PlayerState.ATTACK) return;
 
         if (dashInput) //대쉬
         {
             Dash(inputDir, 30f, 0.1f);
             dashInput = false;
+            return;
+        }
+
+        if (currentState == PlayerState.ATTACK || isSlash)
+        {
+            rb.velocity = Vector2.zero;
             return;
         }
 
@@ -139,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = Vector2.zero; //기존 속도 제거
         rb.velocity = dashDir * force;
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Dash);
 
         StartCoroutine(DashCoroutine(time));
         StartCoroutine(DashCooldown());
@@ -182,7 +196,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pos = transform.position;
         data.posx = pos.x;
         data.posy = pos.y;
-        data.canDash = canDash; //대쉬 해금여부
         data.cooltime = cooltime;
 
         // 스탯
@@ -196,13 +209,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetLoadData(PlayerData data)
     {
-        canDash = data.canDash;
         cooltime = data.cooltime;
 
-        // 스탯 복원
+        //스탯 복원
         StatsManager.Instance.LoadFromData(data);
 
-        // 경험치 복원
+        //경험치 복원
         ExperienceManager.Instance.LoadFromData(data);
 
         //스킬 포인트 복원
