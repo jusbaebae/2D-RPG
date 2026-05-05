@@ -127,7 +127,6 @@ public class DungeonGenerator : MonoBehaviour
     {
         Room roomA = rooms[a];
         Room roomB = rooms[b];
-
         Vector2Int dir = b - a;
 
         if (dir == Vector2Int.right)
@@ -245,6 +244,6 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         rooms[startPos].type = RoomType.Start; //시작점은 시작방
-        DungeonManager.Instance.EnterRoom(rooms[startPos]); //시작방 입장처리
+        DungeonManager.Instance.StartRoom(rooms[startPos]); //시작방 입장처리
     }
 }

@@ -19,16 +19,25 @@ public class SkillMessageUI : MonoBehaviour
     public Button NoButton;
     public Button CancelButton;
 
-    private SkillsSlot targetSlot;
+    public SkillsSlot targetSlot;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
 
         panel.SetActive(false);
         OkButton.onClick.AddListener(Confirm);
-        NoButton.onClick.AddListener(Close);
-        CancelButton.onClick.AddListener(Close);
+        NoButton.onClick.AddListener(CloseWithSound);
+        CancelButton.onClick.AddListener(CloseWithSound);
     }
 
     public void ShowUnlockUi(SkillsSlot slot)
@@ -101,11 +110,19 @@ public class SkillMessageUI : MonoBehaviour
         uianim.Hide(panel);
     }
 
-    private void Close()
+    public void Close(bool playSound = true)
     {
         isOpen = false;
         targetSlot = null;
         uianim.Hide(panel);
-        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Cancel);
+        if (playSound)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Cancel);
+        }
+    }
+
+    private void CloseWithSound()
+    {
+        Close();
     }
 }

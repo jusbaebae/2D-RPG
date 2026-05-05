@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eec9203bee25a49b5a72d89fe3c598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 75
   boss: {fileID: 2357135227481595503}
 --- !u!1 &4416358518858460100
 GameObject:
@@ -195,10 +195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -256,7 +256,7 @@ RectTransform:
   m_Father: {fileID: 4784418213596866850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 5.048828, y: 0.23180008}
   m_SizeDelta: {x: -4.8577, y: -24.989}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 522719066419927199}
   m_Layer: 7
   m_Name: Boss_Gradon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,7 +652,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a1eca1eedbeff8744a1ff88699fb141f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -661,7 +661,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1462708308985744361
 CapsuleCollider2D:
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad8f0ef1d30e6634aaae3275c5cfc70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 30
   attackPoint: {fileID: 7035651835387892508}
   weaponRange: 2.5
   knockbackforce: 20
@@ -732,13 +732,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f07c3a4499a2d34aa7c560212be6640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 3
+  wanderRadius: 7
   wanderMoveTime: 3
   wanderIdleTime: 2
+  WanderSpeed: 0
   speed: 7
   attackRange: 2
   attackCooldown: 1
-  playerDetectRange: 7
+  playerDetectRange: 17
   originPlayerDetechRange: 0
   detectionPoint: {fileID: 8206851415148051698}
   playerLayer:
@@ -793,23 +794,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   room: {fileID: 0}
   Enemy_name: Boss_Gradon
-  ExpReward: 30
+  ExpReward: 500
   damageTextPrefab: {fileID: 6892059751814402074, guid: 044f8879c0402f04781339b55e8d4cb0, type: 3}
   deathEffect: {fileID: 161544526464053854, guid: 17c038d1379ff404f86e2e69f20cac04, type: 3}
-  currentHealth: 2000
-  maxHealth: 2000
+  currentHealth: 5000
+  maxHealth: 5000
   hpSlider: {fileID: 7874846925803928814}
   hpBar: {fileID: 4585958877994073283}
   lootTable:
   - itemSO: {fileID: 11400000, guid: bd0b56613b26dbd449db876ce36792e2, type: 2}
-    quantityRange: {x: 50, y: 85}
+    quantityRange: {x: 380, y: 450}
     dropChance: 1
-  - itemSO: {fileID: 11400000, guid: 1b2653b809a15ec46b58cfc03758a404, type: 2}
-    quantityRange: {x: 1, y: 3}
-    dropChance: 0.5
-  - itemSO: {fileID: 11400000, guid: 0fe9ae7d262f4b04c86507245ba29348, type: 2}
-    quantityRange: {x: 1, y: 2}
+  - itemSO: {fileID: 11400000, guid: 50437ff98346e5c48b9db181abd78af6, type: 2}
+    quantityRange: {x: 1, y: 1}
     dropChance: 0.2
+  - itemSO: {fileID: 11400000, guid: 666f6fe3f8b67494485c3458c3d089bb, type: 2}
+    quantityRange: {x: 1, y: 1}
+    dropChance: 0.05
+  - itemSO: {fileID: 11400000, guid: b3a94bf3b80149f40899dcb95693cb8f, type: 2}
+    quantityRange: {x: 1, y: 1}
+    dropChance: 0.18
   lootPrefab: {fileID: 3378524218417718250, guid: f4a7b24785935d2468e342b9ddb3c9dd, type: 3}
 --- !u!114 &2540486550307809497
 MonoBehaviour:
@@ -884,7 +888,7 @@ Transform:
   m_GameObject: {fileID: 7824445371387172207}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.94, y: 0, z: 0}
+  m_LocalPosition: {x: 1.05, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

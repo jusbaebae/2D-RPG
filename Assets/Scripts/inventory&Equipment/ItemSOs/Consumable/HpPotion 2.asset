@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: HpPotion 2
   m_EditorClassIdentifier: 
   itemName: "\uCCB4\uB825\uD3EC\uC158(\uB300)"
-  itemDescription: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uC2DC\uD0A4\uB294 \uD3EC\uC158\n\uC0AC\uC6A9\uC2DC
-    \uCCB4\uB825\uC774 150\uD68C\uBCF5\uB41C\uB2E4."
+  itemDescription: "\uCCB4\uB825\uC744 \uB9CE\uC774 \uD68C\uBCF5\uC2DC\uD0A4\uB294
+    \uD3EC\uC158\n\uC0AC\uC6A9\uC2DC \uCCB4\uB825\uC774 150\uD68C\uBCF5\uB41C\uB2E4."
   icon: {fileID: 21300000, guid: 342a9b574d268489e96740c9828ef45b, type: 3}
   itemCategory: 0
   itemType: 4
   isGold: 0
-  saleprice: 1
+  saleprice: 200
   stackSize: 99
-  currentHealth: 10
+  currentHealth: 150
   maxHealth: 0
   speed: 0
   damage: 0
@@ -35,3 +35,5 @@ MonoBehaviour:
   bottomSprites:
     leftLeg: {fileID: 0}
     rightLeg: {fileID: 0}
+  hitboxSize: {x: 0, y: 0}
+  hitboxOffset: {x: 0, y: 0}

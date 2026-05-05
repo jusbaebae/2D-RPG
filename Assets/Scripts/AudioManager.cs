@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     }
     public enum Sfx
     {
-        Sword,Arrow,Hit,Walk,Click,Cancel,Cash,Dash,Heal,Dialogue,StrongHit,Treasure,Drop
+        Sword,Arrow,Hit,Walk,Click,Cancel,Cash,Dash,Heal,Dialogue,StrongHit,Treasure,Drop,Levelup
     }
 
     void Awake()
@@ -41,8 +41,8 @@ public class AudioManager : MonoBehaviour
     }
     void Init()
     {
-        bgmVolume = PlayerPrefs.HasKey("BGM") ? PlayerPrefs.GetFloat("BGM") : 0.5f;
-        sfxVolume = PlayerPrefs.HasKey("SFX") ? PlayerPrefs.GetFloat("SFX") : 0.5f;
+        bgmVolume = PlayerPrefs.GetFloat("BGM", 0.5f);
+        sfxVolume = PlayerPrefs.GetFloat("SFX", 0.5f);
 
         //배경음 플레이어 초기화
         GameObject bgmObject = new GameObject("BgmPlayer");
@@ -63,17 +63,32 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[index].playOnAwake = false;
         }
 
-        ApplyVolume();
+        RefreshVolume();
+    }
+
+    void RefreshVolume()
+    {
+        if (bgmPlayer != null) bgmPlayer.volume = bgmVolume;
+        foreach (var sfx in sfxPlayers)
+        {
+            if (sfx != null) sfx.volume = sfxVolume;
+        }
     }
 
     public void PlaySfx(Sfx sfx)
     {
-        AudioSource temp = gameObject.AddComponent<AudioSource>();
-        temp.clip = sfxClip[(int)sfx];
-        temp.volume = sfxVolume;
-        temp.Play();
+        for (int i = 0; i < sfxPlayers.Length; i++)
+        {
+            int loopIndex = (channelindex + i) % sfxPlayers.Length;
 
-        Destroy(temp, temp.clip.length);
+            if (sfxPlayers[loopIndex].isPlaying) continue;
+
+            channelindex = loopIndex;
+            sfxPlayers[loopIndex].clip = sfxClip[(int)sfx];
+            sfxPlayers[loopIndex].volume = sfxVolume; // 현재 볼륨 적용
+            sfxPlayers[loopIndex].Play();
+            return;
+        }
     }
 
     public void PlayBgm(BgmType type)

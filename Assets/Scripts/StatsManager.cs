@@ -47,24 +47,32 @@ public class StatsManager : MonoBehaviour
 
     public void UpdateMaxHealth(int amount) //최대 체력 업데이트
     {
+        float healthPercent = (float)currentHealth / maxHealth;
+
         maxHealth += amount;
 
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        currentHealth = Mathf.RoundToInt(maxHealth * healthPercent);
 
-        healthtext.text = currentHealth + "/ " + maxHealth;
+        if (currentHealth <= 0 && maxHealth > 0) currentHealth = 1;
+
         hpbar.SetMaxHealth(maxHealth);
-        hpbar.SetHealth(currentHealth);
-        statsUI.UpdateAllStats();
+        UpdateHealthUI();
     }
 
     public void UpdateHealth(int amount) //체력 업데이트
     {
         currentHealth += amount;
-        if (currentHealth >= maxHealth)
-            currentHealth = maxHealth;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
+        UpdateHealthUI();
+    }
+    private void UpdateHealthUI()
+    {
+        if (healthtext != null)
+        {
+            healthtext.text = $"{currentHealth} / {maxHealth}";
+        }
         hpbar.SetHealth(currentHealth);
-        healthtext.text = currentHealth + " / " + maxHealth;
         statsUI.UpdateAllStats();
     }
 
@@ -89,26 +97,20 @@ public class StatsManager : MonoBehaviour
     {
         damage += item.damage;
         defense += item.defense;
-        maxHealth += item.maxHealth;
         speed += item.speed;
         crit += item.crit;
 
-        healthtext.text = currentHealth + " / " + maxHealth;
-        hpbar.SetMaxHealth(maxHealth);
-        statsUI.UpdateAllStats();
+        UpdateMaxHealth(item.maxHealth);
     }
 
     public void RemoveStat(ItemSO item)
     {
         damage -= item.damage;
         defense -= item.defense;
-        maxHealth -= item.maxHealth;
         speed -= item.speed;
         crit -= item.crit;
 
-        healthtext.text = currentHealth + " / " + maxHealth;
-        hpbar.SetMaxHealth(maxHealth);
-        statsUI.UpdateAllStats();
+        UpdateMaxHealth(-item.maxHealth);
     }
 
     public void FillData(PlayerData data) //세이브 데이터

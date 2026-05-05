@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7770452429782829721, guid: b84dee45926942b46af14232fa0a13ed, type: 3}
   minDepth: 1
-  maxDepth: 1
-  weight: 50
+  maxDepth: 3
+  weight: 80
   allowedRooms: 0100000003000000

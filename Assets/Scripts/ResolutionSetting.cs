@@ -14,17 +14,24 @@ public class ResolutionSetting : MonoBehaviour
         var rawResolutions = Screen.resolutions.OrderByDescending(res => res.width).ThenByDescending(res => res.height).ToList();
         Resolution currentRes = Screen.currentResolution;
 
-        resolutionDropdown.ClearOptions();
+        HashSet<string> added = new HashSet<string>();
 
+        resolutionDropdown.ClearOptions();
         sortedResolutions.Add(currentRes);
+
+        string currentKey = currentRes.width + "x" + currentRes.height;
+        added.Add(currentKey);
 
         foreach (var res in rawResolutions)
         {
-            //현재 해상도와 동일한 항목은 건너뛰고 추가 (중복 방지)
-            if (res.width == currentRes.width && res.height == currentRes.height)
+            string key = res.width + "x" + res.height;
+
+            //이미 같은 해상도 추가했으면 스킵
+            if (added.Contains(key))
                 continue;
 
             sortedResolutions.Add(res);
+            added.Add(key);
         }
 
         resolutionDropdown.ClearOptions();

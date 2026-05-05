@@ -10,6 +10,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private ShopSlot[] shopSlots;
 
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private ShopInventoryUI shopUI;
 
     void Awake()
     {
@@ -49,6 +50,11 @@ public class ShopManager : MonoBehaviour
                 inventoryManager.gold -= price * amount;
                 inventoryManager.goldText.text = inventoryManager.gold.ToString();
                 inventoryManager.AddItem(itemSO, amount);
+                if (shopUI != null)
+                {
+                    // 현재 활성화된 탭에 맞춰 리프레시
+                    shopUI.RefreshCurrentTab();
+                }
             }
         }
     }
@@ -68,17 +74,38 @@ public class ShopManager : MonoBehaviour
     public void SellItem(ItemSO itemSO, int count)
     {
         if (itemSO == null) return;
+
         foreach(var slot in inventoryManager.itemSlots)
         {
             if(slot.itemSO == itemSO)
             {
-                slot.quantity -= count;
-                inventoryManager.gold += itemSO.saleprice * count;
-                inventoryManager.goldText.text = inventoryManager.gold.ToString();
-                slot.UpdateUI();
+                ProcessSale(slot, count, itemSO);
                 return;
             }
         }
+
+        foreach (var eqSlot in inventoryManager.equipmentSlots)
+        {
+            if (eqSlot.itemSO == itemSO)
+            {
+                ProcessSale(eqSlot, count, itemSO);
+                return;
+            }
+        }
+    }
+
+    private void ProcessSale(ItemSlot slot, int count, ItemSO itemSO) //아이템 팔기
+    {
+        slot.quantity -= count;
+        inventoryManager.gold += itemSO.saleprice * count;
+        inventoryManager.goldText.text = inventoryManager.gold.ToString();
+        slot.UpdateUI();
+        if (shopUI != null)
+        {
+            // 현재 활성화된 탭에 맞춰 리프레시
+            shopUI.RefreshCurrentTab();
+        }
+        QuestManager.Instance.CheckCollectQuests();
     }
 }
 

@@ -7,15 +7,26 @@ public class PlayerCombat : MonoBehaviour
     public static PlayerCombat Instance;
 
     public PlayerMovement playerMovement;
-    public Transform attackPoint;
+    public CircleCollider2D fistHitbox;
+    public BoxCollider2D weaponHitbox;
     public LayerMask enemyLayer;
+    public Transform skillPoint;
 
     public float cooldown;
     private float timer;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); //이 객체를 유지
+        }
+        else
+        {
+            Destroy(gameObject); //이미 있으면 새로 생긴 건 삭제
+            return;
+        }
     }
 
     private void Update()
@@ -38,37 +49,10 @@ public class PlayerCombat : MonoBehaviour
             AudioManager.Instance.PlaySfx(AudioManager.Sfx.Sword);
         }
     }
-    public void DealDamage() //일반 공격용(단일)
-    {
-        StatsManager.Instance.isCrit = false;
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.position, StatsManager.Instance.weaponRange, enemyLayer);
-        int minDamage = Mathf.RoundToInt(StatsManager.Instance.damage * 0.7f); //최소 데미지
-        if(minDamage <= 0)
-        {
-            minDamage = 1; //최소 데미지는 무조건 1이상
-        }
-        int maxDamage = Mathf.RoundToInt(StatsManager.Instance.damage * 1.3f); //최대 데미지
-
-        if (enemies.Length > 0)
-        {
-            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Hit);
-            StatsManager.Instance.CritCheck();
-            if (StatsManager.Instance.isCrit)
-            {
-                enemies[0].GetComponent<Enemy_Health>().ChangeHealth((int)(-StatsManager.Instance.damage * 3));
-                enemies[0].GetComponent<Enemy_KnockBack>().Knockback(transform, StatsManager.Instance.knockbackForce, StatsManager.Instance.knockbackTime, StatsManager.Instance.stunTime);
-            }
-            else
-            {
-                enemies[0].GetComponent<Enemy_Health>().ChangeHealth(-Random.Range(minDamage, maxDamage + 1));
-                enemies[0].GetComponent<Enemy_KnockBack>().Knockback(transform, StatsManager.Instance.knockbackForce, StatsManager.Instance.knockbackTime, StatsManager.Instance.stunTime);
-            }
-        }
-    }
 
     public void DealSkillDamage(float radius, float damageMultiplier, GameObject hitEffect = null) //스킬 공격용(범위)
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.position, radius,enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(skillPoint.position, radius,enemyLayer);
 
         foreach (var enemyCol in enemies)
         {
@@ -107,6 +91,23 @@ public class PlayerCombat : MonoBehaviour
             }
         }
     }
+    public void EnableAttackHitbox() //공격 히트박스 띄우기
+    {
+        //Debug.Log("EnableAttackHitbox호출");
+        if (InventoryManager.Instance.IsWeaponEquipped())
+        {
+            weaponHitbox.enabled = true;
+        }
+        else
+        {
+            fistHitbox.enabled = true;
+        }
+    }
+    public void DisableAttackHitbox()
+    {
+        weaponHitbox.enabled = false;
+        fistHitbox.enabled = false;
+    }
 
     public void FinishAttacking() //공격 끝나면 상태바꾸기
     {
@@ -114,21 +115,33 @@ public class PlayerCombat : MonoBehaviour
         playerMovement.ChangeState(PlayerState.IDLE, 0);
     }
 
-    private void OnDrawGizmosSelected()
+    public void SetWeaponHitbox(Vector2 size, Vector2 offset)
     {
-        if (attackPoint == null)
-            return;
-
-        if (StatsManager.Instance == null)
-            return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, StatsManager.Instance.weaponRange);
+        weaponHitbox.size = size;
+        weaponHitbox.offset = offset;
     }
+
     IEnumerator AttackCall()
     {
-        yield return new WaitForSeconds(0.3f);
-        DealDamage();
+        yield return new WaitForSeconds(0.2f);
+        if (InventoryManager.Instance.IsWeaponEquipped())
+        {
+            weaponHitbox.GetComponent<WeaponHitbox>().ResetHit();
+            weaponHitbox.enabled = true;
+        }
+        else
+        {
+            fistHitbox.GetComponent<WeaponHitbox>().ResetHit();
+            fistHitbox.enabled = true;
+        }
+        yield return new WaitForSeconds(0.1f);
+        DisableAttackHitbox();
         FinishAttacking();
+    }
+
+    protected void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(skillPoint.position, 0.5f);
     }
 }

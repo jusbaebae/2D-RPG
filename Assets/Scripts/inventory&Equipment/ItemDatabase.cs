@@ -33,7 +33,7 @@ public class ItemDatabase : MonoBehaviour
         if (dict.ContainsKey(id))
             return dict[id];
 
-        Debug.LogWarning($"아이템 못찾음: {id}");
+        //Debug.LogWarning($"아이템 못찾음: {id}");
         return null;
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedSlime
   m_EditorClassIdentifier: 
   prefab: {fileID: 7770452429782829721, guid: 7067e9c677390dc4897529d464e9ff14, type: 3}
-  minDepth: 1
-  maxDepth: 5
-  weight: 70
+  minDepth: 2
+  maxDepth: 9
+  weight: 100
   allowedRooms: 01000000

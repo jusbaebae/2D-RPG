@@ -18,11 +18,11 @@ public class SkillInfo : MonoBehaviour
     [Header("스탯")]
     public TMP_Text[] statTexts;
 
-    private RectTransform rect;
+    private RectTransform infoPanelRect;
 
     private void Awake()
     {
-        rect = GetComponent<RectTransform>();
+        infoPanelRect = GetComponent<RectTransform>();
     }
 
     public void ShowSkillInfo(SkillSO skill, int currentLevel, bool isunlocked)
@@ -107,7 +107,24 @@ public class SkillInfo : MonoBehaviour
 
     public void FollowMouse()
     {
-        Vector3 offset = new Vector3(50, 150, 0);
-        rect.position = Input.mousePosition + offset;
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 offset = new Vector2(50, 150);
+
+        Vector2 panelSize = Vector2.Scale(infoPanelRect.rect.size, infoPanelRect.lossyScale);
+        Vector2 targetPos = mousePosition + new Vector2(offset.x, offset.y);
+
+        // 오른쪽 화면 밖 체크
+        if (targetPos.x + panelSize.x > Screen.width)
+        {
+            targetPos.x = mousePosition.x - panelSize.x - offset.x;
+        }
+
+        // 아래쪽 화면 밖 체크
+        if (targetPos.y - panelSize.y < 0)
+        {
+            targetPos.y = panelSize.y;
+        }
+
+        infoPanelRect.position = targetPos;
     }
 }

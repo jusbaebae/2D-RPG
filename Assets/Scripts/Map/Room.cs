@@ -6,6 +6,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public Vector2Int gridPos;
+    public Vector3 playerEnterPos;
     public RoomType type;
 
     public List<DoorSlot> doorSlots;
@@ -88,7 +89,7 @@ public class Room : MonoBehaviour
         int totalWeight = 0;
         foreach (var m in validMonsters) totalWeight += m.weight;
 
-        int spawnCount = Random.Range(4, 7);
+        int spawnCount = Random.Range(4, 8) + depth;
         List<Vector3> positions = new List<Vector3>();
         aliveMonsterCount = 0;
         
@@ -181,7 +182,7 @@ public class Room : MonoBehaviour
             if (Physics2D.OverlapCircle(pos, 1f, obstacleLayer)) continue;
 
             //플레이어 주변에 생성 안되게
-            if (Vector2.Distance(pos, spawnPoint.position) < 5f) continue;
+            if (Vector2.Distance(pos, playerEnterPos) < 5f) continue;
 
             
             bool tooClose = false;
@@ -243,7 +244,29 @@ public class Room : MonoBehaviour
                 slot.door.gameObject.SetActive(true); // 문 생성
                 CloseDoors();
                 slot.door.connectedRoom = room; //문이랑 연결된 방 저장
+                slot.door.doorDirection = dir; //문의 방향 저장
             }
+        }
+    }
+
+    public Transform GetArrivalPoint(DoorDirection enteringFrom)
+    {
+        //만약 오른쪽 방에서 왔다면 현재 방의 왼쪽 문 스폰포인트가 필요
+        DoorDirection targetDir = GetOppositeDirection(enteringFrom);
+        var slot = doorSlots.Find(s => s.direction == targetDir);
+
+        return slot != null ? slot.arrivalPoint : spawnPoint;
+    }
+
+    private DoorDirection GetOppositeDirection(DoorDirection dir)
+    {
+        switch (dir)
+        {
+            case DoorDirection.Up: return DoorDirection.Down;
+            case DoorDirection.Down: return DoorDirection.Up;
+            case DoorDirection.Left: return DoorDirection.Right;
+            case DoorDirection.Right: return DoorDirection.Left;
+            default: return DoorDirection.Up;
         }
     }
 

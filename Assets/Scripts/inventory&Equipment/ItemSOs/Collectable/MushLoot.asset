@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87780f34f40acfe44b42720542e86d89, type: 3}
+  m_Name: MushLoot
+  m_EditorClassIdentifier: 
+  itemName: "\uBFD4\uBC84\uC12F\uC758 \uAC13"
+  itemDescription: "\uBFD4\uBC84\uC12F\uC758 \uAC13\uC774\uB2E4.\n\uB530\uAC00\uC6B0\uB2C8
+    \uB9CC\uC9C8\uB54C \uC870\uC2EC\uD574\uC57C\uD55C\uB2E4"
+  icon: {fileID: -8043868123577388338, guid: fe577a7bcc577924eba251c633873485, type: 3}
+  itemCategory: 2
+  itemType: 5
+  isGold: 0
+  saleprice: 88
+  stackSize: 99
+  currentHealth: 0
+  maxHealth: 0
+  speed: 0
+  damage: 0
+  defense: 0
+  crit: 0
+  duration: 0
+  armorSprites:
+    body: {fileID: 0}
+    leftArm: {fileID: 0}
+    rightArm: {fileID: 0}
+  bottomSprites:
+    leftLeg: {fileID: 0}
+    rightLeg: {fileID: 0}
+  hitboxSize: {x: 0, y: 0}
+  hitboxOffset: {x: 0, y: 0}

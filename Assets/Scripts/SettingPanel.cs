@@ -87,6 +87,7 @@ public class SettingPanel : MonoBehaviour
         OnClose(SubMenuType.Village);
         UiManager.Instance.CloseAll();
         SceneTransition.Instance.StartTransition(GameManager.Instance.previousScene);
+        StatsManager.Instance.UpdateHealth(9999);
     }
     public void OnComfirmQuit()
     {

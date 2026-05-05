@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.UI;
 
 public class QuestUIManager : MonoBehaviour
 {
@@ -74,6 +75,10 @@ public class QuestUIManager : MonoBehaviour
         {
             progressText.text = $"{currentSelectedQuest.questData.targetid}와 대화하기";
         }
+        else if (currentSelectedQuest.questData.questType == QuestType.CollectItem)
+        {
+            progressText.text = $"{currentSelectedQuest.questData.targetid} : {currentSelectedQuest.currentProgress} / {currentSelectedQuest.questData.targetProgress}";
+        }
     }
 
     public void RemoveQuestLog(string questId)
@@ -108,5 +113,7 @@ public class QuestUIManager : MonoBehaviour
                 AddQuestLog(state);
             }
         }
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(logParent.GetComponent<RectTransform>());
     }
 }

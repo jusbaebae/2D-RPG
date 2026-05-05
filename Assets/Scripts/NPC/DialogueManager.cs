@@ -83,7 +83,18 @@ public class DialogueManager : MonoBehaviour
         pmove.isinteract = true;
 
         dialoguePanel.SetActive(true);
-        nextIcon.SetActive(true);
+        if (isquest && currentLines.Length == 1)
+        {
+            nextIcon.SetActive(false);
+            acceptButton.SetActive(true);
+            denyButton.SetActive(true);
+        }
+        else
+        {
+            nextIcon.SetActive(true);
+        }
+
+
         StartTyping(currentLines[currentIndex]);
         nameText.text = npc.Name;
 
@@ -104,10 +115,19 @@ public class DialogueManager : MonoBehaviour
         pmove.isinteract = true;
 
         dialoguePanel.SetActive(true);
-        rewardbar.SetActive(true);
-        rewardButton.SetActive(true);
         goldText.text = questData.rewardGold.ToString();
         expText.text = questData.rewardExp.ToString();
+
+        if (currentIndex == currentLines.Length - 1) //마지막줄일때
+        {
+            rewardbar.SetActive(true);
+            rewardButton.SetActive(true);
+        }
+        else
+        {
+            nextIcon.SetActive(true);
+        }
+
         StartTyping(currentLines[currentIndex]);
         nameText.text = npc.Name;
 
@@ -120,18 +140,36 @@ public class DialogueManager : MonoBehaviour
     public void NextDialogue()
     {
         currentIndex++;
-        if(currentIndex == currentLines.Length - 1 && isquest)
+        if (currentIndex >= currentLines.Length)
         {
-            nextIcon.SetActive(false);
-            acceptButton.SetActive(true);
-            denyButton.SetActive(true);
-        }
-        else if (currentIndex >= currentLines.Length && !isquest)
-        {
-            CloseDialogue();
+            if (!isquest) // 일반 대화면 종료
+            {
+                CloseDialogue();
+            }
             return;
         }
 
+        if (currentIndex == currentLines.Length - 1)
+        {
+            if (isquest)
+            {
+                nextIcon.SetActive(false);
+
+                //일반 퀘스트 수락 대화인지, 보상 대화인지 구분하여 버튼 활성화
+                if (currentQuestData != null && QuestManager.Instance.IsQuestCompleted(currentQuestData.questId))
+                {
+                    //보상 대화인 경우
+                    rewardbar.SetActive(true);
+                    rewardButton.SetActive(true);
+                }
+                else
+                {
+                    //퀘스트 수락 대화인 경우
+                    acceptButton.SetActive(true);
+                    denyButton.SetActive(true);
+                }
+            }
+        }
         StartTyping(currentLines[currentIndex]);
     }
 
@@ -176,7 +214,6 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
         int soundIndex = 0;
 
-
         foreach (char c in line)
         {
             dialogueText.text += c;
@@ -203,7 +240,8 @@ public class DialogueManager : MonoBehaviour
 
     private void HandleDialogueInput()
     {
-        if (currentIndex == currentLines.Length - 1 && isquest) return;
+        bool isLastLine = currentIndex == currentLines.Length - 1;
+        if (isLastLine && isquest) return;
 
         if (isTyping)
         {
@@ -225,19 +263,20 @@ public class DialogueManager : MonoBehaviour
         if (currentNPC == null) return;
 
         QuestManager.Instance.AcceptQuest(currentQuestData);
-
         CloseDialogue();
     }
 
     public void OnReward()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Cash);
+
         OnRewardexp(currentQuestData.rewardExp);
         OnRewardGold(currentQuestData.rewardGold);
 
         QuestUIManager.Instance.RemoveQuestLog(currentQuestData.questId);
         QuestManager.Instance.RewardQuest(currentQuestData.questId);
         QuestManager.Instance.OnQuestAccepted(currentQuestData.npcId);
-
+        Debug.Log("RewardQuest called: " + currentQuestData.questId);
         currentQuestData = null;
         CloseDialogue();
     }

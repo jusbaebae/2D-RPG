@@ -32,35 +32,54 @@ public class DungeonManager : MonoBehaviour
 
         if (currentRoom != null)
         {
-            ApplyRoom(currentRoom);
+            StartRoom(currentRoom);
         }
     }
-
-    public void EnterRoom(Room room)
+    private void SetupRoomEnvironment(Room room)
     {
-        currentRoom = room;
-        ApplyRoom(room);
-        MinimapManager.Instance.VisitRoom(room);
-        MinimapManager.Instance.UpdatePlayerPosition(room);
-    }
-
-    void ApplyRoom(Room room)
-    {
-        // 플레이어 위치
-        if (player != null)
-            player.transform.position = room.spawnPoint.position;
-
-        // 카메라 경계
+        //카메라 경계
         if (confiner != null)
         {
             confiner.m_BoundingShape2D = room.confiner;
             confiner.InvalidateCache();
         }
+
+        if (MinimapManager.Instance != null)
+        {
+            MinimapManager.Instance.VisitRoom(room);
+            MinimapManager.Instance.UpdatePlayerPosition(room);
+        }
+    }
+
+    public void EnterRoom(Room room, DoorDirection dir) //다음 방으로 이동처리
+    {
+        Vector3 nextPos = room.GetArrivalPoint(dir).position;
+        
+        // 플레이어 위치
+        if (player != null)
+        {
+            player.transform.position = nextPos;
+            room.playerEnterPos = nextPos;
+        }
+
+        SetupRoomEnvironment(room);
+    }
+
+    public void StartRoom(Room room) //시작방
+    {
+        // 플레이어 위치
+        if (player != null)
+        {
+            player.transform.position = room.spawnPoint.position;
+        }
+
+        SetupRoomEnvironment(room);
     }
 
     public void Onreturn()
     {
         SceneTransition.Instance.StartTransition(GameManager.Instance.previousScene);
+        StatsManager.Instance.UpdateHealth(9999);
     }
 
     public void Onclose()
@@ -89,15 +108,15 @@ public class DungeonManager : MonoBehaviour
 
         dungeonNameUI.anchoredPosition = startPos;
 
-        // 1. 왼쪽 → 중앙 (빠르게)
+        //왼쪽 → 중앙 (빠르게)
         yield return dungeonNameUI.DOAnchorPos(midPos, 0.5f).SetEase(Ease.OutBack).WaitForCompletion();
         Debug.Log(dungeonNameUI.anchoredPosition);
-        // 2. 중앙에서 1초 정지
+        //중앙에서 1초 정지
         yield return new WaitForSeconds(1f);
 
-        // 3. 중앙 → 오른쪽 (빠르게 퇴장)
+        //중앙 → 오른쪽 (빠르게 퇴장)
         yield return dungeonNameUI.DOAnchorPos(endPos, 0.5f).SetEase(Ease.InBack).WaitForCompletion();
-        Debug.Log(dungeonNameUI.anchoredPosition);
-        Debug.Log("애니메이션 실행완료!");
+        //Debug.Log(dungeonNameUI.anchoredPosition);
+        //Debug.Log("애니메이션 실행완료!");
     }
 }

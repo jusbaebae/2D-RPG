@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87780f34f40acfe44b42720542e86d89, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  itemName: Mushroom
-  itemDescription: "\uBC84\uC12F"
+  itemName: "\uBC84\uC12F"
+  itemDescription: "\uACE0\uBE14\uB9B0\uC774 \uC9C0\uB2C8\uACE0 \uC788\uB358 \uBC84\uC12F\uC774\uB2E4\n\uAD6C\uC6CC
+    \uBA39\uC73C\uBA74 \uB9DB\uC788\uC5B4\uBCF4\uC778\uB2E4"
   icon: {fileID: 8793915729297761979, guid: c0275bce3cf26394aafa8cf63edd16f4, type: 3}
   itemCategory: 0
   itemType: 4
   isGold: 0
-  saleprice: 10
+  saleprice: 7
   stackSize: 99
-  currentHealth: 5
+  currentHealth: 3
   maxHealth: 0
   speed: 0
   damage: 0

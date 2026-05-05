@@ -48,10 +48,7 @@ public class itemInfo : MonoBehaviour
         if (itemSO.damage > 0) stats.Add("공격력\n+" + itemSO.damage.ToString());
         if (itemSO.speed > 0) stats.Add("이동속도\n+" + itemSO.speed.ToString());
         if (itemSO.defense > 0) stats.Add("방어력\n+" + itemSO.defense.ToString());
-        if (itemSO.crit > 0) stats.Add("치명타 확률\n+" + itemSO.crit.ToString());
-
-        if (stats.Count <= 0)
-            return;
+        if (itemSO.crit > 0) stats.Add("치명타확률\n+" + itemSO.crit.ToString());
 
         for (int i = 0; i < statTexts.Length; i++)
         {
@@ -62,6 +59,7 @@ public class itemInfo : MonoBehaviour
             }
             else
             {
+                statTexts[i].text = "";
                 statTexts[i].gameObject.SetActive(false);
             }
         }
@@ -73,13 +71,34 @@ public class itemInfo : MonoBehaviour
 
         itemNameText.text = "";
         itemDescriptionText.text = "";
+
+        foreach (TMP_Text stat in statTexts)
+        {
+            stat.text = "";
+            stat.gameObject.SetActive(false);
+        }
     }
 
     public void FollowMouse()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 offset = new Vector3(50, 50, 0);
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 offset = new Vector2(50, 50);
 
-        infoPanelRect.position = mousePosition + offset;
+        Vector2 panelSize = Vector2.Scale(infoPanelRect.rect.size, infoPanelRect.lossyScale);
+        Vector2 targetPos = mousePosition + new Vector2(offset.x, offset.y);
+
+        // 오른쪽 화면 밖 체크
+        if (targetPos.x + panelSize.x > Screen.width)
+        {
+            targetPos.x = mousePosition.x - panelSize.x - offset.x;
+        }
+
+        // 아래쪽 화면 밖 체크
+        if (targetPos.y - panelSize.y < 0)
+        {
+            targetPos.y = panelSize.y;
+        }
+
+        infoPanelRect.position = targetPos;
     }
 }

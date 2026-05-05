@@ -25,7 +25,7 @@ public class NPCController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetButtonDown("Interact") && currentState == NPCState.PlayerDetected && !DialogueManager.Instance.blockInteract)
+        if (Input.GetButtonDown("Interact") && currentState == NPCState.PlayerDetected && UiManager.Instance.currentOpenUI == UIType.None && !DialogueManager.Instance.blockInteract)
         {
             Interact();
         }

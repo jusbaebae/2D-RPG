@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87780f34f40acfe44b42720542e86d89, type: 3}
+  m_Name: "\uD1A0\uB07C\uC637"
+  m_EditorClassIdentifier: 
+  itemName: "\uD1A0\uB07C\uC637"
+  itemDescription: "\uB2EC\uB098\uB77C\uC5D0\uB294 \uAC08\uC218\uC5C6\uB2E4"
+  icon: {fileID: 21300000, guid: 8287746cec1a32d4790338b913b50f00, type: 3}
+  itemCategory: 1
+  itemType: 1
+  isGold: 0
+  saleprice: 500
+  stackSize: 1
+  currentHealth: 0
+  maxHealth: 150
+  speed: 0
+  damage: 0
+  defense: 0
+  crit: 1
+  duration: 0
+  armorSprites:
+    body: {fileID: -8439029293663886290, guid: 30af9fed244d29543bc0c12d6730a57d, type: 3}
+    leftArm: {fileID: 7410614344859572497, guid: 30af9fed244d29543bc0c12d6730a57d, type: 3}
+    rightArm: {fileID: -7657487650210245680, guid: 30af9fed244d29543bc0c12d6730a57d, type: 3}
+  bottomSprites:
+    leftLeg: {fileID: 0}
+    rightLeg: {fileID: 0}
+  hitboxSize: {x: 0, y: 0}
+  hitboxOffset: {x: 0, y: 0}

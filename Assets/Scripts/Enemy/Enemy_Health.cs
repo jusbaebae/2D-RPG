@@ -45,7 +45,7 @@ public class Enemy_Health : MonoBehaviour
 
     private void OnDestroy()
     {
-        QuestManager.Instance.AddProgress(QuestType.KillMonster, Enemy_name, 1);
+        
         //Debug.Log(Enemy_name + "잡았다");
     }
     public void Init(Room room)
@@ -92,6 +92,7 @@ public class Enemy_Health : MonoBehaviour
 
     public void InvokeDeath() //죽었는지 확인하기
     {
+        QuestManager.Instance.AddProgress(QuestType.KillMonster, Enemy_name, 1);
         Ondeath?.Invoke();
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         OnMonsterDefeated(ExpReward);

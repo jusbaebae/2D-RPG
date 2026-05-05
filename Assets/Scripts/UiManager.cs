@@ -12,11 +12,14 @@ public class UiManager : MonoBehaviour
     public CanvasGroup skillUI; 
     public CanvasGroup equipmentUI;
     public CanvasGroup questUI;
+
     public GameObject SettingPanel;
     public SettingPanel PanelBtnCS;
     public StatsUi statsUi;
+    public ShopInventoryUI shopInventoryUI;
 
-    private UIType currentOpenUI = UIType.None;
+
+    public UIType currentOpenUI = UIType.None;
     public bool isInteract; //대화창 용도
 
     private void Awake()
@@ -47,14 +50,17 @@ public class UiManager : MonoBehaviour
             statsUi.UpdateAllStats();
         }
         if (Input.GetButtonDown("ToggleQuest"))
+        {
+            QuestUIManager.Instance.RefreshUI();
             ToggleUI(UIType.Quest);
+        }
         if (Input.GetButtonDown("ToggleSetting"))
         {
             ToggleUI(UIType.Setting);
         }
         if (Input.GetKeyDown(KeyCode.Escape)) //ESC로 UI닫기
         {
-            CloseAll();
+            if (currentOpenUI != UIType.None) CloseAll();
         }
     }
 
@@ -84,13 +90,14 @@ public class UiManager : MonoBehaviour
                 SetUI(skillUI, true); 
                 break; 
             case UIType.Shop: 
-                SetUI(shopUI, true); 
-                SetUI(inventoryUI, true); 
+                SetUI(shopUI, true);
+                shopInventoryUI.ShowItemTab();
                 break; 
             case UIType.Equipment: 
                 SetUI(equipmentUI, true);
                 break;
             case UIType.Quest:
+                QuestManager.Instance.CheckCollectQuests();
                 SetUI(questUI, true);
                 break;
             case UIType.Setting:
@@ -98,7 +105,10 @@ public class UiManager : MonoBehaviour
                 PanelBtnCS.SetBtn();
                 break;
         }
-        PlayerMovement.Instance.isinteract = true;
+        if (type != UIType.Inventory && type != UIType.Equipment)
+        {
+            PlayerMovement.Instance.isinteract = true;
+        }
         currentOpenUI = type;
     }
 
@@ -110,10 +120,14 @@ public class UiManager : MonoBehaviour
         SetUI(equipmentUI, false); 
         SetUI(questUI, false);
         SettingPanel.SetActive(false);
+        SkillMessageUI.Instance.Close(false);
 
         Time.timeScale = 1;
+        if (currentOpenUI != UIType.Inventory && currentOpenUI != UIType.Equipment && currentOpenUI != UIType.None)
+        {
+            PlayerMovement.Instance.isinteract = false;
+        }
         currentOpenUI = UIType.None;
-        PlayerMovement.Instance.isinteract = false;
     }
 
     void SetUI(CanvasGroup ui, bool state)

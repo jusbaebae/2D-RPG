@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Zombie
   m_EditorClassIdentifier: 
   prefab: {fileID: 7770452429782829721, guid: f274b38a15f69994385082a73b14107a, type: 3}
-  minDepth: 1
-  maxDepth: 4
-  weight: 30
+  minDepth: 2
+  maxDepth: 9
+  weight: 60
   allowedRooms: 01000000

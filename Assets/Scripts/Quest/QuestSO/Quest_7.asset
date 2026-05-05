@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fed7deca2d11014abbf7013e342ac0c, type: 3}
+  m_Name: Quest_7
+  m_EditorClassIdentifier: 
+  questId: 7
+  npcId: 3
+  questName: "\uADF8\uB77C\uB3C8"
+  questType: 0
+  targetid: Boss_Gradon
+  targetProgress: 1
+  prerequisiteQuest: {fileID: 11400000, guid: fde11338ea0ade04b98623278c12bfbc, type: 2}
+  description: "\uC232 \uAE4A\uC740 \uACF3\uC5D0 \uD30C\uAD34\uC790 \uADF8\uB77C\uB3C8\uC774
+    \uB098\uD0C0\uB0AC\uB2E4\n\uADF8\uB77C\uB3C8\uC744 \uD574\uCE58\uC6CC\uC11C \uB9C8\uC744\uC744
+    \uAD6C\uD558\uC790"
+  requiredLevel: 40
+  rewardGold: 1000
+  rewardExp: 500
+  acceptDialogueLines:
+  - "\uD55C\uB3D9\uC548 \uC7A0\uC7A0\uD558\uB2E4 \uD588\uB354\uB2C8\n\uC124\uB9C8
+    \uADF8\uB77C\uB3C8\uC774 \uB098\uD0C0\uB0A0\uC904\uC774\uC57C..."
+  - "\uB9C8\uC744\uC744 \uC704\uD574 \uADF8\uB77C\uB3C8\uC744 \uC7A1\uC544\uC904\uC218
+    \uC788\uC744\uAE4C?"
+  progressDialogueLines:
+  - "\uADF8\uB77C\uB3C8\uC740 \uAC15\uD558\uB2C8\uAE4C \uBD80\uB514 \uBAB8\uC870\uC2EC\uD558\uB77C\uACE0"
+  completeDialogueLines:
+  - "\uC815\uB9D0\uB85C \uC7A1\uC544\uC62C\uC904\uC774\uC57C..."
+  - "\uB9C8\uC744\uC744 \uC9C0\uCF1C\uC918\uC11C \uACE0\uB9C8\uC6CC\n\uC5EC\uAE30
+    \uC57D\uC18D\uD588\uB358 \uBCF4\uC0C1\uC774\uC57C"
+  targetNpcDialogueLines: []

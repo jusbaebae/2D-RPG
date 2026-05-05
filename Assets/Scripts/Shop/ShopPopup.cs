@@ -14,6 +14,7 @@ public class ShopPopup : MonoBehaviour
     int totalPrice;
     int playerGold;
     int unitPrice; //슬롯 구매가
+    private bool isProcessing = false; //중복클릭 방지용
 
     public UIAnim uianim;
 
@@ -35,6 +36,7 @@ public class ShopPopup : MonoBehaviour
 
     public void OpenPopup(ItemSO item, ShopMode mode, int price, int playerGold, int playerItemCount)
     {
+        isProcessing = false;
         uianim.Show(Popup);
         AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
         currentItem = item;
@@ -103,7 +105,7 @@ public class ShopPopup : MonoBehaviour
     public void OnClickPlus() //수량 플러스 버튼
     {
         amountSlider.value++;
-    }
+    }  
 
     public void OnClickMinus() //수량 마이너스 버튼
     {
@@ -119,6 +121,10 @@ public class ShopPopup : MonoBehaviour
 
     public void OnConfirm()
     {
+        if (isProcessing) return;
+
+        isProcessing = true;
+
         if (currentMode == ShopMode.Buy)
         {
             ShopManager.Instance.TryBuyItem(currentItem, unitPrice, currentAmount);

@@ -24,6 +24,9 @@ public class SceneTransition : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public Tween FadeOut(float time) => panel.DOFade(1f, time);
+    public Tween FadeIn(float time) => panel.DOFade(0f, time);
+
     public void StartTransition(string sceneName)
     {
         StartCoroutine(TransitionRoutine(sceneName, false));
@@ -55,7 +58,6 @@ public class SceneTransition : MonoBehaviour
                 yield return null;
             }
         }
-        
 
         yield return new WaitForSeconds(holdTime);
 

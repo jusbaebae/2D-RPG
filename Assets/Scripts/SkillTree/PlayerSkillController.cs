@@ -43,6 +43,8 @@ public class PlayerSkillController : MonoBehaviour
 
     void Update()
     {
+        if (PlayerMovement.Instance.isDead) return;
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && PlayerMovement.Instance.inputDir != Vector2.zero)
         {
             AttemptSkill(KeyCode.LeftShift);
@@ -57,6 +59,8 @@ public class PlayerSkillController : MonoBehaviour
 
     void AttemptSkill(KeyCode key)
     {
+        if (PlayerMovement.Instance.isDead) return;
+
         if (equippedSkills.ContainsKey(key)) //딕셔너리에 현재 스킬이 저장되어있는지 확인(해금여부)
         {
             SkillSO skill = equippedSkills[key];

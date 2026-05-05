@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fed7deca2d11014abbf7013e342ac0c, type: 3}
+  m_Name: Quest_2
+  m_EditorClassIdentifier: 
+  questId: 2
+  npcId: 2
+  questName: "\uB2EC\uB2D8\uC744 \uCC3E\uC544\uB77C"
+  questType: 2
+  targetid: "\uB2EC\uB2D8"
+  targetProgress: 1
+  prerequisiteQuest: {fileID: 0}
+  description: "\uD587\uB2D8\uC774\uB791 \uB2EE\uC740 \uCE5C\uAD6C\uAC00 \uD55C\uBA85\uC788\uB2E4\uACE0\uD558\uB294\uB370...\n\uC228\uBC14\uAF2D\uC9C8\uC744
+    \uC88B\uC544\uD558\uB294 \uB2EC\uB2D8\uC744 \uCC3E\uC544\uBCF4\uC790"
+  requiredLevel: 3
+  rewardGold: 0
+  rewardExp: 30
+  acceptDialogueLines:
+  - "\uC548\uB155\uD558\uC138\uC694!"
+  - "\uC0AC\uC2E4 \uC800\uB791 \uB2EE\uC740 \uCE5C\uAD6C\uAC00 \uC788\uB2E4\uB294\uAC78
+    \uC544\uC168\uB098\uC694?"
+  - "\uB2EC\uB2D8\uC774\uB77C\uACE0 \uD558\uB294\uB370 \uC228\uBC14\uAF2D\uC9C8\uC744
+    \uC88B\uC544\uD558\uB294 \uCE5C\uAD6C\uC5D0\uC694"
+  - "\uB2EC\uB2D8\uC774\uB97C \uD55C\uBC88 \uCC3E\uC544\uBCF4\uC2DC\uACA0\uC5B4\uC694?"
+  progressDialogueLines:
+  - "\uC800\uB791 \uB2EE\uC558\uC73C\uB2C8 \uCC3E\uAE30 \uC26C\uC6B0\uC2E4\uAC70\uC5D0\uC694"
+  completeDialogueLines:
+  - "\uB2EC\uB2D8\uC774\uB97C \uCC3E\uC73C\uC168\uAD70\uC694! \uC800\uB791 \uC815\uB9D0
+    \uB2EE\uC9C0 \uC54A\uC558\uB098\uC694?"
+  targetNpcDialogueLines:
+  - "\uC624\uC789 \uC5EC\uAE34 \uC5B4\uB5BB\uAC8C \uC624\uC168\uB098\uC694?"
+  - "\uD587\uB2D8\uC774\uC758 \uBD80\uD0C1\uC744 \uBC1B\uACE0 \uC654\uAD70\uC694!\n\uD587\uB2D8\uC774\uB294
+    \uC800\uB791 \uAF2D\uB2EE\uC740 \uCE5C\uAD6C\uB78D\uB2C8\uB2F9\n"

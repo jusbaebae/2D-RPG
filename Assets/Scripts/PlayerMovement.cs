@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isShooting;
     public bool isInvincible;
     public bool isSlash;
+    public bool isDead;
 
     public SPUM_Prefabs spum;
     public PlayerCombat playerCombat;
@@ -53,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (isDead) return;
+
         if (currentState == PlayerState.DEATH) return;
 
         if (isKnockBack) return;
@@ -86,6 +89,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isDead) return;
+
         if (currentState == PlayerState.DEATH) return;
 
         if (dashInput) //대쉬
@@ -160,6 +165,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void ChangeState(PlayerState newState, int index) //애니메이션 상태 전환
     {
+        if (isDead && newState != PlayerState.DEATH)
+            return;
+
         if (currentState == newState) return;
 
         currentState = newState;
@@ -203,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
         ExperienceManager.Instance.FillData(data);
         SkillTreeManager.Instance.FillData(data);
 
-        Debug.Log("데이터 저장 완료!");
+        //Debug.Log("데이터 저장 완료!");
         return data;
     }
 
@@ -220,6 +228,6 @@ public class PlayerMovement : MonoBehaviour
         //스킬 포인트 복원
         SkillTreeManager.Instance.LoadFromData(data);
 
-        Debug.Log("플레이어 데이터 로드 완료!");
+        //Debug.Log("플레이어 데이터 로드 완료!");
     }
 }

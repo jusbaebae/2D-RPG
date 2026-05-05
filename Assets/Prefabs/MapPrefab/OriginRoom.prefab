@@ -24396,24 +24396,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridPos: {x: 0, y: 0}
+  playerEnterPos: {x: 0, y: 0, z: 0}
   type: 0
   doorSlots:
   - direction: 0
     wall: {fileID: 1782879794547926716}
     door: {fileID: 7958007973522167880}
     isConnected: 0
+    arrivalPoint: {fileID: 651510027723667116}
   - direction: 1
     wall: {fileID: 7999627606244200180}
     door: {fileID: 4119284782974392058}
     isConnected: 0
+    arrivalPoint: {fileID: 5773893131035247052}
   - direction: 2
     wall: {fileID: 5720613202407732173}
     door: {fileID: 4003970068720169069}
     isConnected: 0
+    arrivalPoint: {fileID: 6266924064190383296}
   - direction: 3
     wall: {fileID: 664896862730569463}
     door: {fileID: 7257553912606677372}
     isConnected: 0
+    arrivalPoint: {fileID: 4605643239096487419}
   spawnPoint: {fileID: 4138786673720723644}
   BossSpawnPoint:
   - {fileID: 7461487879115455051}
@@ -24428,6 +24433,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95e44ca2bb63a064b954b977e100c4fb, type: 2}
   - {fileID: 11400000, guid: 276a2e4f8dac57d4db7b61f4f49ccf02, type: 2}
   - {fileID: 11400000, guid: 22c087d96c801c447b5622965f234548, type: 2}
+  - {fileID: 11400000, guid: ed9dfe087f8a35f4290b74f44da1cc6e, type: 2}
+  - {fileID: 11400000, guid: b19daa09c8b59f149ab5a3eb1d53d01a, type: 2}
   spawnedMonsters: []
   bossPrefab: {fileID: 7770452429782829721, guid: 69bbab0bbf8b9ef4bb37f71704fc5edf, type: 3}
   portalPrefab: {fileID: 5385913401752869603, guid: ad75a323bbbd6d348b800bde7faec80f, type: 3}
@@ -39276,6 +39283,37 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &789652202262811130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 651510027723667116}
+  m_Layer: 8
+  m_Name: ArrivalPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &651510027723667116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789652202262811130}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 8.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7103038769051263347}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1023372861478822805
 GameObject:
   m_ObjectHideFlags: 0
@@ -39814,6 +39852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}
@@ -39973,7 +40012,8 @@ Transform:
   m_LocalPosition: {x: 2.4918332, y: 0.9802753, z: 45.84778}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 651510027723667116}
   m_Father: {fileID: 3972341998623007955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &6976005799875700548
@@ -40261,6 +40301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}
@@ -40386,6 +40427,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2295850675587649871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6266924064190383296}
+  m_Layer: 8
+  m_Name: ArrivalPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6266924064190383296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2295850675587649871}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6856932686385359486}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2657403114232816576
 GameObject:
   m_ObjectHideFlags: 0
@@ -40418,7 +40490,8 @@ Transform:
   m_LocalPosition: {x: 2.4918332, y: 0.9802753, z: 45.84778}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6266924064190383296}
   m_Father: {fileID: 4657932802671602795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &9182900650736015472
@@ -40706,6 +40779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}
@@ -40747,6 +40821,37 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &2733970976546499048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4605643239096487419}
+  m_Layer: 8
+  m_Name: ArrivalPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4605643239096487419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733970976546499048}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7235279476727000968}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2747888306441329000
 GameObject:
   m_ObjectHideFlags: 0
@@ -40810,7 +40915,8 @@ Transform:
   m_LocalPosition: {x: 2.4918332, y: 0.9802753, z: 45.84778}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5773893131035247052}
   m_Father: {fileID: 6604182340489978188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &3768257482753460747
@@ -41098,6 +41204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}
@@ -41532,6 +41639,37 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &3380028224118903725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5773893131035247052}
+  m_Layer: 8
+  m_Name: ArrivalPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5773893131035247052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380028224118903725}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3750453928270301720}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3792585383234808127
 GameObject:
   m_ObjectHideFlags: 0
@@ -41862,14 +42000,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bonusTable:
   - itemSO: {fileID: 11400000, guid: bd0b56613b26dbd449db876ce36792e2, type: 2}
-    quantityRange: {x: 10, y: 20}
+    quantityRange: {x: 50, y: 75}
     dropChance: 1
-  - itemSO: {fileID: 11400000, guid: df78cc6a773348a47a670edebb476119, type: 2}
-    quantityRange: {x: 1, y: 2}
-    dropChance: 0.4
+  - itemSO: {fileID: 11400000, guid: c64f3a43aff6934449a4c44699c6179b, type: 2}
+    quantityRange: {x: 1, y: 1}
+    dropChance: 0.3
   - itemSO: {fileID: 11400000, guid: a250dd5a2ae548042835219ac5aafaed, type: 2}
     quantityRange: {x: 1, y: 1}
-    dropChance: 0.1
+    dropChance: 0.3
+  - itemSO: {fileID: 11400000, guid: b8c2f2265b9cfd840a911d61c22e5836, type: 2}
+    quantityRange: {x: 1, y: 1}
+    dropChance: 0.09
+  - itemSO: {fileID: 11400000, guid: ba194d10fa3f8d64492e80ae6a6a0cdb, type: 2}
+    quantityRange: {x: 1, y: 1}
+    dropChance: 0.05
+  - itemSO: {fileID: 11400000, guid: a7426cf46719a0b4a8073c0cbee7faa3, type: 2}
+    quantityRange: {x: 1, y: 1}
+    dropChance: 0.05
   bonusPrefab: {fileID: 3378524218417718250, guid: f4a7b24785935d2468e342b9ddb3c9dd, type: 3}
   OpenBox: {fileID: 8650638208306956450}
   CloseBox: {fileID: 2255191929429642867}
@@ -42433,6 +42580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}
@@ -43134,6 +43282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}
@@ -43207,7 +43356,8 @@ Transform:
   m_LocalPosition: {x: 2.4918332, y: 0.9802753, z: 45.84778}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4605643239096487419}
   m_Father: {fileID: 3980241589230380434}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &6567206753224421765
@@ -43495,6 +43645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2ddbf72b0296c4583eb49ba350e5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorDirection: 0
   connectedRoom: {fileID: 0}
   tilemap: {fileID: 0}
   block: {fileID: 0}

@@ -8,7 +8,7 @@ public class SkillManager : MonoBehaviour
 
     public Dictionary<int, int> skillLevels = new Dictionary<int, int>();
 
-    private bool hasRevived = false;
+    public bool hasRevived = false;
 
     private void Awake()
     {

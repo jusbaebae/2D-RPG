@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using DG.Tweening;
 
 public class Door : MonoBehaviour
 {
+    public DoorDirection doorDirection;
     public Room connectedRoom; //연결된 방
     public Tilemap tilemap;
     private bool isOpen = false;
@@ -21,7 +23,22 @@ public class Door : MonoBehaviour
         if (!isOpen) return;
         if (!other.CompareTag("Player")) return;
 
-        DungeonManager.Instance.EnterRoom(connectedRoom);
+        StartCoroutine(EnterRoomRoutine());
+
+    }
+
+    private IEnumerator EnterRoomRoutine()
+    {
+       
+        yield return SceneTransition.Instance.FadeOut(0.5f).WaitForCompletion();
+        PlayerMovement.Instance.isinteract = true;
+
+        DungeonManager.Instance.EnterRoom(connectedRoom, doorDirection);
+
+        yield return new WaitForSeconds(0.3f);
+
+        yield return SceneTransition.Instance.FadeIn(0.5f).WaitForCompletion();
+        PlayerMovement.Instance.isinteract = false;
     }
 
     public void Close()

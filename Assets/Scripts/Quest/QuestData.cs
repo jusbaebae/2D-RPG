@@ -13,6 +13,7 @@ public class QuestData : ScriptableObject
     public QuestType questType;
     public string targetid;
     public int targetProgress;
+    public QuestData prerequisiteQuest; //선행 퀘스트
 
     [TextArea(3, 10)]
     public string description;

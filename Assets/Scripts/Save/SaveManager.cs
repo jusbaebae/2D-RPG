@@ -46,9 +46,9 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);
 
-        Debug.Log(respawnPosition);
-        Debug.Log(respawnScene);
-        Debug.Log("파일이 저장되었습니다" + path + "위치입니다.");
+        //Debug.Log(respawnPosition);
+        //Debug.Log(respawnScene);
+        //Debug.Log("파일이 저장되었습니다" + path + "위치입니다.");
     }
 
     public void LoadGame()
@@ -61,7 +61,7 @@ public class SaveManager : MonoBehaviour
 
         StartCoroutine(LoadSceneAndRestoreData(data));
 
-        Debug.Log("현재파일: "+ data +"로드가 정상적으로 완료되었습니다");
+        //Debug.Log("현재파일: "+ data +"로드가 정상적으로 완료되었습니다");
     }
     public bool HasSaveData()
     {

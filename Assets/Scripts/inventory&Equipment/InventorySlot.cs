@@ -13,15 +13,10 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
     public TMP_Text quantityText;
 
     public ShopPopup popup;
-    public InventoryManager inventoryManager;
     private static ShopManager activeShop;
     public GameObject selectBorder;
 
     [SerializeField] private itemInfo info;
-    private void Start()
-    {
-        inventoryManager = GetComponentInParent<InventoryManager>();
-    }
 
     private void OnEnable()
     {
@@ -43,7 +38,7 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                inventoryManager.DeselectItem();
+                InventoryManager.Instance.DeselectItem();
             }
             return;
         }
@@ -57,12 +52,12 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
             }
             else
             {
-                inventoryManager.OnSlotClicked(this, eventData.clickCount);
+                InventoryManager.Instance.OnSlotClicked(this, eventData.clickCount);
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            inventoryManager.DropItem(this);
+            InventoryManager.Instance.DropItem(this);
         }
     }
 
@@ -86,26 +81,33 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
 
     public void OnBeginDrag(PointerEventData eventData) //드래그를 시작할때
     {
+        if (activeShop != null) return;
         if (itemSO == null) return;
 
-        inventoryManager.dragIcon.sprite = itemSO.icon; //드래그 이미지 생성
-        inventoryManager.dragIcon.gameObject.SetActive(true);
+        InventoryManager.Instance.dragIcon.sprite = itemSO.icon; //드래그 이미지 생성
+        InventoryManager.Instance.dragIcon.gameObject.SetActive(true);
     }
 
     public void OnDrag(PointerEventData eventData) //드래그 중일때
     {
-        inventoryManager.dragIcon.transform.position = Input.mousePosition;
+        if (activeShop != null) return;
+
+        InventoryManager.Instance.dragIcon.transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData) //드래그가 끝날때
     {
-        inventoryManager.dragIcon.gameObject.SetActive(false);
+        if (activeShop != null) return;
+
+        InventoryManager.Instance.dragIcon.gameObject.SetActive(false);
         itemImage.enabled = true;
         quantityText.enabled = true;
     }
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (activeShop != null) return;
+
         InventorySlot draggedSlot = eventData.pointerDrag.GetComponent<InventorySlot>();
 
         if (draggedSlot == null || draggedSlot == this)
@@ -126,13 +128,13 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
 
             UpdateUI();
             draggedSlot.UpdateUI();
-            inventoryManager.DeselectItem();
-            inventoryManager.OnSlotClicked(this, 1);
+            InventoryManager.Instance.DeselectItem();
+            InventoryManager.Instance.OnSlotClicked(this, 1);
         }
         else
         {
             //두개 다 아이템이면 교환
-            inventoryManager.SwapItems(draggedSlot, this);
+            InventoryManager.Instance.SwapItems(draggedSlot, this);
         }
     }
 
@@ -168,6 +170,7 @@ public class InventorySlot : ItemSlot, IPointerClickHandler,
         itemSO = item;
         quantity = count;
 
+        QuestManager.Instance.CheckCollectQuests();
         UpdateUI();
     }
 

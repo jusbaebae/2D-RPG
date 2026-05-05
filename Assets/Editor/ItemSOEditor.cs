@@ -22,7 +22,7 @@ public class ItemSOEditor : Editor
         //타입 가져오기
         ItemSO item = (ItemSO)target;
 
-        //장비별 스프라이트분리
+        //장비별 스프라이트분리(무기는 히트박스)
         switch (item.itemType)
         {
             case ItemType.armor:
@@ -31,6 +31,11 @@ public class ItemSOEditor : Editor
 
             case ItemType.bottom:
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("bottomSprites"), true);
+                break;
+
+            case ItemType.weapon:
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("hitboxSize"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("hitboxOffset"), true);
                 break;
         }
 

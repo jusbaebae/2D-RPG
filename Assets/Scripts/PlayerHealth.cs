@@ -39,6 +39,7 @@ public class PlayerHealth : MonoBehaviour
         if (PlayerMovement.Instance.isInvincible) return;
 
         StatsManager.Instance.currentHealth += amount;
+        StatsManager.Instance.currentHealth = Mathf.Clamp(StatsManager.Instance.currentHealth,0,StatsManager.Instance.maxHealth);
         healthText.text = StatsManager.Instance.currentHealth + " / " + StatsManager.Instance.maxHealth;
         ShowDamage(Mathf.Abs(amount));
         hpbar.SetHealth(StatsManager.Instance.currentHealth);
@@ -51,6 +52,7 @@ public class PlayerHealth : MonoBehaviour
             if (SkillManager.Instance.TryRevive())
                 return;
 
+            PlayerMovement.Instance.isDead = true;
             Die();
             StartCoroutine(ReSpawn());
             //Debug.Log("부활스킬없어서 그냥 죽었다!");
@@ -122,6 +124,7 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StatsManager.Instance.UpdateHealth(9999);
         PlayerMovement.Instance.ChangeState(PlayerState.IDLE, 0);
+        PlayerMovement.Instance.isDead = false;
         PlayerMovement.Instance.isInvincible = false;
         SaveManager.Instance.SaveGame();
     }

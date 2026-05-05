@@ -86,6 +86,7 @@ public class InventoryManager : MonoBehaviour
                     quantity -= amountToAdd;
 
                     slot.UpdateUI();
+                    QuestManager.Instance.CheckCollectQuests();
                     if (quantity <= 0)
                         return;
                 }
@@ -106,8 +107,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
 
-            if (quantity > 0)
-                DropLoot(itemSO, quantity);
+            if (quantity > 0) DropLoot(itemSO, quantity);
         }
         else //장비아이템일때
         {
@@ -118,11 +118,24 @@ public class InventoryManager : MonoBehaviour
                     slot.itemSO = itemSO;
                     slot.quantity = 1;
                     slot.UpdateUI();
-                    return;
+
+                    quantity--;
+
+                    if (quantity <= 0)
+                    {
+                        QuestManager.Instance.CheckCollectQuests();
+                        return;
+                    }
                 }
             }
 
-            DropLoot(itemSO, 1);
+            if (quantity > 0)
+            {
+                for (int i = 0; i < quantity; i++)
+                {
+                    DropLoot(itemSO, 1);
+                }
+            }
         }
     }
 
@@ -142,12 +155,14 @@ public class InventoryManager : MonoBehaviour
             slot.quantity = 0;
         }
         slot.UpdateUI();
+        QuestManager.Instance.CheckCollectQuests();
     }
 
     private void DropLoot(ItemSO itemSO, int quantity) //아이템이 들어갈 공간이없을시 다시 내려놓기
     {
         Loot loot = Instantiate(lootPrefab, player.position, Quaternion.identity).GetComponent<Loot>();
         loot.Initialize(itemSO, quantity, false);
+        QuestManager.Instance.CheckCollectQuests();
     }
 
     public void SwapItems(ItemSlot a, ItemSlot b) //슬롯끼리 아이템 교환하기
@@ -204,7 +219,7 @@ public class InventoryManager : MonoBehaviour
         selectedSlot = slot;
         selectedSlot.Select();
     }
-    public void UseItem(ItemSlot slot)
+    public void UseItem(ItemSlot slot) //아이템 사용
     {
         if (slot.itemSO != null && slot.quantity > 0)
         {
@@ -218,6 +233,8 @@ public class InventoryManager : MonoBehaviour
             slot.UpdateUI();
         }
         Debug.Log("UseItem 발동!");
+
+        QuestManager.Instance.CheckCollectQuests();
     }
 
     public void EquipGear(ItemSlot slot, ItemType itemtype)  //장비 장착
@@ -237,6 +254,7 @@ public class InventoryManager : MonoBehaviour
             slot.itemSO = null;
         }
         slot.UpdateUI();
+        QuestManager.Instance.CheckCollectQuests();
     }
     public void DeselectItem()
     {
@@ -252,14 +270,55 @@ public class InventoryManager : MonoBehaviour
         return weaponSlot.slotuse && weaponSlot.equippedItem != null && weaponSlot.equippedItem.itemType == ItemType.weapon;
     }
 
+    public int GetItemCount(string itemId) //아이템 수량 가져오기
+    {
+        int count = 0;
+
+        foreach (var item in itemSlots)
+        {
+            if (item.itemSO == null)
+                continue;
+
+            if (item.itemSO.itemName == itemId)
+            {
+                count += item.quantity;
+            }
+        }
+        return count;
+    }
+
+    public void RemoveItem(string itemId, int amount)
+    {
+        int remaining = amount;
+
+        foreach (var slot in itemSlots)
+        {
+            if (slot.itemSO == null)
+                continue;
+
+            if (slot.itemSO.itemName != itemId)
+                continue;
+
+            int removeAmount = Mathf.Min(slot.quantity, remaining); //현재 슬롯에서 제거가능한 양 구하기
+            slot.quantity -= removeAmount;
+            remaining -= removeAmount;
+
+            slot.UpdateUI();
+
+            if (remaining <= 0) //전부 제거 완료
+                break;
+        }
+    }
+
+
     public InventoryData GetSaveItemData() //아이템 슬롯 저장
     {
         InventoryData data = new InventoryData();
 
-        foreach (var slot in itemSlots)
+        /*foreach (var slot in itemSlots)
         {
             Debug.Log($"슬롯: {slot.itemSO}, 개수: {slot.quantity}");
-        }
+        }*/
 
         data.items = new List<InventoryItemData>();
         foreach (var slot in itemSlots)
@@ -304,10 +363,10 @@ public class InventoryManager : MonoBehaviour
     {
         EquipmentData data = new EquipmentData();
 
-        foreach (var slot in equipmentSlots)
+        /*foreach (var slot in equipmentSlots)
         {
             Debug.Log($"슬롯: {slot.itemSO}");
-        }
+        }*/
 
         // 인벤토리
         data.equips = new List<EquipmentItemData>();

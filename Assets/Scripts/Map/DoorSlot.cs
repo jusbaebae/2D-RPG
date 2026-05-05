@@ -6,12 +6,13 @@ using UnityEngine;
 public class DoorSlot
 {
     public DoorDirection direction;
-
+    
     public GameObject wall; // 연결 안된 경우
     public Door door;       // 연결된 경우
 
     public bool isConnected = false;
 
+    public Transform arrivalPoint; //플레이어의 방이동시 위치할 지점
     // 연결 설정 (맵 생성 시 사용)
     public void SetConnection(bool connected)
     {

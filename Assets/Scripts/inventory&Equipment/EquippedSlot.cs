@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class EquippedSlot : MonoBehaviour, IPointerClickHandler
+public class EquippedSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     [SerializeField] private InventoryManager inventoryManager;
 
@@ -22,6 +22,8 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
     private SpriteRenderer[] playerImage; //Player 이미지 변경
 
     public bool slotuse = false;
+
+    [SerializeField] private itemInfo info;
     private void Start()
     {
         DefaultslotImage = slotImage.sprite; //기존 슬롯 이미지 저장
@@ -59,6 +61,13 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
                 playerImage[1].sprite = item.bottomSprites.rightLeg;
                 break;
 
+            case ItemType.weapon:
+                playerDisplayImage[0].sprite = item.icon;
+                playerImage[0].sprite = item.icon;
+
+                PlayerCombat.Instance.SetWeaponHitbox(item.hitboxSize, item.hitboxOffset);
+                break;
+
             default:
                 playerDisplayImage[0].sprite = item.icon;
                 playerImage[0].sprite = item.icon;
@@ -93,6 +102,12 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
                 playerImage[1].sprite = null;
                 break;
 
+            case ItemType.weapon:
+                playerDisplayImage[0].sprite = null;
+                playerImage[0].sprite = null;
+
+                break;
+
             default:
                 playerDisplayImage[0].sprite = null;
                 playerImage[0].sprite = null;
@@ -111,7 +126,25 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
 
             equippedItem = null;
             slotuse = false;
+            info.HideItemInfo();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (equippedItem == null) return;
+
+        info.ShowItemInfo(equippedItem);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        info.HideItemInfo();
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        if (info != null) info.FollowMouse();
     }
 
 
@@ -146,6 +179,12 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
                 playerImage[1].sprite = item.bottomSprites.rightLeg;
                 break;
 
+            case ItemType.weapon:
+                playerDisplayImage[0].sprite = item.icon;
+                playerImage[0].sprite = item.icon;
+
+                PlayerCombat.Instance.SetWeaponHitbox(item.hitboxSize, item.hitboxOffset);
+                break;
             default:
                 playerDisplayImage[0].sprite = item.icon;
                 playerImage[0].sprite = item.icon;

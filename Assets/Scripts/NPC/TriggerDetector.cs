@@ -11,6 +11,7 @@ public class TriggerDetector : MonoBehaviour
     public TextMeshPro npcname;
     public GameObject npcnamebox;
     public GameObject[] icons;
+
     private void Awake()
     {
         npc = GetComponent<NPCController>();
@@ -31,6 +32,7 @@ public class TriggerDetector : MonoBehaviour
             }
             npc.currentState = NPCState.PlayerDetected;
             QuestState state = QuestManager.Instance.GetQuestStateForNPC(npc.id);
+            //Debug.Log(state.status);
             UpdateNPCIcon(state);
         }
     }
@@ -53,7 +55,15 @@ public class TriggerDetector : MonoBehaviour
 
     public void UpdateNPCIcon(QuestState state) //NPC 머리위 아이콘 업데이트
     {
+        if (npc == null) npc = GetComponent<NPCController>();
+
         QuestData quest = QuestManager.Instance.GetPriorityQuestForNPC(npc.id);
+
+        if (quest == null)
+        {
+            Debug.LogWarning($"{npc.Name}의 ID({npc.id})로 조회된 퀘스트가 없습니다.");
+        }
+
         NPCIconType type = ConvertStateToIcon(quest, state);
 
         for (int i = 0; i < icons.Length; i++)
@@ -64,31 +74,23 @@ public class TriggerDetector : MonoBehaviour
 
     private NPCIconType ConvertStateToIcon(QuestData quest, QuestState state) //아이콘 상태 전환
     {
-        //퀘스트 자체가 없음
-        if (quest == null)
+        //진행 중이거나 완료된 퀘스트 상태가 있다면 해당 아이콘 우선
+        if (state != null)
         {
-            return NPCIconType.Dialogue;
+            if (state.status == QuestStatus.Complete) return NPCIconType.QuestComplete;
+            if (state.status == QuestStatus.InProgress) return NPCIconType.QuestInProgress;
         }
 
-        //아직 퀘스트 안 받은 상태
-        if (state == null)
+        //퀘스트 데이터가 있고, 아직 받지 않은 상태라면 수락 가능 여부 체크
+        if (quest != null)
         {
+            // 선행 퀘스트나 레벨 조건이 맞는지 확인
             bool canAccept = QuestManager.Instance.IsQuestAvailable(quest.questId);
             return canAccept ? NPCIconType.QuestAvailable : NPCIconType.Dialogue;
         }
 
-        //이미 받은 상태
-        switch (state.status)
-        {
-            case QuestStatus.Complete:
-                return NPCIconType.QuestComplete;
-
-            case QuestStatus.InProgress:
-                return NPCIconType.QuestInProgress;
-
-            default:
-                return NPCIconType.Dialogue;
-        }
+        //아무것도 해당 안 되면 기본 대화
+        return NPCIconType.Dialogue;
     }
 }
 

@@ -63,6 +63,18 @@ public class QuestManager : MonoBehaviour
         if (ExperienceManager.Instance.level < quest.requiredLevel)
             return false;
 
+        //선행 퀘스트 체크
+        if (quest.prerequisiteQuest != null)
+        {
+            string preQuestId = quest.prerequisiteQuest.questId;
+
+            if (!questStates.ContainsKey(preQuestId))
+                return false;
+
+            if (questStates[preQuestId].status != QuestStatus.Rewarded)
+                return false;
+        }
+
         return true;
     }
 
@@ -81,14 +93,15 @@ public class QuestManager : MonoBehaviour
         questStates.Add(quest.questId, newQuest);
         QuestUIManager.Instance.AddQuestLog(newQuest);
         OnQuestAccepted?.Invoke(newQuest.questData.npcId);
-        Debug.Log($"{quest.questName} 퀘스트 수락");
+        CheckCollectQuests(); //콜렉트퀘스트 아이템 확인
+        //Debug.Log($"{quest.questName} 퀘스트 수락");
     }
 
     public void AddProgress(QuestType type, string targetId, int amount) //진행상황
     {
         foreach (var quest in questStates.Values)
         {
-            if (quest.status == QuestStatus.Complete)
+            if (quest.status == QuestStatus.Complete || quest.status == QuestStatus.Rewarded)
                 continue;
 
             if (quest.questData.questType != type)
@@ -99,8 +112,8 @@ public class QuestManager : MonoBehaviour
 
             quest.currentProgress += amount;
             QuestUIManager.Instance.UpdateQuest();
-            Debug.Log("퀘스트 타입 : " + type);
-            Debug.Log($"{targetId} 1마리");
+            //Debug.Log("퀘스트 타입 : " + type);
+            //Debug.Log($"{targetId} 1마리");
             if (quest.currentProgress >= quest.questData.targetProgress)
             {
                 CompleteQuest(quest.questData.questId);
@@ -125,7 +138,15 @@ public class QuestManager : MonoBehaviour
         if (!questStates.ContainsKey(questId))
             return;
 
-        questStates[questId].status = QuestStatus.Rewarded;
+        QuestState quest = questStates[questId];
+
+        if (quest.questData.questType == QuestType.CollectItem)
+        {
+            //Debug.Log("아이템 감소!");
+            InventoryManager.Instance.RemoveItem(quest.questData.targetid,quest.questData.targetProgress);
+        }
+        
+        quest.status = QuestStatus.Rewarded;
     }
 
     public QuestState GetTalkQuestForNPC(string npcname)
@@ -148,6 +169,29 @@ public class QuestManager : MonoBehaviour
         return null;
     }
 
+    public void CheckCollectQuests() //수집퀘스트 아이템 체크하기
+    {
+        foreach (var quest in questStates.Values)
+        {
+            if (quest.status == QuestStatus.Rewarded)
+                continue;
+
+            if (quest.questData.questType != QuestType.CollectItem)
+                continue;
+
+            int itemCount = InventoryManager.Instance.GetItemCount(quest.questData.targetid);
+
+            quest.currentProgress = itemCount;
+
+            if (quest.currentProgress >= quest.questData.targetProgress)
+            {
+                CompleteQuest(quest.questData.questId);
+            }
+        }
+
+        QuestUIManager.Instance.UpdateQuest();
+    }
+
     public bool IsQuestAccepted(string questId)
     {
         return questStates.ContainsKey(questId) && questStates[questId].status == QuestStatus.InProgress;
@@ -166,13 +210,7 @@ public class QuestManager : MonoBehaviour
         {
             var q = pair.Value;
 
-            list.Add(new QuestStateData
-            {
-                questId = pair.Key,
-                status = q.status,
-                currentProgress = q.currentProgress
-                
-        });
+            list.Add(new QuestStateData{questId = pair.Key, status = q.status, currentProgress = q.currentProgress});
         }
         return list;
     }
@@ -192,7 +230,7 @@ public class QuestManager : MonoBehaviour
             state.questData = QuestDatabase.Instance.GetQuestById(data.questId);
             questStates[data.questId] = state;
 
-            Debug.Log("로드 questId: " + data.questId);
+            //Debug.Log("로드 questId: " + data.questId);
         }
 
         QuestUIManager.Instance.RefreshUI();
@@ -205,6 +243,9 @@ public class QuestManager : MonoBehaviour
         {
             if (quest.Value.questData.npcId == id)
             {
+                if (quest.Value.status == QuestStatus.Rewarded) //보상까지 받았으면 스킵
+                    continue;
+
                 return quest.Value;
             }
         }

@@ -22,8 +22,7 @@ public class Boss_Movement : Enemy_Movement
     }
     new void Update()
     {
-        base.Update();
-        if (isDead) 
+        if (isDead)
         {
             //현재 애니메이션 중지
             if (enemyState == EnemyState.Idle)
@@ -39,12 +38,14 @@ public class Boss_Movement : Enemy_Movement
             anim.SetBool("IsDead", true);
             return;
         }
-        
+
+        base.Update();
         if (isUsingSkill) return;
     }
 
     new void FixedUpdate()
     {
+        if (isDead) return;
         if (isUsingSkill) return;
         base.FixedUpdate();
     }

@@ -9,19 +9,49 @@ public class ItemPop : MonoBehaviour
     public float gravity = -15f;  //중력
     public float drag = 2f;       //마찰
     public float stopTime = 1f; //1초 후 멈춤
-    private float timer = 0f;
+    public LayerMask obstacleLayer; //벽 레이어 선택
 
+    private float timer = 0f;
     private Vector2 velocity;
     private bool isMoving = false;
 
     public void Pop()
     {
-        Vector2 dir = Random.insideUnitCircle.normalized;
+        Vector2 dir = GetSafeDirection();
 
         velocity = new Vector2(dir.x * power, upForce);
 
         timer = 0f;
         isMoving = true;
+    }
+
+    private Vector2 GetSafeDirection()
+    {
+        float checkRadius = 0.3f; //아이템의 크기에 맞춰 조절
+
+        //최대 10번까지 새로운 방향을 시도해봄
+        for (int i = 0; i < 10; i++)
+        {
+            Vector2 testDir = Random.insideUnitCircle.normalized;
+
+            //예상되는 도착 지점 계산
+            Vector2 expectedPos = (Vector2)transform.position + (testDir * power * 0.5f);
+
+            //해당 지점에 장애물 있는지 체크
+            Collider2D hit = Physics2D.OverlapCircle(expectedPos, checkRadius, obstacleLayer);
+
+            if (hit == null)
+            {
+                return testDir; //장애물이 없으면 이 방향 채택
+            }
+        }
+
+        if (PlayerMovement.Instance != null)
+        {
+            return (PlayerMovement.Instance.transform.position - transform.position).normalized; //만약 10번 다실패하면 플레이어 방향쪽으로 던지기
+        }
+
+        return Vector2.up; //최악의 경우엔 그냥 위로 던지기 (에러 방지)
     }
 
     void Update()

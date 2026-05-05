@@ -7,6 +7,7 @@ public class Revive : ISkillLogic
     public IEnumerator Execute(PlayerMovement player, SkillSO skill, int level)
     {
         PlayerMovement.Instance.isInvincible = true;
+        PlayerMovement.Instance.isDead = true;
 
         player.ChangeState(PlayerState.DEATH, 0);
 
@@ -17,11 +18,11 @@ public class Revive : ISkillLogic
 
         yield return new WaitForSeconds(2f);
 
-        StatsManager.Instance.UpdateHealth(StatsManager.Instance.maxHealth);
+        StatsManager.Instance.UpdateHealth(999);
         StatsManager.Instance.ShowHealText(StatsManager.Instance.maxHealth);
 
         player.ChangeState(PlayerState.IDLE, 0);
-        
+        PlayerMovement.Instance.isDead = false;
         PlayerMovement.Instance.isInvincible = false;
         GameObject.Destroy(obj, 1f);
     }

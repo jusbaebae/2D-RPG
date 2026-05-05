@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87780f34f40acfe44b42720542e86d89, type: 3}
+  m_Name: "\uB4DC\uB798\uACE4\uBCA0\uC778"
+  m_EditorClassIdentifier: 
+  itemName: "\uB4DC\uB798\uACE4\uBCA0\uC778"
+  itemDescription: "\uC6A9\uC758 \uC2EC\uC7A5\uBC15\uB3D9\uC774 \uB290\uAEF4\uC9C0\uB294
+    \uB4EF\uD55C \n\uBD89\uC740 \uAD11\uCC44\uC758 \uBCF4\uC11D\uACFC \uC815\uAD50\uD55C
+    \n\uAE08\uBE5B \uC7A5\uC2DD\uC758 \uC870\uD654\uB85C\uC6B4 \uAC80\uC774\uB2E4."
+  icon: {fileID: 21300000, guid: d531b8b416125504e8ac2ceb37e5023c, type: 3}
+  itemCategory: 1
+  itemType: 3
+  isGold: 0
+  saleprice: 2800
+  stackSize: 0
+  currentHealth: 0
+  maxHealth: 0
+  speed: 0
+  damage: 80
+  defense: 0
+  crit: 10
+  duration: 0
+  armorSprites:
+    body: {fileID: 0}
+    leftArm: {fileID: 0}
+    rightArm: {fileID: 0}
+  bottomSprites:
+    leftLeg: {fileID: 0}
+    rightLeg: {fileID: 0}
+  hitboxSize: {x: 0.31, y: 0.84}
+  hitboxOffset: {x: 0, y: 0.39}

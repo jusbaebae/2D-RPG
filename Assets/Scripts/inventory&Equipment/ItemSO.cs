@@ -34,6 +34,10 @@ public class ItemSO : ScriptableObject
     public ArmorSprites armorSprites;
     [Header("장비 스프라이트_신발")]
     public BottomSprites bottomSprites;
+
+    [Header("무기 히트박스")]
+    public Vector2 hitboxSize;
+    public Vector2 hitboxOffset;
 }
 
 

@@ -219,6 +219,8 @@ GameObject:
   - component: {fileID: 6245317936054446325}
   - component: {fileID: 4790984617104650701}
   - component: {fileID: 3052667866636023294}
+  - component: {fileID: 2575867521777639618}
+  - component: {fileID: 5472220551297542379}
   m_Layer: 5
   m_Name: SkillPanel
   m_TagString: Untagged
@@ -311,6 +313,34 @@ MonoBehaviour:
   m_Spacing: {x: 20, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!225 &2575867521777639618
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800881668224753047}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5472220551297542379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800881668224753047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b0a3d3be2844f459ab1d2484c5dd0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  canvasGroup: {fileID: 2575867521777639618}
+  fadeAlpha: 0.3
+  fadeSpeed: 10
 --- !u!1 &918115030456129735
 GameObject:
   m_ObjectHideFlags: 0

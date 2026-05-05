@@ -46,8 +46,10 @@ public class DTeleport : MonoBehaviour
 
     public void Onvisit()
     {
+        SkillManager.Instance.hasRevived = false; //던전 들어갈때 부활여부 항상 false로
         PlayerMovement.Instance.isinteract = false;
         UiManager.Instance.isInteract = false;
+        StatsManager.Instance.UpdateHealth(9999);
         SceneTransition.Instance.StartTransition(sceneToLoad);
     }
 
