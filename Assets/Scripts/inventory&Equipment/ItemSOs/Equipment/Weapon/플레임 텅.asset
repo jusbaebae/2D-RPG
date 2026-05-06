@@ -19,14 +19,14 @@ MonoBehaviour:
   itemCategory: 1
   itemType: 3
   isGold: 0
-  saleprice: 20
+  saleprice: 4000
   stackSize: 1
   currentHealth: 0
   maxHealth: 0
   speed: 10
-  damage: 100
+  damage: 150
   defense: 0
-  crit: 15
+  crit: 20
   duration: 0
   armorSprites:
     body: {fileID: 0}

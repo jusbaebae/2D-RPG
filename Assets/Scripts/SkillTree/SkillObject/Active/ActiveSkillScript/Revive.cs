@@ -20,9 +20,9 @@ public class Revive : ISkillLogic
 
         StatsManager.Instance.UpdateHealth(999);
         StatsManager.Instance.ShowHealText(StatsManager.Instance.maxHealth);
+        PlayerMovement.Instance.isDead = false;
 
         player.ChangeState(PlayerState.IDLE, 0);
-        PlayerMovement.Instance.isDead = false;
         PlayerMovement.Instance.isInvincible = false;
         GameObject.Destroy(obj, 1f);
     }

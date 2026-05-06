@@ -123,8 +123,8 @@ public class PlayerHealth : MonoBehaviour
         SceneTransition.Instance.StartTransition(SaveManager.Instance.respawnScene);
         yield return new WaitForSeconds(1f);
         StatsManager.Instance.UpdateHealth(9999);
-        PlayerMovement.Instance.ChangeState(PlayerState.IDLE, 0);
         PlayerMovement.Instance.isDead = false;
+        PlayerMovement.Instance.ChangeState(PlayerState.IDLE, 0);
         PlayerMovement.Instance.isInvincible = false;
         SaveManager.Instance.SaveGame();
     }

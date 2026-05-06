@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class DialogueComponent : MonoBehaviour, IInteractable
 {
-    [TextArea]
-    public string[] dialogueLines;
+    public DialogueSet[] randomDialogues;
 
     private NPCController npcController;
 
@@ -37,7 +36,9 @@ public class DialogueComponent : MonoBehaviour, IInteractable
         //기본 대사
         if (bestQuest == null)
         {
-            DialogueManager.Instance.ShowDialogue(dialogueLines, npcController, false);
+            string[] selectedDialogue = GetRandomDialogue();
+
+            DialogueManager.Instance.ShowDialogue(selectedDialogue, npcController, false);
             return;
         }
 
@@ -57,4 +58,24 @@ public class DialogueComponent : MonoBehaviour, IInteractable
 
         Debug.Log(bestQuest);
     }
+
+    private string[] GetRandomDialogue()
+    {
+        if (randomDialogues == null || randomDialogues.Length == 0)
+            return new string[0];
+
+        if (randomDialogues.Length == 1)
+            return randomDialogues[0].lines;
+
+        int randomIndex = Random.Range(0, randomDialogues.Length);
+
+        return randomDialogues[randomIndex].lines;
+    }
+}
+
+[System.Serializable]
+public class DialogueSet
+{
+    [TextArea]
+    public string[] lines;
 }

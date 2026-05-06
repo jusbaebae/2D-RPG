@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: d671580c0d421f84f880dc66859ef3cb
+guid: 122edec0194d0bc4d987df91aecd209a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8697269985045294854
-    second: SPUM_20240921010939584_DEATH1_idle_0_0
-  - first:
-      213: 7357033875776671477
-    second: SPUM_20240921010939584_DEATH1_idle_0_1
-  - first:
-      213: 7758728407914283724
-    second: SPUM_20240921010939584_DEATH1_idle_0_2
-  - first:
-      213: 7515014558438113763
-    second: SPUM_20240921010939584_DEATH1_idle_0_3
-  - first:
-      213: 1868572233685821644
-    second: SPUM_20240921010939584_DEATH1_idle_0_4
+      213: 109434055250640743
+    second: SPUM_20240921010902312_greeting1_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -49,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -63,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 80
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -87,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -134,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SPUM_20240921010939584_DEATH1_idle_0_0
+      name: SPUM_20240921010902312_greeting1_0
       rect:
         serializedVersion: 2
-        x: 91
-        y: 1840
-        width: 84
-        height: 122
+        x: 88
+        y: 62
+        width: 77
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,92 +136,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 60faa46a8f8e2b870800000000000000
-      internalID: 8697269985045294854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPUM_20240921010939584_DEATH1_idle_0_1
-      rect:
-        serializedVersion: 2
-        x: 347
-        y: 1840
-        width: 84
-        height: 121
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5fe0f2ea45f691660800000000000000
-      internalID: 7357033875776671477
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPUM_20240921010939584_DEATH1_idle_0_2
-      rect:
-        serializedVersion: 2
-        x: 603
-        y: 1840
-        width: 84
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cc28676216a8cab60800000000000000
-      internalID: 7758728407914283724
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPUM_20240921010939584_DEATH1_idle_0_3
-      rect:
-        serializedVersion: 2
-        x: 859
-        y: 1840
-        width: 84
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3e1c795bce1ba4860800000000000000
-      internalID: 7515014558438113763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPUM_20240921010939584_DEATH1_idle_0_4
-      rect:
-        serializedVersion: 2
-        x: 1115
-        y: 1840
-        width: 84
-        height: 121
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cc86002eb808ee910800000000000000
-      internalID: 1868572233685821644
+      spriteID: 76f7b8581b9c48100800000000000000
+      internalID: 109434055250640743
       vertices: []
       indices: 
       edges: []
@@ -248,12 +152,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      SPUM_20240921010939584_DEATH1_idle_0_0: 8697269985045294854
-      SPUM_20240921010939584_DEATH1_idle_0_1: 7357033875776671477
-      SPUM_20240921010939584_DEATH1_idle_0_2: 7758728407914283724
-      SPUM_20240921010939584_DEATH1_idle_0_3: 7515014558438113763
-      SPUM_20240921010939584_DEATH1_idle_0_4: 1868572233685821644
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

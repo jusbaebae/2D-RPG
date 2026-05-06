@@ -1,37 +1,37 @@
 fileFormatVersion: 2
-guid: f992101f33709ba4196285480863037c
+guid: e381579cfee7e2042911dde716e10c6c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 486746580341249829
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_0
+      213: -5768478531159154374
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_0
   - first:
-      213: 6183047759449100043
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_1
+      213: 1017739594644210471
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_1
   - first:
-      213: 7366612136224680038
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_2
+      213: 2440823441761805518
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_2
   - first:
-      213: -2199420264407464921
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_3
+      213: -3117988461666291505
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_3
   - first:
-      213: 7045889272591943809
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_4
+      213: -898159887696909546
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_4
   - first:
-      213: -5684533673074489171
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_5
+      213: 2903797151396636539
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_5
   - first:
-      213: -3841496913690472024
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_6
+      213: -1642601901051221383
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_6
   - first:
-      213: -729588747966263856
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_7
+      213: 283862469700391163
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_7
   - first:
-      213: 6545166922212401198
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_8
+      213: -5091104305938405556
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_8
   - first:
-      213: -8649519996535368271
-    second: SPUM_20240921010939584_OTHER6_greeting1_0_9
+      213: -7536952636974811384
+    second: SPUM_20240921010902312_DEBUFF0_greeting1_0_9
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -64,7 +64,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -78,7 +78,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 80
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -102,7 +102,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -149,13 +149,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_0
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_0
       rect:
         serializedVersion: 2
-        x: 91
-        y: 1840
-        width: 84
-        height: 122
+        x: 88
+        y: 1854
+        width: 77
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 52750e89f6541c600800000000000000
-      internalID: 486746580341249829
+      spriteID: a31aacfa65f32ffa0800000000000000
+      internalID: -5768478531159154374
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_1
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_1
       rect:
         serializedVersion: 2
         x: 346
-        y: 1840
-        width: 87
-        height: 121
+        y: 1854
+        width: 75
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b0f0d339d299ec550800000000000000
-      internalID: 6183047759449100043
+      spriteID: 7234e94e4ccbf1e00800000000000000
+      internalID: 1017739594644210471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_2
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_2
       rect:
         serializedVersion: 2
         x: 602
-        y: 1840
-        width: 90
-        height: 121
+        y: 1854
+        width: 76
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 668e0c935b67b3660800000000000000
-      internalID: 7366612136224680038
+      spriteID: ec4a8adfcfb8fd120800000000000000
+      internalID: 2440823441761805518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_3
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_3
       rect:
         serializedVersion: 2
         x: 859
-        y: 1840
-        width: 93
-        height: 120
+        y: 1854
+        width: 77
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,20 +226,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 724823c2ce61a71e0800000000000000
-      internalID: -2199420264407464921
+      spriteID: fc03d90930eaab4d0800000000000000
+      internalID: -3117988461666291505
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_4
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_4
       rect:
         serializedVersion: 2
         x: 1115
-        y: 1840
-        width: 97
-        height: 120
+        y: 1854
+        width: 79
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,20 +247,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 188049376f608c160800000000000000
-      internalID: 7045889272591943809
+      spriteID: 61b225e37581983f0800000000000000
+      internalID: -898159887696909546
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_5
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_5
       rect:
         serializedVersion: 2
         x: 1371
-        y: 1840
-        width: 96
-        height: 120
+        y: 1854
+        width: 79
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,20 +268,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da806a60eba7c11b0800000000000000
-      internalID: -5684533673074489171
+      spriteID: b77a9cccf1c5c4820800000000000000
+      internalID: 2903797151396636539
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_6
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_6
       rect:
         serializedVersion: 2
         x: 1627
-        y: 1840
-        width: 92
-        height: 120
+        y: 1854
+        width: 76
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,20 +289,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a158bdf8e240bac0800000000000000
-      internalID: -3841496913690472024
+      spriteID: 97ae57c164e4439e0800000000000000
+      internalID: -1642601901051221383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_7
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_7
       rect:
         serializedVersion: 2
         x: 1883
-        y: 1840
-        width: 95
-        height: 121
+        y: 1854
+        width: 78
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,20 +310,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0dd495536eaffd5f0800000000000000
-      internalID: -729588747966263856
+      spriteID: bf09e87896b70f300800000000000000
+      internalID: 283862469700391163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_8
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_8
       rect:
         serializedVersion: 2
         x: 91
-        y: 1584
-        width: 97
-        height: 121
+        y: 1598
+        width: 79
+        height: 109
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -331,20 +331,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e206b1253aa15da50800000000000000
-      internalID: 6545166922212401198
+      spriteID: c47641a8b93c859b0800000000000000
+      internalID: -5091104305938405556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPUM_20240921010939584_OTHER6_greeting1_0_9
+      name: SPUM_20240921010902312_DEBUFF0_greeting1_0_9
       rect:
         serializedVersion: 2
         x: 346
-        y: 1584
-        width: 94
-        height: 122
+        y: 1598
+        width: 77
+        height: 109
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -352,8 +352,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1b51fd8e36bb6f780800000000000000
-      internalID: -8649519996535368271
+      spriteID: 8073c28528d576790800000000000000
+      internalID: -7536952636974811384
       vertices: []
       indices: 
       edges: []
@@ -368,17 +368,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      SPUM_20240921010939584_OTHER6_greeting1_0_0: 486746580341249829
-      SPUM_20240921010939584_OTHER6_greeting1_0_1: 6183047759449100043
-      SPUM_20240921010939584_OTHER6_greeting1_0_2: 7366612136224680038
-      SPUM_20240921010939584_OTHER6_greeting1_0_3: -2199420264407464921
-      SPUM_20240921010939584_OTHER6_greeting1_0_4: 7045889272591943809
-      SPUM_20240921010939584_OTHER6_greeting1_0_5: -5684533673074489171
-      SPUM_20240921010939584_OTHER6_greeting1_0_6: -3841496913690472024
-      SPUM_20240921010939584_OTHER6_greeting1_0_7: -729588747966263856
-      SPUM_20240921010939584_OTHER6_greeting1_0_8: 6545166922212401198
-      SPUM_20240921010939584_OTHER6_greeting1_0_9: -8649519996535368271
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

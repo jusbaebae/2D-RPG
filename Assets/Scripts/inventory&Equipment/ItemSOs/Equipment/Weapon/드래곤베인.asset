@@ -25,9 +25,9 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 0
   speed: 0
-  damage: 80
+  damage: 100
   defense: 0
-  crit: 10
+  crit: 15
   duration: 0
   armorSprites:
     body: {fileID: 0}

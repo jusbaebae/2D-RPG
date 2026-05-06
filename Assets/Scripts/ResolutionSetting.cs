@@ -24,6 +24,11 @@ public class ResolutionSetting : MonoBehaviour
 
         foreach (var res in rawResolutions)
         {
+            float ratio = (float)res.width / res.height;
+            
+            if (Mathf.Abs(ratio - (16f / 9f)) > 0.01f)
+                continue;
+
             string key = res.width + "x" + res.height;
 
             //이미 같은 해상도 추가했으면 스킵

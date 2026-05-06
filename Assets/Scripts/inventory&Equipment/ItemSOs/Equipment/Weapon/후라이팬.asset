@@ -18,12 +18,12 @@ MonoBehaviour:
   itemCategory: 1
   itemType: 3
   isGold: 0
-  saleprice: 20
+  saleprice: 2500
   stackSize: 1
   currentHealth: 0
   maxHealth: 0
   speed: 0
-  damage: 50
+  damage: 70
   defense: 0
   crit: 8
   duration: 0

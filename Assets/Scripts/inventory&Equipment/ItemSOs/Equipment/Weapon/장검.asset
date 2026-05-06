@@ -18,7 +18,7 @@ MonoBehaviour:
   itemCategory: 1
   itemType: 3
   isGold: 0
-  saleprice: 30
+  saleprice: 100
   stackSize: 1
   currentHealth: 0
   maxHealth: 0

@@ -44,7 +44,7 @@ public class ExperienceManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.F11))
         {
             GainExperience(1000);
             InventoryManager.Instance.gold += 9999;

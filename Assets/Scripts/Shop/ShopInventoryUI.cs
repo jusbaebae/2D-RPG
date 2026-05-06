@@ -26,11 +26,11 @@ public class ShopInventoryUI : MonoBehaviour
         itemPanel.SetActive(true);
         equipPanel.SetActive(false);
 
-        // 시각적 효과 (선택된 탭은 진하게, 아닌 건 반투명하게)
+        //선택한 탭 보이고 선택하지 않은 탭은 투명하게
         itemTabCG.alpha = 1f;
         equipTabCG.alpha = 0.5f;
 
-        // 데이터 갱신 로직 (여기서 인벤토리 아이템을 슬롯에 뿌려줌)
+        //데이터 갱신
         UpdateItemSlots(itemPanel, InventoryManager.Instance.itemSlots);
     }
 
@@ -47,13 +47,12 @@ public class ShopInventoryUI : MonoBehaviour
 
     public void UpdateItemSlots(GameObject panel, InventorySlot[] originalSlots)
     {
-        //해당 패널(ItemPanel 또는 EqPanel)에 있는 상점용 슬롯들을 다 가져옴
+        //해당 패널에 있는 상점용 슬롯들을 다 가져옴
         InventorySlot[] shopSlots = panel.GetComponentsInChildren<InventorySlot>();
 
         //상점 슬롯들을 돌면서 원본 데이터와 동기화
         for (int i = 0; i < shopSlots.Length; i++)
         {
-            //원본 인벤토리/장비창에 해당 인덱스의 아이템이 있다면
             if (i < originalSlots.Length && originalSlots[i].itemSO != null)
             {
                 //상점 슬롯에 아이템 정보 복사
@@ -63,7 +62,7 @@ public class ShopInventoryUI : MonoBehaviour
             }
             else
             {
-                //아이템이 없는 빈 슬롯 처리
+                //빈 슬롯 처리
                 shopSlots[i].itemSO = null;
                 shopSlots[i].quantity = 0;
                 shopSlots[i].UpdateUI();
@@ -73,13 +72,12 @@ public class ShopInventoryUI : MonoBehaviour
 
     public void UpdateEquipSlots(GameObject panel, EquipmentSlot[] originalSlots)
     {
-        //해당 패널(ItemPanel 또는 EqPanel)에 있는 상점용 슬롯들을 다 가져옴
+        //해당 패널에 있는 상점용 슬롯들을 다 가져옴
         EquipmentSlot[] shopSlots = panel.GetComponentsInChildren<EquipmentSlot>();
 
         //상점 슬롯들을 돌면서 원본 데이터와 동기화
         for (int i = 0; i < shopSlots.Length; i++)
         {
-            //원본 인벤토리/장비창에 해당 인덱스의 아이템이 있다면
             if (i < originalSlots.Length && originalSlots[i].itemSO != null)
             {
                 //상점 슬롯에 아이템 정보 복사
@@ -89,7 +87,7 @@ public class ShopInventoryUI : MonoBehaviour
             }
             else
             {
-                //아이템이 없는 빈 슬롯 처리
+                //빈 슬롯 처리
                 shopSlots[i].itemSO = null;
                 shopSlots[i].quantity = 0;
                 shopSlots[i].UpdateUI();
